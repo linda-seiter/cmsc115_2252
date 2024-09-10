@@ -64,11 +64,9 @@ The tests are updated to record the actual output and result. Notice the last te
 | 1000  | 525600000 minutes  | 525600000 minutes   | Pass      |
 | 5000  | 2628000000 minutes | -1666967296 minutes | Fail      |
 
-<div class="hideme">
-blah blah
+<!-- This content will not appear in the rendered Markdown
 <style>
 th,td { border: 1px solid black; padding: 5px; }
 table {border-collapse: collapse }
-.hideme {color: pink; display: none;}
 </style>
-</div>
+-->
