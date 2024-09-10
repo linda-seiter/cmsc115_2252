@@ -8,20 +8,20 @@ There are many different software testing methodologies, techniques, and tools. 
 
 - **White Box Testing:** Assesses program functionality based on its implementation. To perform white-box testing in CMSC 115, we will develop test cases to cover various execution paths through a program.
 
-For the week#2 projects, we will focus on simple black-box testing. For each test case, we will specify:
+For the week#2 projects, we will perform basic black-box testing. Each test case will specify:
 
 - the user input
-- the expected output based on the requirements
-- the actual output produced from executing the program
-- the test result of pass/fail
+- the expected output
+- the actual output
+- the test result
 
 ### Example
 
-Let's consider the following application:
+Let's consider the following program requirements:
 
-_REQUIREMENT: Write a program that prompts the user to enter the years (such as 1, 2, 1000, or 5000) and displays the equivalent number of minutes. For simplicity, assume a year has 365 days._
+_Write a program that prompts the user to enter a quantity of years (such as 1, 2, 1000, or 5000). The program should calculate and display the equivalent number of minutes. For simplicity, assume a year has 365 days._
 
-Notice that the requirements are a bit ambiguous in terms of the valid range of values, but it does list sample integer values for the number of years. We will use the sample values for our test cases, displayed below. The first two columns are filled out before writing the code. The last two columns are filled out after writing and executing the code.
+While the requirements do not specify a valid range of input values, a set of sample values is provided. The sample values will be used for the test cases.
 
 | Input | Expected Output    | Actual Output | Pass/Fail |
 | ----- | ------------------ | ------------- | --------- |
@@ -30,7 +30,11 @@ Notice that the requirements are a bit ambiguous in terms of the valid range of 
 | 1000  | 525600000 minutes  |               |           |
 | 5000  | 2628000000 minutes |               |           |
 
-Let's test with the following program:
+NOTE: The first two columns should be filled out before writing the code. The last two columns are filled out after writing and executing the code.
+
+<div style="page-break-after: always"></div>
+
+We'll execute each test case for the following program:
 
 ```java
 import java.util.Scanner;
@@ -55,7 +59,7 @@ public class YearsToMinutes {
 }
 ```
 
-The tests are updated to record the actual output and result. Notice the last test fails to produce the correct result.
+Each test case is updated to record the actual output and result. Notice the last test fails to produce the correct result.
 
 | Input | Expected Output    | Actual Output       | Pass/Fail |
 | ----- | ------------------ | ------------------- | --------- |
@@ -64,9 +68,9 @@ The tests are updated to record the actual output and result. Notice the last te
 | 1000  | 525600000 minutes  | 525600000 minutes   | Pass      |
 | 5000  | 2628000000 minutes | -1666967296 minutes | Fail      |
 
-<!-- This content will not appear in the rendered Markdown
+An **overflow** occurs when a calculation produces a result that is too large for the declared data type of a variable. Similarly, an **underflow** occurs when the value is too small. An int is a 32-bit signed integer data type that can store whole numbers ranging from: -2,147,483,648 to 2,147,483,647. The last test case results in an overflow error because `minutes` is declared as an int and is not able to store a value as large as 2,626,000,000.
+
 <style>
 th,td { border: 1px solid black; padding: 5px; }
 table {border-collapse: collapse }
 </style>
--->
