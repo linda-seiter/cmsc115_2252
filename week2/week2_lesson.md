@@ -145,7 +145,7 @@ A `long` can store a value as large as 9,223,372,036,854,775,807. Assume the cod
 long minutes = years * 365 * 24 * 60;
 ```
 
-After updating the code, the program is re-executed for each test case. Unfortunately, the last test case still fails as shown below:
+After updating the code, the program needs to be re-executed for each test case. Unfortunately, the last test case still fails as shown below:
 
 | Test | Input | Expected Output    | Actual Output       | Pass/Fail |
 | ---- | ----- | ------------------ | ------------------- | --------- |
@@ -154,7 +154,7 @@ After updating the code, the program is re-executed for each test case. Unfortun
 | 3    | 1000  | 525600000 minutes  | 525600000 minutes   | Pass      |
 | 4    | 5000  | 2628000000 minutes | -1666967296 minutes | Fail      |
 
-The variable `years` is declared as an int, thus `years * 365 * 24 * 60` produces an int and results in an overflow error. The solution is to either cast `years` as a long in the calculation, or to specify one of the literal values as a long by append `L`.
+Since the variable `years` is declared as an int, the expression `years * 365 * 24 * 60` produces an int and results in an overflow error. The solution is to either cast `years` as a long within the calculation, or to specify one of the numeric literal values as a long by append `L`.
 
 | Expression          | Result Type |
 | ------------------- | ----------- |
@@ -162,7 +162,7 @@ The variable `years` is declared as an int, thus `years * 365 * 24 * 60` produce
 | (long) years \* 365 | long        |
 | years \* 365L       | long        |
 
-We'll update the code as shown below, converting `years` from int to long before performing the multiplication.
+We'll update the code to cast `years` from int to long before performing the multiplication. Note this does not modify the actual type of the variable `years`, rather it creates a temporary copy of the value stored in memory as a long.
 
 ```java
 long minutes = (long) years * 365 * 24 * 60;
