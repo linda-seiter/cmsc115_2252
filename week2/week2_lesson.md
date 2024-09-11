@@ -19,9 +19,9 @@ The week#2 projects will be tested using black-box testing techniques. Each test
 
 Consider the following program requirements:
 
-_Write a program that converts inches to feet. The program should prompt the user to enter an integer representing the number of inches, then calculate and display the equivalent number of feet. There are 12 inches in a foot._
+_Write a program that converts inches to feet. The program should read in an integer representing the number of inches, then calculate and display the equivalent number of feet._
 
-The table below contains 5 test cases that will be used for testing.
+The table below contains 5 test cases that will be used for testing:
 
 | Test | Input | Expected Output       | Actual Output | Pass/Fail |
 | ---- | ----- | --------------------- | ------------- | --------- |
@@ -31,7 +31,7 @@ The table below contains 5 test cases that will be used for testing.
 | 4    | 24    | 24 inches = 2.0 feet  |               |           |
 | 5    | 33    | 30 inches = 2.75 feet |               |           |
 
-The last two columns are filled out by executing the program to obtain the actual output and comparing it to the expected output.
+The last two columns are filled out after executing the program to obtain the actual output.
 
 <div style="page-break-after: always"></div>
 
@@ -41,8 +41,8 @@ We'll execute each test case using the `InchesToFeet` class:
 import java.util.Scanner;
 
 /**
- * InchesToFeet reads the number of inches from user input and prints the
- * equivalent number of feet.
+ * InchesToFeet reads the number of inches from user input
+ * and prints the equivalent number of feet.
  */
 public class InchesToFeet {
     public static void main(String[] args) {
@@ -66,7 +66,7 @@ The table is updated to record the actual output and result. While the tests for
 | 5    | 33    | 33 inches = 2.75 feet | 33 inches = 2.0 feet | Fail      |
 
 Recall how division works in Java.
-If both operands are integers, the result is an integer and any remainder is discarded. However,if either operand is a floating point number, the result is a floating point number.
+If both operands are integers, the result is an integer and any remainder is discarded. However, if either operand is a floating point number, the result is a floating point number.
 
 | Expression | Value |
 | ---------- | ----- |
@@ -79,7 +79,7 @@ The code should be updated to use 12.0 as the divisor to avoid integer division:
 double feet = inches / 12.0;
 ```
 
-After updating the code, the program is re-executed for each test case to confirm the actual output matches the expected output:
+After updating the code, the program should be re-executed for each test case to confirm the actual output matches the expected output:
 
 | Test | Input | Expected Output       | Actual Output         | Pass/Fail |
 | ---- | ----- | --------------------- | --------------------- | --------- |
@@ -91,7 +91,7 @@ After updating the code, the program is re-executed for each test case to confir
 
 ### Example #12 - Converting years to minutes
 
-_Write a program that converts years to minutes. The program should prompt the user to enter an integer representing the number of years, then calculate and display the equivalent number of minutes. For simplicity, assume a year has 365 days._
+_Write a program that converts years to minutes. The program should read in an integer representing the number of years, then calculate and display the equivalent number of minutes. For simplicity, assume a year has 365 days._
 
 The requirements do not specify a particular range of values for years, other than stating the input is an integer. We'll use the following test cases:
 
@@ -102,27 +102,24 @@ The requirements do not specify a particular range of values for years, other th
 | 3    | 1000  | 525600000 minutes  |               |           |
 | 4    | 5000  | 2628000000 minutes |               |           |
 
-Let's test the `YearsToMinutes` class for each test case:
+Let's test the `YearsToMinutes` class:
 
 ```java
 import java.util.Scanner;
 
 /**
- * YearsToMinutes reads the number of years from user input and prints the equivalent number of minutes.
+ * YearsToMinutes reads the number of years from user input
+ * and prints the equivalent number of minutes.
  */
 public class YearsToMinutes {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
         System.out.print("Enter the number of years: ");
         int years = input.nextInt();
-
         int minutes = years * 365 * 24 * 60;
-
         System.out.println(minutes + " minutes");
     }
 }
-
 ```
 
 Notice the last test fails to produce the correct result.
@@ -168,14 +165,15 @@ We'll update the code to cast `years` from int to long before performing the mul
 long minutes = (long) years * 365 * 24 * 60;
 ```
 
-Executing the updated program for each test case results in success:
+Executing the updated program for each test case results in success. We've added an additional test case using the largest int value as an input to confirm a long is large enough to handle the result.
 
-| Test | Input | Expected Output    | Actual Output      | Pass/Fail |
-| ---- | ----- | ------------------ | ------------------ | --------- |
-| 1    | 1     | 525600 minutes     | 525600 minutes     | Pass      |
-| 2    | 2     | 1051200 minutes    | 1051200 minutes    | Pass      |
-| 3    | 1000  | 525600000 minutes  | 525600000 minutes  | Pass      |
-| 4    | 5000  | 2628000000 minutes | 2628000000 minutes | Pass      |
+| Test | Input      | Expected Output          | Actual Output            | Pass/Fail |
+| ---- | ---------- | ------------------------ | ------------------------ | --------- |
+| 1    | 1          | 525600 minutes           | 525600 minutes           | Pass      |
+| 2    | 2          | 1051200 minutes          | 1051200 minutes          | Pass      |
+| 3    | 1000       | 525600000 minutes        | 525600000 minutes        | Pass      |
+| 4    | 5000       | 2628000000 minutes       | 2628000000 minutes       | Pass      |
+| 5    | 2147483647 | 1128717404863200 minutes | 1128717404863200 minutes | Pass      |
 
 <style>
 th,td { border: 1px solid black; padding: 5px; }
