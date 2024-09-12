@@ -2,7 +2,7 @@
 
 Testing is a critical part of software development that involves executing a program to identify errors in the code.
 
-There are many different software testing methodologies, techniques, and tools. CMSC 115 introduces two basic testing approaches:
+There are many software testing methodologies, techniques, and tools. CMSC 115 introduces two basic testing approaches:
 
 - **Black-box Testing** assesses program functionality based on requirements of what the program should do, without looking into the details of how the program is implemented. To perform black-box testing in CMSC 115, we will develop test cases that map a program input to an expected output, or map a method call to an expected return value.
 
@@ -11,17 +11,17 @@ There are many different software testing methodologies, techniques, and tools. 
 The week#2 projects will be tested using black-box testing techniques. Each test case will specify:
 
 - the user input
-- the expected output
-- the actual output
-- the test result
+- the expected output based on the requirements
+- the actual output based on the program execution
+- the test result of pass/fail
 
 ### Example #1 - Convert Inches to Feet
 
 Consider the following program requirements:
 
-_Write a program that converts inches to feet. The program should read in an integer representing the number of inches, then calculate and display the equivalent number of feet._
+_Write a program that converts inches to feet. The program should read in an integer representing the number of inches, then calculate and display the equivalent number of feet. There are 12 inches in a foot._
 
-The table below contains 5 test cases that will be used for testing:
+The table below contains 5 test cases that will be used for testing. The last two columns are filled out after the program is written and executed.
 
 | Test | Input | Expected Output       | Actual Output | Pass/Fail |
 | ---- | ----- | --------------------- | ------------- | --------- |
@@ -31,11 +31,9 @@ The table below contains 5 test cases that will be used for testing:
 | 4    | 24    | 24 inches = 2.0 feet  |               |           |
 | 5    | 33    | 30 inches = 2.75 feet |               |           |
 
-The last two columns are filled out after executing the program to obtain the actual output.
-
 <div style="page-break-after: always"></div>
 
-We'll execute each test case using the `InchesToFeet` class:
+Each test case will be executed for the `InchesToFeet` class:
 
 ```java
 import java.util.Scanner;
@@ -55,7 +53,7 @@ public class InchesToFeet {
 }
 ```
 
-The table is updated to record the actual output and result. While the tests for 12 and 24 inches pass, the other tests fail to produce the correct result.
+The table should be updated to record the actual output and pass/fail result. While the tests for 12 and 24 inches pass, the other tests fail to produce the correct result.
 
 | Test | Input | Expected Output       | Actual Output        | Pass/Fail |
 | ---- | ----- | --------------------- | -------------------- | --------- |
@@ -89,9 +87,11 @@ After updating the code, the program should be re-executed for each test case to
 | 4    | 24    | 24 inches = 2.0 feet  | 24 inches = 2.0 feet  | Pass      |
 | 5    | 33    | 33 inches = 2.75 feet | 33 inches = 2.75 feet | Pass      |
 
-### Example #12 - Converting years to minutes
+### Example #2 - Converting years to minutes
 
-_Write a program that converts years to minutes. The program should read in an integer representing the number of years, then calculate and display the equivalent number of minutes. For simplicity, assume a year has 365 days._
+Consider the following program requirements:
+
+_Write a program that converts years to minutes. The program should read in an integer representing the number of years, then calculate and display the equivalent number of minutes. Assume a year has 365 days, a day has 24 hours, and an hour has 60 minutes._
 
 The requirements do not specify a particular range of values for years, other than stating the input is an integer. We'll use the following test cases:
 
@@ -122,7 +122,7 @@ public class YearsToMinutes {
 }
 ```
 
-Notice the last test fails to produce the correct result.
+Notice the last test fails to produce the expected result.
 
 | Test | Input | Expected Output    | Actual Output       | Pass/Fail |
 | ---- | ----- | ------------------ | ------------------- | --------- |
@@ -133,8 +133,8 @@ Notice the last test fails to produce the correct result.
 
 An **overflow** occurs when a calculation produces a result that is too large for the declared data type of a variable.
 
-- An int is a 32-bit signed integer data type that can store whole numbers ranging from: -2,147,483,648 to 2,147,483,647.
-- The last test case results in an overflow error because `minutes` is declared as an int and can't store a value as large as 2,626,000,000.
+- An `int` is a 32-bit signed integer data type that can store whole numbers ranging from: -2,147,483,648 to 2,147,483,647. Java provides constants `Integer.MIN_VALUE` and `Integer.MAX_VALUE` for these values.
+- The last test case results in an overflow error because `minutes` is declared as an `int` and can't store a value as large as 2,626,000,000.
 
 A `long` can store a value as large as 9,223,372,036,854,775,807. Assume the code is updated to declare the variable as `long`:
 
@@ -151,29 +151,28 @@ After updating the code, the program needs to be re-executed for each test case.
 | 3    | 1000  | 525600000 minutes  | 525600000 minutes   | Pass      |
 | 4    | 5000  | 2628000000 minutes | -1666967296 minutes | Fail      |
 
-Since the variable `years` is declared as an int, the expression `years * 365 * 24 * 60` produces an int and results in an overflow error. The solution is to either cast `years` as a long within the calculation, or to specify one of the numeric literal values as a long by append `L`.
+Since the variable `years` is declared as an `int`, the expression `years * 365 * 24 * 60` produces an `int` and results in an overflow error. The solution is to either cast `years` as a long, or to specify one of the numeric literal values as a long by append `L`.
 
-| Expression          | Result Type |
-| ------------------- | ----------- |
-| years \* 365        | int         |
-| (long) years \* 365 | long        |
-| years \* 365L       | long        |
+| Expression          | Type |
+| ------------------- | ---- |
+| years \* 365        | int  |
+| (long) years \* 365 | long |
+| years \* 365L       | long |
 
-We'll update the code to cast `years` from int to long before performing the multiplication. Note this does not modify the actual type of the variable `years`, rather it creates a temporary copy of the value stored in memory as a long.
+We'll update the code to cast the variable as a `long`. Note this does not modify the actual type of the variable `years`, rather it creates a temporary copy of the value stored in memory as a long.
 
 ```java
 long minutes = (long) years * 365 * 24 * 60;
 ```
 
-Executing the updated program for each test case results in success. We've added an additional test case using the largest int value as an input to confirm a long is large enough to handle the result.
+Executing the updated program for each test case results in success.
 
-| Test | Input      | Expected Output          | Actual Output            | Pass/Fail |
-| ---- | ---------- | ------------------------ | ------------------------ | --------- |
-| 1    | 1          | 525600 minutes           | 525600 minutes           | Pass      |
-| 2    | 2          | 1051200 minutes          | 1051200 minutes          | Pass      |
-| 3    | 1000       | 525600000 minutes        | 525600000 minutes        | Pass      |
-| 4    | 5000       | 2628000000 minutes       | 2628000000 minutes       | Pass      |
-| 5    | 2147483647 | 1128717404863200 minutes | 1128717404863200 minutes | Pass      |
+| Test | Input | Expected Output    | Actual Output      | Pass/Fail |
+| ---- | ----- | ------------------ | ------------------ | --------- |
+| 1    | 1     | 525600 minutes     | 525600 minutes     | Pass      |
+| 2    | 2     | 1051200 minutes    | 1051200 minutes    | Pass      |
+| 3    | 1000  | 525600000 minutes  | 525600000 minutes  | Pass      |
+| 4    | 5000  | 2628000000 minutes | 2628000000 minutes | Pass      |
 
 <style>
 th,td { border: 1px solid black; padding: 5px; }
