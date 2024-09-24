@@ -3,15 +3,15 @@
 White box testing techniques are based on code coverage, which measures of the percent of code executed by the tests. Some basic measures of code coverage include:
 
 - **Statement Coverage:** The percent of statements executed at least once.
-- **Branch Coverage:** The percent of branches executed at least once. For example, `if (x  < 10)` requires at least 2 tests to cover the true and the false branches:
+- **Branch Coverage:** The percent of branches executed at least once. For example, `if (x  < 10)` requires at least 2 tests:
   - `x < 10` is true
   - `x < 10` is false
 - **Condition/Predicate Coverage:** The percent of boolean sub-expression in a compound boolean expression that evaluate to `true` and `false` at least once.
   - The compound boolean expression `(isSunny || isWeekend)` requires 4 tests that evaluate as shown:
-    - `(true || true)`
-    - `(true || false)`
-    - `(false || true)`
-    - `(false || false)`
+    - `isSunny == true && isWeekend == true`
+    - `isSunny == true && isWeekend == false`
+    - `isSunny == false && isWeekend == true`
+    - `isSunny == false && isWeekend == false`
 - **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
 
 ### Statement Coverage - BuggyExample1.java
@@ -75,9 +75,9 @@ There are two possible execution paths:
 
 Assume the program is executed with the test case shown below:
 
-| Test | Input | Expected Output  | Actual Output    | Path             | Pass/Fail |
-| ---- | ----- | ---------------- | ---------------- | ---------------- | --------- |
-| 1    | 6     | 6 is even : true | 6 is even : true | 6,7,8,9,10,11,12 | Pass      |
+| Test | Input | Expected Output  | Actual Output    | Path             | Pass/Fail | Comment              |
+| ---- | ----- | ---------------- | ---------------- | ---------------- | --------- | -------------------- |
+| 1    | 6     | 6 is even : true | 6 is even : true | 6,7,8,9,10,11,12 | Pass      | num % 2 == 0 is true |
 
 The test passes and the error on line 9 goes undetected.
 
@@ -87,10 +87,10 @@ Is 100% statement coverage achieved? Yes it is! The single test case causes ever
 
 We'll add a test with an odd number as input to force path that follows the `false` branch:
 
-| Test | Input | Expected Output   | Actual Output    | Path             | Pass/Fail |
-| ---- | ----- | ----------------- | ---------------- | ---------------- | --------- |
-| 1    | 6     | 6 is even : true  | 6 is even : true | 6,7,8,9,10,11,12 | Pass      |
-| 2    | 7     | 7 is even : false | 7 is even : true | 6,7,8,9,10,12    | Fail      |
+| Test | Input | Expected Output   | Actual Output    | Path             | Pass/Fail | Comment               |
+| ---- | ----- | ----------------- | ---------------- | ---------------- | --------- | --------------------- |
+| 1    | 6     | 6 is even : true  | 6 is even : true | 6,7,8,9,10,11,12 | Pass      | num % 2 == 0 is true  |
+| 2    | 7     | 7 is even : false | 7 is even : true | 6,7,8,9,10,12    | Fail      | num % 2 == 0 is false |
 
 The new test case fails to produce the expected output, indicating an error exists in the code.
 
