@@ -58,9 +58,43 @@ The error was not discovered until 100% statement coverage was achieved.
 
 ### Branch Coverage - BuggyExample2.java
 
-Consider the following program that reads in two numbers and compares them to find the smallest. Line numbers are displayed to the left of each line of code. The programmer copied the assignment statement from the `if` block (line 12) into the `else` block (line 14) and forgot to update the variable from `x` to `y`.
+Consider the following program that reads in a number and should print whether it is even or not. The `isEven` boolean variable is not initialized correctly on line 9.
 
 <img alt="BuggyExample2.java with line numbers" src="images/buggy2code.png" width="400">
+
+The program control flow is shown below:
+
+| Flowchart                                                                     | Simplified                                                                      |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| <img alt="flowchart2 with java statements" src="images/buggy2flowchart.png" > | <img alt="flowchart with line numbers" src="images/buggy2simpleflowchart.png" > |
+
+There are two possible execution paths:
+
+- `num %2 == 0` is true: 6, 7, 8, 9, 10, 11, 12
+- `num %2 == 0` is false: 6, 7, 8, 9, 10, 12
+
+Assume the program is executed with the test case shown below:
+
+| Test | Input | Expected Output  | Actual Output    | Path             | Pass/Fail |
+| ---- | ----- | ---------------- | ---------------- | ---------------- | --------- |
+| 1    | 6     | 6 is even : true | 6 is even : true | 6,7,8,9,10,11,12 | Pass      |
+
+The test passes and the error on line 9 goes undetected.
+
+Is 100% statement coverage achieved? Yes it is! The single test case causes every statement in the `main` method to execute. However, the error was not discovered because the `false` branch of the conditional statement was never executed.
+
+**100% branch coverage** means every branch is executed by at least one test. For each decision point such as a conditional statement (if, if-else, etc), at least one test includes a path that follows the `true` branch and at least one test includes a path that follows the `false` branch.
+
+We'll add a test with an odd number as input to force path that follows the `false` branch:
+
+| Test | Input | Expected Output   | Actual Output    | Path             | Pass/Fail |
+| ---- | ----- | ----------------- | ---------------- | ---------------- | --------- |
+| 1    | 6     | 6 is even : true  | 6 is even : true | 6,7,8,9,10,11,12 | Pass      |
+| 2    | 7     | 7 is even : false | 7 is even : true | 6,7,8,9,10,12    | Fail      |
+
+The new test case fails to produce the expected output, indicating an error exists in the code.
+
+The error was not discovered until 100% branch coverage was achieved.
 
 <div style="page-break-after: always"></div>
 
@@ -68,3 +102,7 @@ Consider the following program that reads in two numbers and compares them to fi
 th,td { border: 1px solid black; padding: 5px; }
 table {border-collapse: collapse }
 </style>
+
+## Resources
+
+[https://app.code2flow.com/](https://app.code2flow.com/)
