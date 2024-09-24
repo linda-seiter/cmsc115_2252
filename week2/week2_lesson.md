@@ -1,6 +1,6 @@
 ## Week 2 - Unit Testing
 
-Testing is a critical part of software development that involves executing a program to identify errors in the code.
+The primary objective of software testing is to identify and eliminate errors in the code.
 
 There are many software testing methodologies, techniques, and tools. CMSC 115 introduces two basic testing approaches:
 
@@ -21,7 +21,7 @@ Consider the following program requirements:
 
 _Write a program that converts inches to feet. The program should read in an integer representing the number of inches, then calculate and display the equivalent number of feet. There are 12 inches in a foot._
 
-The table below contains 5 test cases that will be used for testing. The last two columns are filled out after the program is written and executed.
+The table below contains 5 test cases that will be used for testing. The first three columns can be filled out based on the specified program requirements. The last two columns are filled out by executing the program and observing the actual output.
 
 | Test | Input | Expected Output       | Actual Output | Pass/Fail |
 | ---- | ----- | --------------------- | ------------- | --------- |
@@ -33,7 +33,7 @@ The table below contains 5 test cases that will be used for testing. The last tw
 
 <div style="page-break-after: always"></div>
 
-Each test case will be executed for the `InchesToFeet` class:
+The `InchesToFeet` class represents a possible solution:
 
 ```java
 import java.util.Scanner;
@@ -53,7 +53,7 @@ public class InchesToFeet {
 }
 ```
 
-The table should be updated to record the actual output and pass/fail result. While the tests for 12 and 24 inches pass, the other tests fail to produce the correct result.
+`InchesToFeet` should be executed for each test case to obtain the actual output and determine the pass/fail result as shown below. While the tests for 12 and 24 inches pass, the other tests fail to produce the correct result.
 
 | Test | Input | Expected Output       | Actual Output        | Pass/Fail |
 | ---- | ----- | --------------------- | -------------------- | --------- |
@@ -63,8 +63,8 @@ The table should be updated to record the actual output and pass/fail result. Wh
 | 4    | 24    | 24 inches = 2.0 feet  | 24 inches = 2.0 feet | Pass      |
 | 5    | 33    | 33 inches = 2.75 feet | 33 inches = 2.0 feet | Fail      |
 
-Recall how division works in Java.
-If both operands are integers, the result is an integer and any remainder is discarded. However, if either operand is a floating point number, the result is a floating point number.
+The failed tests indicate an error exists in the `InchesToFeet` class.
+Recall how division works in Java. If both operands are integers, the result is an integer and any remainder is discarded. However, if either operand is a floating point number, the result is a floating point number.
 
 | Expression | Value |
 | ---------- | ----- |
@@ -77,7 +77,7 @@ The code should be updated to use 12.0 as the divisor to avoid integer division:
 double feet = inches / 12.0;
 ```
 
-After updating the code, the program should be re-executed for each test case to confirm the actual output matches the expected output:
+After updating the code, the program is re-executed for each test case to confirm the actual output matches the expected output:
 
 | Test | Input | Expected Output       | Actual Output         | Pass/Fail |
 | ---- | ----- | --------------------- | --------------------- | --------- |
@@ -102,7 +102,7 @@ The requirements do not specify a particular range of values for years, other th
 | 3    | 1000  | 525600000 minutes  |               |           |
 | 4    | 5000  | 2628000000 minutes |               |           |
 
-Let's test the `YearsToMinutes` class:
+The `YearsToMinutes` class represents a possible solution:
 
 ```java
 import java.util.Scanner;
@@ -122,7 +122,7 @@ public class YearsToMinutes {
 }
 ```
 
-Notice the last test fails to produce the expected result.
+We'll run `YearsToMinutes` for each test case. Notice the last test fails to produce the expected result.
 
 | Test | Input | Expected Output    | Actual Output       | Pass/Fail |
 | ---- | ----- | ------------------ | ------------------- | --------- |
@@ -142,7 +142,7 @@ A `long` can store a value as large as 9,223,372,036,854,775,807. Assume the cod
 long minutes = years * 365 * 24 * 60;
 ```
 
-After updating the code, the program needs to be re-executed for each test case. Unfortunately, the last test case still fails as shown below:
+After updating the code, the program is re-executed for each test case. Unfortunately, the last test case still fails as shown below:
 
 | Test | Input | Expected Output    | Actual Output       | Pass/Fail |
 | ---- | ----- | ------------------ | ------------------- | --------- |
@@ -151,7 +151,13 @@ After updating the code, the program needs to be re-executed for each test case.
 | 3    | 1000  | 525600000 minutes  | 525600000 minutes   | Pass      |
 | 4    | 5000  | 2628000000 minutes | -1666967296 minutes | Fail      |
 
-Since the variable `years` is declared as an `int`, the expression `years * 365 * 24 * 60` produces an `int` and results in an overflow error. The solution is to either cast `years` as a long, or to specify one of the numeric literal values as a long by append `L`.
+Although the variable `minutes` on the left-hand side of the assignment is declared as a long, the expression on the right-hand side produces an int:
+
+```java
+long minutes = years * 365 * 24 * 60;
+```
+
+Why does this happen? Since the variable `years` is declared as an `int`, the expression `years * 365 * 24 * 60` produces an `int` and results in an overflow error. The solution is to either cast `years` as a long, or to specify one of the numeric literal values as a long by append `L`.
 
 | Expression          | Type |
 | ------------------- | ---- |
@@ -159,13 +165,13 @@ Since the variable `years` is declared as an `int`, the expression `years * 365 
 | (long) years \* 365 | long |
 | years \* 365L       | long |
 
-We'll update the code to cast the variable as a `long`. Note this does not modify the actual type of the variable `years`, rather it creates a temporary copy of the value stored in memory as a long.
+We'll update the code to cast the `years` variable as a `long`. Note this does not modify the actual type of the variable `years`, rather it creates a temporary copy of the value stored in memory as a long.
 
 ```java
 long minutes = (long) years * 365 * 24 * 60;
 ```
 
-Executing the updated program for each test case results in success.
+Executing the updated program for each test case results in success:
 
 | Test | Input | Expected Output    | Actual Output      | Pass/Fail |
 | ---- | ----- | ------------------ | ------------------ | --------- |
