@@ -7,18 +7,23 @@ White box testing techniques are based on code coverage, which measures of the p
   - `x < 10` is true
   - `x < 10` is false
 - **Condition/Predicate Coverage:** The percent of boolean sub-expression in a compound boolean expression that evaluate to `true` and `false` at least once.
+
   - The compound boolean expression `(isSunny || isWeekend)` requires 4 tests that evaluate as shown:
-    - `isSunny == true && isWeekend == true`
-    - `isSunny == true && isWeekend == false`
-    - `isSunny == false && isWeekend == true`
-    - `isSunny == false && isWeekend == false`
+
+  | isSunny | isWeekend |
+  | ------- | --------- |
+  | true    | true      |
+  | true    | false     |
+  | false   | true      |
+  | false   | false     |
+
 - **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
 
 ### Statement Coverage - BuggyExample1.java
 
 Consider the following program that reads in two numbers and compares them to find the smallest. Line numbers are displayed to the left of each line of code. The programmer copied the assignment statement from the `if` block (line 12) into the `else` block (line 14) and forgot to update the variable from `x` to `y`.
 
-<img alt="BuggyExample1.java with line numbers" src="images/buggy1code.png" width="600">
+<img alt="BuggyExample1.java with line numbers" src="images/buggy1code.png" width="800">
 
 The program control flow can be visually depicted using a flowchart as shown below. We will use a simplified flowchart notation, drawing decision points as diamonds and all other statements as a rectangle. The line number is displayed next to each node in the graph. Note that line 6 is omitted since a variable declaration (without assignment) is a compile-time rather than runtime statement.
 
@@ -60,7 +65,7 @@ The error was not discovered until 100% statement coverage was achieved.
 
 Consider the following program that reads in a number and should print whether it is even or not. The `isEven` boolean variable is not initialized correctly on line 9.
 
-<img alt="BuggyExample2.java with line numbers" src="images/buggy2code.png" width="600">
+<img alt="BuggyExample2.java with line numbers" src="images/buggy2code.png" width="800">
 
 The program control flow is shown below:
 
