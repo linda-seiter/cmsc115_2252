@@ -17,6 +17,15 @@ White box testing techniques are based on code coverage, which measures the perc
 
 - **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
 
+The week#3 projects will be tested using white-box testing techniques. Each test case will specify:
+
+- the user input
+- a column per decision point
+- the expected output based on the requirements
+- the actual output based on the program execution
+- the execution path
+- the test result of pass/fail
+
 ### Statement Coverage - BuggyExample1.java
 
 Consider the following program that reads in two numbers and compares them to find the smallest. Line numbers are displayed to the left of each line of code. There is an error on line 14. The programmer copied the assignment statement from the `if` block (line 12) into the `else` block (line 14) and forgot to update the variable from `x` to `y`.
@@ -127,7 +136,7 @@ The two decision points result in 3 possible paths:
 | true      | false            | 5-11, 14 |
 | false     |                  | 5-8, 17  |
 
-For each decision point, there should be at least one test that attempts to cover the `true` branch and one that attempts to cover the `false` branch. We need a minimum of three tests to achieve 100% branch coverage.
+For each decision point, there should be at least one test that attempts to cover the `true` branch and one that attempts to cover the `false` branch. We need a minimum of three tests to achieve 100% branch coverage for the two decision points based on the nested structure.
 
 | Test | isWeekend | temperature < 50 | Input   | Expected Output  | Actual Output    | Path     | Status |
 | ---- | --------- | ---------------- | ------- | ---------------- | ---------------- | -------- | ------ |
