@@ -92,59 +92,48 @@ Is 100% statement coverage achieved? Yes it is! The single test case causes ever
 
 For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch.
 
-| Test | Input | Expected Output   | Actual Output    | num % 2 == 0 | Pass/Fail |
-| ---- | ----- | ----------------- | ---------------- | ------------ | --------- |
-| 1    | 6     | 6 is even : true  | 6 is even : true | true         | Pass      |
-| 2    | 7     | 7 is even : false | 7 is even : true | false        | Fail      |
+| Test | num % 2 == 0 | Input | Expected Output   | Actual Output    | Pass/Fail |
+| ---- | ------------ | ----- | ----------------- | ---------------- | --------- |
+| 1    | true         | 6     | 6 is even : true  | 6 is even : true | Pass      |
+| 2    | false        | 7     | 7 is even : false | 7 is even : true | Fail      |
 
-Each test case omits the path and instead displays the branch followed for the decision point `num % 2 == 0`. The second test case fails to produce the expected output, indicating an error exists in the code.
+Each test case omits the path and instead displays the branch for decision point `num % 2 == 0`. The second test case fails to produce the expected output, indicating an error exists in the code.
 
 NOTE: 100% branch coverage implies 100% statement coverage, but not the other way around.
 
-### Branch Coverage - BuggyExample3.java
+### Branch Coverage - Example3.java
 
-Consider the following decision table that suggests an activity based on the amount of available cash and whether or not it is raining:
+Consider the following decision table that suggests a morning activity based on the day and weather:
 
-|                           | cash >= 50      | cash < 50 |
-| ------------------------- | --------------- | --------- |
-| <b>isRaining == true</b>  | Indoor Movie    | Watch TV  |
-| <b>isRaining == false</b> | Outdoor Concert | Ride Bike |
+| isWeekend | temperature < 50 | activity         |
+| --------- | ---------------- | ---------------- |
+| true      | true             | Sleep late       |
+| true      | false            | Sunrise at beach |
+| false     |                  | Go to work       |
 
-The `BuggyExample3` class attempts to implement the decision table using nested conditional statements. However, there is an error on line 17:
+The `Example3` class implements the decision table using a nested conditional statement.
 
-- The assignment operator `=` is used instead of the equality operator `==`.
-- Line 17 assigns `isRaining` to `true`, which causes the `true` branch to line 18 to execute. The `else` branch and line 20 are never executed, regardless of the input.
-
-<img alt="BuggyExample3.java with line numbers" src="images/buggy3code.png" width="600">
+<img alt="Example3.java with line numbers" src="images/example3code.png" width="600">
 
 The program control flow is shown below.
 
-<img alt="flowchart3 with java statements" src="images/buggy3flowchart.png" >
+<img alt="flowchart3 with java statements" src="images/example3flowchart.png" >
 
-There are four paths through the flowchart, although the last path not achievable due to the logic error:
+The two decision points result in 3 possible paths:
 
-| cash >= 50 | isRaining | path             |
-| ---------- | --------- | ---------------- |
-| true       | true      | 6-11, 12, 13     |
-| true       | false     | 6-11, 12, 15     |
-| false      | true      | 6-11, 16, 17, 18 |
-| false      | false     | 6-11, 16, 17, 20 |
+| isWeekend | temperature < 50 | path     |
+| --------- | ---------------- | -------- |
+| true      | true             | 5-11, 12 |
+| true      | false            | 5-11, 14 |
+| false     |                  | 5-8, 17  |
 
-For each decision point, there should be at least one test that **attempts** to cover the `true` branch and one that **attempts** to cover the `false` branch. The program logic may prevent execution of a particular branch, as is the case for test #4.
+For each decision point, there should be at least one test that attempts to cover the `true` branch and one that attempts to cover the `false` branch. We need a minimum of three tests to achieve 100% branch coverage:
 
-| Test | Input    | Expected Output | Actual Output   | cash >= 50 | isRaining | Pass/Fail |
-| ---- | -------- | --------------- | --------------- | ---------- | --------- | --------- |
-| 1    | 60 true  | Indoor Movie    | Indoor Movie    | true       | true      | Pass      |
-| 2    | 50 false | Outdoor Concert | Outdoor Concert | true       | false     | Pass      |
-| 3    | 49 true  | Watch TV        | Watch TV        | false      | true      | Pass      |
-| 4    | 30 false | Ride Bike       | Watch TV        | false      | false     | Fail      |
-
-NOTE: `BuggyExamle3.java` demonstrates a very common error, namely using `=` rather than `==` within a boolean expression. The error can be avoided by omitting the equality operator:
-
-| Bad Style               | Better Style    |
-| ----------------------- | --------------- |
-| if (isRaining == true)  | if (isRaining)  |
-| if (isRaining == false) | if (!isRaining) |
+| Test | isWeekend | temperature < 50 | Input   | Expected Output  | Actual Output    | Pass/Fail |
+| ---- | --------- | ---------------- | ------- | ---------------- | ---------------- | --------- |
+| 1    | true      | true             | true 45 | Sleep late       | Sleep late       | Pass      |
+| 2    | true      | false            | true 70 | Sunrise at beach | Sunrise at beach | Pass      |
+| 3    | false     |                  | false   | Go to work       | Go to work       | Path      |
 
 <div style="page-break-after: always"></div>
 
