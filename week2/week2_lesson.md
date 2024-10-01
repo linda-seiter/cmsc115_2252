@@ -4,11 +4,11 @@ The primary objective of software testing is to identify and eliminate errors in
 
 There are many software testing methodologies, techniques, and tools. CMSC 115 introduces two basic testing approaches:
 
-- **Black-box Testing** assesses program functionality based on requirements of what the program should do, without looking into the details of how the program is implemented. To perform black-box testing in CMSC 115, we will develop test cases that map a program input to an expected output, or map a method call to an expected return value.
+- **Functional (Opaque-box) Testing** assesses program functionality based on requirements of what the program should do, without looking into the details of how the program is implemented. To perform functional testing in CMSC 115, we will develop test cases that map a program input to an expected output, or map a method call to an expected return value.
 
-- **White Box Testing** assesses program functionality based on its implementation. To perform white-box testing in CMSC 115, we will develop test cases to cover various execution paths through a program.
+- **Structural (Clear-box) Testing** assesses program functionality based on its implementation. To perform structural testing in CMSC 115, we will develop test cases to cover various execution paths through a program.
 
-The week#2 projects will be tested using black-box testing techniques. Each test case will specify:
+The week#2 projects will be tested using functional/opaque-box testing techniques. Each test case will specify:
 
 - the user input
 - the expected output based on the requirements

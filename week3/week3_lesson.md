@@ -1,6 +1,6 @@
-## Week 3 - White-box testing
+## Week 3 - Structural (clear-box) testing
 
-White box testing techniques are based on code coverage, which measures the percent of code executed by the tests. Some basic measures of code coverage include:
+Structural or clear-box testing techniques are based on code coverage, which measures the percent of code executed by the tests. Some basic measures of code coverage include:
 
 - **Statement Coverage:** The percent of statements executed at least once.
 - **Branch Coverage:** The percent of branches executed at least once. For example, `if (x  < 10)` requires at least 2 tests to cover both branches:
@@ -17,7 +17,7 @@ White box testing techniques are based on code coverage, which measures the perc
 
 - **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
 
-The week#3 projects will be tested using white-box testing techniques. Each test case will specify:
+The week#3 projects will be tested using structural testing techniques. Each test case will specify:
 
 - the user input
 - a column per decision point
@@ -112,7 +112,7 @@ NOTE: 100% branch coverage implies 100% statement coverage, but not the other wa
 
 ### Branch Coverage - Example3.java
 
-Consider the following decision table that suggests a morning activity based on the day and weather:
+Consider the following decision table that suggests a morning activity based on the day and outdoor temperature:
 
 | isWeekend | temperature < 50 | activity         |
 | --------- | ---------------- | ---------------- |
@@ -150,6 +150,41 @@ For each decision point, there should be at least one test that attempts to cove
 th,td { border: 1px solid black; padding: 5px; }
 table {border-collapse: collapse }
 </style>
+
+### Condition/Predicate Coverage - Example4Compound.java
+
+Consider the following decision table that suggests an activity based on the quantity of cash available and whether you are hungry:
+
+| cash > 50 | isHungry | activity      |
+| --------- | -------- | ------------- |
+| true      | true     | Order a pizza |
+| true      | false    | Keep studying |
+| false     |          | Keep studying |
+
+A compound boolean expression uses a logical (boolean) operator such as `&&`, `||`, `^`.
+
+The `Example4Compound` class implements the decision table with a compound conditional that uses the logical `&&` (and) operator. Note there is an error on line 10 where `=` is used instead of `==`. The variable `isHungry` is assigned to the value `true`, overwriting the value input by the user.
+
+<img alt="Example4Compound.java with line numbers" src="images/example4compoundcode.png" width="600">
+
+The program control flow is shown below.
+
+<img alt="flowchart4 with java statements" src="images/example4compoundflowchart.png" >
+
+The one decision point results in 2 possible paths:
+
+| (cash > 50) && (isHungry = true) | path     |
+| -------------------------------- | -------- |
+| true                             | 5-10, 11 |
+| false                            | 5-10, 13 |
+
+Is 100% branch coverage sufficient to find the error?
+
+| Test | isWeekend | temperature < 50 | Input   | Expected Output  | Actual Output    | Path     | Status |
+| ---- | --------- | ---------------- | ------- | ---------------- | ---------------- | -------- | ------ |
+| 1    | true      | true             | true 45 | Sleep late       | Sleep late       | 5-11, 12 | Pass   |
+| 2    | true      | false            | true 70 | Sunrise at beach | Sunrise at beach | 5-11, 14 | Pass   |
+| 3    | false     |                  | false   | Go to work       | Go to work       | 5-8, 17  | Pass   |
 
 ## Resources
 
