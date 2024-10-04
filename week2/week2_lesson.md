@@ -1,4 +1,4 @@
-## Week 2 - Unit Testing
+## Week 2 - Functional (opaque-box) Testing
 
 The primary objective of software testing is to identify and eliminate errors in the code.
 
@@ -8,7 +8,7 @@ There are many software testing techniques. CMSC 115 introduces two common appro
 
 - **Structural Testing**. The program is treated as a **clear-box**. The tests are developed based on the actual code structures and paths. To perform structural testing in CMSC 115, we will develop test cases to cover various execution paths through a program.
 
-The week#2 projects will be tested using functional/opaque-box testing techniques. Each test case specifies:
+The week#2 programming projects will be tested using functional/opaque-box testing techniques. Each test case specifies:
 
 - the user input
 - the expected output based on the requirements

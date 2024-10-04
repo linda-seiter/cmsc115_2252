@@ -3,26 +3,29 @@
 Structural or clear-box testing techniques are based on code coverage, which measures the percent of code executed by the tests. Some basic measures of code coverage include:
 
 - **Statement Coverage:** The percent of statements executed at least once.
-- **Branch Coverage:** The percent of branches executed at least once. For example, `if (x  < 10)` requires at least 2 tests to cover both branches:
-  - `x < 10` is true
-  - `x < 10` is false
-- **Condition/Predicate Coverage:** The percent of boolean sub-expression in a compound boolean expression that evaluate to `true` and `false` at least once. For example, the compound boolean expression `(isSunny || isWeekend)` requires 4 tests that evaluate as shown:
+- **Branch Coverage:** The percent of decision point branches executed at least once. For example, the decision point `if (isSunny && isWeekend)` requires at least 2 tests to cover both branches:
+  |Test #| isSunny && isWeekend |
+  |---| ---------------- |
+  |1 | true |
+  |2 | false |
 
-  | isSunny | isWeekend |
-  | ------- | --------- |
-  | true    | true      |
-  | true    | false     |
-  | false   | true      |
-  | false   | false     |
+- **Condition/Predicate Coverage:** The percent of decision point conditions that evaluate to `true` and `false` at least once. For example, the compound boolean expression `if (isSunny || isWeekend)` requires 4 tests that evaluate as shown:
+
+  | Test # | isSunny | isWeekend |
+  | ------ | ------- | --------- |
+  | 1      | true    | true      |
+  | 2      | true    | false     |
+  | 3      | false   | true      |
+  | 4      | false   | false     |
 
 - **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
 
-The week#3 projects will be tested using structural testing techniques. Each test case will specify:
+The week#3 programming projects will be tested using structural testing techniques. Each test case will specify:
 
+- a column per condition
 - the user input
-- a column per decision point
-- the expected output based on the requirements
-- the actual output based on the program execution
+- the expected output
+- the actual output
 - the execution path
 - the test result of pass/fail
 
