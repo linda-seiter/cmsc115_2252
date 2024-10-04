@@ -100,9 +100,9 @@ The test passes and the initialization error on line 9 goes undetected.
 
 Is 100% statement coverage achieved? Yes it is! The single test case causes every statement in the `main` method to execute. However, the error was not discovered because the `false` branch of the conditional statement is not executed.
 
-**100% branch coverage** means every statement _and_ every branch is executed by at least one test. For each decision point, at least one test includes a path that follows the `true` branch and at least one test includes a path that follows the `false` branch.
+**100% branch coverage** means every branch is executed by at least one test. For each decision point, at least one test includes a path that follows the `true` branch and at least one test includes a path that follows the `false` branch.
 
-For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch. We'll omit the path column and just list the branch for decision point `num % 2 == 0`.
+For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch.
 
 | Test | num % 2 == 0 | Input | Expected Output   | Actual Output    | Path       | Status |
 | ---- | ------------ | ----- | ----------------- | ---------------- | ---------- | ------ |
@@ -147,13 +147,6 @@ For each decision point, there should be at least one test that attempts to cove
 | 2    | true      | false            | true 70 | Sunrise at beach | Sunrise at beach | 5-11, 14 | Pass   |
 | 3    | false     |                  | false   | Go to work       | Go to work       | 5-8, 17  | Pass   |
 
-<div style="page-break-after: always"></div>
-
-<style>
-th,td { border: 1px solid black; padding: 5px; }
-table {border-collapse: collapse }
-</style>
-
 ### Condition/Predicate Coverage - Example4Compound.java
 
 Consider the following decision table that suggests an activity based on the quantity of cash available and whether you are hungry:
@@ -164,7 +157,7 @@ Consider the following decision table that suggests an activity based on the qua
 | true      | false    | Keep studying |
 | false     |          | Keep studying |
 
-The `Example4Compound` class implements the decision table with a compound conditional that uses the logical `&&` (and) operator. Note there is an error on line 10 where `=` is used instead of `==`. The variable `isHungry` is assigned to the value `true`, overwriting the value input by the user.
+The `Example4Compound` class attempts to implement the decision table. Note there is an error on line 10 where `=` is used instead of `==`. The variable `isHungry` is assigned to the value `true`, overwriting the value input by the user.
 
 <img alt="Example4Compound.java with line numbers" src="images/example4compoundcode.png" width="600">
 
