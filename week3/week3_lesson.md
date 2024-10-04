@@ -178,13 +178,64 @@ The one decision point results in 2 possible paths:
 | true                             | 5-10, 11 |
 | false                            | 5-10, 13 |
 
-Is 100% branch coverage sufficient to find the error?
+The two tests below achieve 100% branch coverage, with both tests passing. 100% branch coverage is not sufficient in finding the error in the compound boolean expression.
 
-| Test | isWeekend | temperature < 50 | Input   | Expected Output  | Actual Output    | Path     | Status |
-| ---- | --------- | ---------------- | ------- | ---------------- | ---------------- | -------- | ------ |
-| 1    | true      | true             | true 45 | Sleep late       | Sleep late       | 5-11, 12 | Pass   |
-| 2    | true      | false            | true 70 | Sunrise at beach | Sunrise at beach | 5-11, 14 | Pass   |
-| 3    | false     |                  | false   | Go to work       | Go to work       | 5-8, 17  | Pass   |
+| Test | cash > 50 | isHungry | Input   | Expected Output | Actual Output | Path     | Status |
+| ---- | --------- | -------- | ------- | --------------- | ------------- | -------- | ------ |
+| 1    | true      | true     | 60 true | Order a pizza   | Order a pizza | 5-10, 11 | Pass   |
+| 2    | false     | true     | 40 true | Keep studying   | Keep studying | 5-10, 13 | Pass   |
+
+**100% condition/predicate coverage** means each decision point sub-expression evaluates to `true` and `false` at least once by at least one test.
+
+A boolean expression with a single logical operator `(a op b)` requires at least 4 tests:
+
+| a     | b     |
+| ----- | ----- |
+| true  | true  |
+| true  | false |
+| false | true  |
+| false | false |
+
+A boolean expression with two logical operators `(a op1 b op2 c)` requires at least 8 tests:
+
+| a     | b     | c     |
+| ----- | ----- | ----- |
+| true  | true  | true  |
+| true  | false | true  |
+| false | true  | true  |
+| false | false | true  |
+| true  | true  | false |
+| true  | false | false |
+| false | true  | false |
+| false | false | false |
+
+For the `Example4Compound` class, we need at least 4 tests to obtain 100% condition coverage:
+
+| Test | cash > 50 | isHungry | Input    | Expected Output | Actual Output | Path     | Status |
+| ---- | --------- | -------- | -------- | --------------- | ------------- | -------- | ------ |
+| 1    | true      | true     | 60 true  | Order a pizza   | Order a pizza | 5-10, 11 | Pass   |
+| 2    | false     | true     | 40 true  | Keep studying   | Keep studying | 5-10, 13 | Pass   |
+| 3    | true      | false    | 55 false | Keep studying   | Order a pizza | 5-10, 11 | Fail   |
+| 4    | false     | false    | 35 false | Keep studying   | Keep studying | 5-10, 13 | Pass   |
+
+Test #3 identifies an error in the code.
+
+### Reviewing Java short-circuiting
+
+Java short-circuits the evaluation of a logical expression if the result is clear before completely evaluating the expression. This is done for efficiency to avoid unnecessary work:
+
+- If the expression on the left-hand side of `&&` is `false`, the entire expression must be `false` so don't bother evaluating the right-hand side.
+- If the expression on the left-hand side of `||` is `true`, the entire expression must be `true` so don't bother evaluating the right-hand side.
+
+Given `a < 10 && b > 20`:
+
+- If `a < 10` is `false`, then `false` is returned **without evaluating** `b > 20`.
+- If `a < 10` is `true`, then the value of `b > 20` is returned.
+
+Given `a < 10 || b > 20`:
+
+- If `a < 10` is `true`, then `true` is returned **without evaluating** `b > 20`.
+- If `a < 10` is `false`, then the value of `b > 20` is returned.
 
 ## Resources
 
