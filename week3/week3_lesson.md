@@ -3,20 +3,20 @@
 Structural or clear-box testing techniques are based on code coverage, which measures the percent of code executed by the tests. Some basic measures of code coverage include:
 
 - **Statement Coverage:** The percent of statements executed at least once.
-- **Branch Coverage:** The percent of decision point branches executed at least once. For example, the decision point `if (isSunny && isWeekend)` requires at least 2 tests to cover both branches:
-  |Test #| isSunny && isWeekend |
-  |---| ---------------- |
-  |1 | true |
-  |2 | false |
+- **Branch Coverage:** The percent of decision point branches executed at least once. For example, the decision point `if (isSunny && isWeekend)` has two branches and thus requires at least one test per branch:
+  | isSunny && isWeekend |
+  | ---------------- |
+  | true |
+  | false |
 
-- **Condition/Predicate Coverage:** The percent of decision point conditions that evaluate to `true` and `false` at least once. For example, the compound boolean expression `if (isSunny && isWeekend)` requires 4 tests that evaluate as shown:
+- **Condition/Predicate Coverage:** The percent of decision point conditions that evaluate to `true` and `false` at least once. The two conditions in the boolean expression `(isSunny && isWeekend)` results in four possible combinations:
 
-  | Test # | isSunny | isWeekend |
-  | ------ | ------- | --------- |
-  | 1      | true    | true      |
-  | 2      | true    | false     |
-  | 3      | false   | true      |
-  | 4      | false   | false     |
+  | isSunny | isWeekend |
+  | ------- | --------- |
+  | true    | true      |
+  | true    | false     |
+  | false   | true      |
+  | false   | false     |
 
 - **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
 
@@ -147,6 +147,25 @@ For each decision point, there should be at least one test that attempts to cove
 | 2    | true      | false            | true 70 | Sunrise at beach | Sunrise at beach | 5-11, 14 | Pass   |
 | 3    | false     |                  | false   | Go to work       | Go to work       | 5-8, 17  | Pass   |
 
+### Reviewing Java short-circuiting
+
+Before we discuss condition coverage, let's review how Java processes a compound logical expression that includes a boolean operator `&&` or `||`.
+
+Java short-circuits the evaluation of a logical expression if the result is clear before completely evaluating the expression. This is done for efficiency to avoid unnecessary work:
+
+- If the expression on the left-hand side of `&&` is `false`, the entire expression must be `false` so don't bother evaluating the expression on the right-hand side.
+- If the expression on the left-hand side of `||` is `true`, the entire expression must be `true` so don't bother evaluating the expression on the right-hand side.
+
+For example, given the logical expression `a < 10 && b > 20`:
+
+- If `a < 10` is `false`, then `false` is returned **without evaluating** `b > 20`.
+- If `a < 10` is `true`, then the value of `b > 20` is returned.
+
+Similarly, given `a < 10 || b > 20`:
+
+- If `a < 10` is `true`, then `true` is returned **without evaluating** `b > 20`.
+- If `a < 10` is `false`, then the value of `b > 20` is returned.
+
 ### Condition/Predicate Coverage - Example4Compound.java
 
 Consider the following decision table that suggests an activity based on the quantity of cash available and whether you are hungry:
@@ -155,7 +174,8 @@ Consider the following decision table that suggests an activity based on the qua
 | --------- | -------- | ------------- |
 | true      | true     | Order a pizza |
 | true      | false    | Keep studying |
-| false     |          | Keep studying |
+| false     | true     | Keep studying |
+| false     | false    | Keep studying |
 
 The `Example4Compound` class attempts to implement the decision table. Note there is an error on line 10 where `=` is used instead of `==`. The variable `isHungry` is assigned to the value `true`, overwriting the value input by the user.
 
@@ -181,7 +201,9 @@ The two tests below achieve 100% branch coverage, with both tests passing. 100% 
 
 **100% condition/predicate coverage** means every decision point condition evaluates to `true` and `false` by at least one test.
 
-A boolean expression with a single logical operator `(a op b)` requires at least 4 tests:
+TODO: REWRITE THIS, first show why true+false and false+true is not enough because of short-circuiting. we need at least 3 tests. in general we'll write 4.
+
+We will write 4 tests for a boolean expression with a single operator `(a op b)`:
 
 | a     | b     |
 | ----- | ----- |
@@ -190,7 +212,7 @@ A boolean expression with a single logical operator `(a op b)` requires at least
 | false | true  |
 | false | false |
 
-A boolean expression with two logical operators `(a op1 b op2 c)` requires at least 8 tests:
+We will write 8 tests for an expression with two logical operators `(a op1 b op2 c)`:
 
 | a     | b     | c     |
 | ----- | ----- | ----- |
@@ -203,7 +225,7 @@ A boolean expression with two logical operators `(a op1 b op2 c)` requires at le
 | false | true  | false |
 | false | false | false |
 
-For the `Example4Compound` class, we need at least 4 tests to obtain 100% condition coverage:
+For the `Example4Compound` class, we need at least 4 tests to ensure 100% condition coverage:
 
 | Test | cash > 50 | isHungry | Input    | Expected Output | Actual Output | Path     | Status |
 | ---- | --------- | -------- | -------- | --------------- | ------------- | -------- | ------ |
@@ -214,22 +236,7 @@ For the `Example4Compound` class, we need at least 4 tests to obtain 100% condit
 
 Test #3 identifies an error in the code.
 
-### Reviewing Java short-circuiting
-
-Java short-circuits the evaluation of a logical expression if the result is clear before completely evaluating the expression. This is done for efficiency to avoid unnecessary work:
-
-- If the expression on the left-hand side of `&&` is `false`, the entire expression must be `false` so don't bother evaluating the right-hand side.
-- If the expression on the left-hand side of `||` is `true`, the entire expression must be `true` so don't bother evaluating the right-hand side.
-
-Given `a < 10 && b > 20`:
-
-- If `a < 10` is `false`, then `false` is returned **without evaluating** `b > 20`.
-- If `a < 10` is `true`, then the value of `b > 20` is returned.
-
-Given `a < 10 || b > 20`:
-
-- If `a < 10` is `true`, then `true` is returned **without evaluating** `b > 20`.
-- If `a < 10` is `false`, then the value of `b > 20` is returned.
+NOTE: 100% condition coverage implies 100% branch coverage, but not the other way around.
 
 ## Resources
 
