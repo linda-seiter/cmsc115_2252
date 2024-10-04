@@ -240,3 +240,10 @@ Given `a < 10 || b > 20`:
 ## Resources
 
 [https://app.code2flow.com/](https://app.code2flow.com/)
+
+<!--
+<style>
+th,td { border: 1px solid black; padding: 5px; }
+table {border-collapse: collapse }
+</style>
+>
