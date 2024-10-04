@@ -9,7 +9,7 @@ Structural or clear-box testing techniques are based on code coverage, which mea
   |1 | true |
   |2 | false |
 
-- **Condition/Predicate Coverage:** The percent of decision point conditions that evaluate to `true` and `false` at least once. For example, the compound boolean expression `if (isSunny || isWeekend)` requires 4 tests that evaluate as shown:
+- **Condition/Predicate Coverage:** The percent of decision point conditions that evaluate to `true` and `false` at least once. For example, the compound boolean expression `if (isSunny && isWeekend)` requires 4 tests that evaluate as shown:
 
   | Test # | isSunny | isWeekend |
   | ------ | ------- | --------- |
@@ -35,9 +35,9 @@ Consider the following program that reads in two numbers and compares them to fi
 
 <img alt="BuggyExample1.java with line numbers" src="images/buggy1code.png" width="600">
 
-The runtime control flow can be visually depicted using a flowchart as shown below. Decision points are drawn as diamonds and all other statements are draw as rectangles. A line number is displayed next to each node. Line 6 is omitted since a variable declaration (without assignment) is a compile-time rather than runtime statement.
+The program control flow can be visually depicted using a flowchart as shown on the left below. Decision points are drawn as diamonds and all other statements are drawn as rectangles. A line number is displayed next to each statement. Line 6 is omitted since a variable declaration without assignment is a compile-time rather than runtime statement. The flowchart is further simplified on the right to show only the line numbers.
 
-| Flowchart                                                                    | Simplified                                                                      |
+| Program Control Flow                                                         | Simplified                                                                      |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | <img alt="flowchart with java statements" src="images/buggy1flowchart.png" > | <img alt="flowchart with line numbers" src="images/buggy1simpleflowchart.png" > |
 
@@ -79,7 +79,7 @@ Consider the following program that reads in a number and prints whether it is e
 
 The program control flow is as shown:
 
-| Flowchart                                                                     | Simplified                                                                      |
+| Program Control Flow                                                          | Simplified                                                                      |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | <img alt="flowchart2 with java statements" src="images/buggy2flowchart.png" > | <img alt="flowchart with line numbers" src="images/buggy2simpleflowchart.png" > |
 
@@ -100,7 +100,7 @@ The test passes and the initialization error on line 9 goes undetected.
 
 Is 100% statement coverage achieved? Yes it is! The single test case causes every statement in the `main` method to execute. However, the error was not discovered because the `false` branch of the conditional statement is not executed.
 
-**100% branch coverage** means every statement _and_ every branch is executed by at least one test. For each decision point (if, if-else, etc), at least one test includes a path that follows the `true` branch and at least one test includes a path that follows the `false` branch.
+**100% branch coverage** means every statement _and_ every branch is executed by at least one test. For each decision point, at least one test includes a path that follows the `true` branch and at least one test includes a path that follows the `false` branch.
 
 For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch. We'll omit the path column and just list the branch for decision point `num % 2 == 0`.
 
@@ -164,8 +164,6 @@ Consider the following decision table that suggests an activity based on the qua
 | true      | false    | Keep studying |
 | false     |          | Keep studying |
 
-A compound boolean expression uses a logical (boolean) operator such as `&&`, `||`, `^`.
-
 The `Example4Compound` class implements the decision table with a compound conditional that uses the logical `&&` (and) operator. Note there is an error on line 10 where `=` is used instead of `==`. The variable `isHungry` is assigned to the value `true`, overwriting the value input by the user.
 
 <img alt="Example4Compound.java with line numbers" src="images/example4compoundcode.png" width="600">
@@ -188,7 +186,7 @@ The two tests below achieve 100% branch coverage, with both tests passing. 100% 
 | 1    | true      | true     | 60 true | Order a pizza   | Order a pizza | 5-10, 11 | Pass   |
 | 2    | false     | true     | 40 true | Keep studying   | Keep studying | 5-10, 13 | Pass   |
 
-**100% condition/predicate coverage** means each decision point sub-expression evaluates to `true` and `false` at least once by at least one test.
+**100% condition/predicate coverage** means every decision point condition evaluates to `true` and `false` by at least one test.
 
 A boolean expression with a single logical operator `(a op b)` requires at least 4 tests:
 
