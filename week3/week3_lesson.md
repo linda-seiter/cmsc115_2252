@@ -1,25 +1,13 @@
 ## Week 3 - Structural (clear-box) testing
 
-Structural or clear-box testing techniques are based on code coverage, which measures the percent of code executed by the tests. Some basic measures of code coverage include:
+Structural or clear-box testing techniques are based on code coverage, which measures the percent of code executed by the tests. Some basic code coverage criteria include:
 
-- **Statement Coverage:** The percent of statements executed at least once.
-- **Branch Coverage:** The percent of decision point branches executed at least once. For example, the decision point `if (isSunny && isWeekend)` has two branches:
-  | isSunny && isWeekend |
-  | -------------------- |
-  | true |
-  | false |
+- **Statement Coverage:** Every statement is executed at least once.
+- **Decision Coverage:** Every decision results in a true outcome and a false outcome at least once. For example, the decision `if (isSunny && isWeekend)` requires two test cases: one for a true outcome and another for a false outcome.
+- **Condition Coverage:** Every condition in a decision results in a true outcome and a false outcome at least once. The decision `if (isSunny && isWeekend)` consists of a compound boolean expression with two conditions: (1) `isSunny` and (2) `isWeekend`. While decision coverage only requires two tests, condition coverage requires at least three due to Java's logical operator short-circuiting.
+- **Loop Coverage:** Each loop is executed zero, one, and two or more times.
 
-- **Condition/Predicate Coverage:** The percent of decision point conditions that evaluate to `true` and `false` at least once. The decision point `if (isSunny && isWeekend)` consists of a compound boolean expression with two conditions: (1) `isSunny` and (2) `isWeekend`. The two conditions result in four possible combinations:
-  | isSunny | isWeekend |
-  | ------- | --------- |
-  | true | true |
-  | true | false |
-  | false | true |
-  | false | false |
-
-- **Loop Coverage:** The percent of loops that have been executed at least zero times, one time, and two or more times.
-
-The week#3 programming projects will be tested using structural testing techniques. However, it's crucial to recognize that 100% code coverage does not ensure effective testing; it merely indicates the extent of code that has been executed by the tests.
+It's crucial to recognize that code coverage does not guarantee effective testing; it merely indicates the extent of code that has been executed by the tests.
 
 ### Statement Coverage - BuggyExample1.java
 
@@ -65,7 +53,7 @@ The fourth test case fails to produce the expected output.
 
 _It's crucial to recognize that the purpose of testing isn't to confirm that the code works, but to find errors. In this case, the fourth test successfully identifies the presence of an error._
 
-### Branch Coverage - BuggyExample2.java
+### Decision Coverage - BuggyExample2.java
 
 Consider the `BuggyExample2` class, which reads a number from input and prints whether it is even. The code contains an initialization error on line 9.
 
@@ -94,9 +82,7 @@ The test passes and the initialization error on line 9 goes undetected.
 
 Is 100% statement coverage achieved? Yes it is! The test case causes every statement in the `main` method to execute. However, the error was not discovered because the `false` branch of the conditional statement is not executed.
 
-**100% branch coverage** means every branch is executed by at least one test. For each decision point, at least one test executes the `true` branch and at least one test executes the `false` branch.
-
-For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch.
+**100% decision coverage** requires one test to evaluate `num % 2 == 0` as `true` and another test as `false`. For the `BuggyExample2` class, 100% decision coverage is achieved by adding a second test to cover the `false` branch.
 
 | Test | Input | Expected Output   | Actual Output    | Path       | num % 2 == 0 | Status |
 | ---- | ----- | ----------------- | ---------------- | ---------- | ------------ | ------ |
@@ -105,7 +91,7 @@ For the `BuggyExample2` class, 100% branch coverage is achieved by adding a seco
 
 The second test case fails to produce the expected output, indicating an error exists in the code.
 
-### Branch Coverage - Example3.java
+### Decision Coverage - Example3.java
 
 Here’s a decision table that recommends a morning activity based on the day of the week and the outdoor temperature.
 
@@ -132,7 +118,7 @@ The two decision points result in 3 possible paths:
 | true      | false            | 5-11, 14 |
 | false     |                  | 5-8, 17  |
 
-For each decision point, there should be at least one test that covers the `true` branch and one that covers the `false` branch. We need a minimum of three tests to achieve 100% branch coverage for the two decision points based on the nested structure.
+For each decision, there should be at least one test that covers the `true` branch and one that covers the `false` branch. Three tests are required to achieve 100% decision coverage for the nested structure:
 
 | Test | Input   | Expected Output  | Actual Output    | Path     | isWeekend | temperature < 50 | Status |
 | ---- | ------- | ---------------- | ---------------- | -------- | --------- | ---------------- | ------ |
@@ -165,7 +151,7 @@ Similarly, given `a  && b `:
 
 Notice that `a || b` and `a && b` produce the same value when the conditions are either both true (first row) or both false (fourth row). As we will illustrate in the next example, 100% branch coverage may not be adequate for detecting errors in logical operators.
 
-### Condition/Predicate Coverage - Example4.java
+### Condition Coverage - Example4.java
 
 Here’s a decision table that recommends an activity based on two conditions: cash and hunger.
 
@@ -191,14 +177,14 @@ The decision point has two branches, resulting in two paths:
 | true                    | 5-10, 11 |
 | false                   | 5-10, 13 |
 
-The two tests below achieve 100% branch coverage as indicated in the `cash > 50 || isHungry` column, yet the operator error on line 10 goes undetected. **100% condition/predicate coverage** means every condition evaluates to both `true` and `false` at least once. Although the input values for the two tests appear to meet this requirement, test #1 short-circuits since the condition `cash > 50` is true. Consequently, the condition `isHungry` is never assessed as true.
+The two tests below achieve 100% decision coverage as indicated in the `cash > 50 || isHungry` column, yet the operator error on line 10 goes undetected. **100% condition coverage** means every condition evaluates to both `true` and `false` at least once. Although the input values for the two tests appear to meet this requirement, test #1 short-circuits since `cash > 50` is true. Consequently, the condition `isHungry` is never assessed as true.
 
 | Test | Input    | Expected Output | Actual Output | cash > 50 \|\| isHungry | cash > 50 | isHungry | Status |
 | ---- | -------- | --------------- | ------------- | ----------------------- | --------- | -------- | ------ |
 | 1    | 60 true  | Order a pizza   | Order a pizza | true                    | true      |          | Pass   |
 | 2    | 40 false | Keep studying   | Keep studying | false                   | false     | false    | Pass   |
 
-To achieve 100% condition coverage, we'll need to add a third test that avoids the short-circuit as shown below:
+To achieve 100% condition coverage, we'll need to add a third test that avoids a short-circuit by evaluating `cash > 50` as false:
 
 | Test | Input    | Expected Output | Actual Output | cash > 50 \|\| isHungry | cash > 50 | isHungry | Status |
 | ---- | -------- | --------------- | ------------- | ----------------------- | --------- | -------- | ------ |
@@ -227,20 +213,25 @@ We'll introduce a fourth test as shown below where `cash > 50` is true to preven
 | 3    | 35 true  | Keep studying   | Keep studying | false                 | false     |          | Pass   |
 | 4    | 55 false | Keep studying   | Keep studying | false                 | true      | false    | Pass   |
 
-To address operator short circuiting and simplify the testing process, we will aim to create four tests for each expression having a single logical operator `(a op b)`:
+To summarize, condition coverage requires 3 tests for any boolean expression `(a && b)`:
 
-| a     | b     |
-| ----- | ----- |
-| true  | true  |
-| true  | false |
-| false | true  |
-| false | false |
+| Testing && | a     | b             |
+| ---------- | ----- | ------------- |
+| 1          | false | short-circuit |
+| 2          | true  | true          |
+| 3          | true  | false         |
+
+The expression `(a || b)` also requires 3 tests:
+
+| Testing \|\| | a     | b             |
+| ------------ | ----- | ------------- |
+| 1            | true  | short-circuit |
+| 2            | false | true          |
+| 3            | false | false         |
 
 ### Code Coverage Tools
 
-The code examples presented in this lesson are small enough that we can manually determine the execution paths.
-But most programs are too large and complex to compute the paths manually.
-
+The examples presented in this lesson are small enough that it is easy to identify the execution paths and code coverage. But most programs are too large and complex to do this manually.
 There are a variety of tools that measure code coverage during test execution. For example, [https://github.com/jacoco/jacoco](Jacoco) is a popular code coverage report generator for Java projects.
 
 TODO: links to Jacoco tutorials
@@ -248,6 +239,7 @@ TODO: links to Jacoco tutorials
 ## Resources
 
 [https://app.code2flow.com/](https://app.code2flow.com/)
+
 [https://github.com/jacoco/jacoco](Jacoco open source project)
 
 <!--
