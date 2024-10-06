@@ -61,7 +61,9 @@ All tests pass and the error on line 14 goes undetected.
 | 3    | 20 20   | smallest is 20  | smallest is 20  | 7-11,12,16 | Pass   |
 | 4    | 25 10   | smallest is 10  | smallest is 25  | 7-11,14,16 | Fail   |
 
-The fourth test case fails to produce the expected output, indicating an error exists in the code.
+The fourth test case fails to produce the expected output.
+
+_It's crucial to recognize that the purpose of testing isn't to confirm that the code works, but to find errors. In this case, the fourth test successfully identifies the presence of an error._
 
 ### Branch Coverage - BuggyExample2.java
 
@@ -94,7 +96,7 @@ Is 100% statement coverage achieved? Yes it is! The test case causes every state
 
 **100% branch coverage** means every branch is executed by at least one test. For each decision point, at least one test executes the `true` branch and at least one test executes the `false` branch.
 
-We'll revise the test cases to include the decision point branch. For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch.
+For the `BuggyExample2` class, 100% branch coverage is achieved by adding a second test to cover the `false` branch.
 
 | Test | Input | Expected Output   | Actual Output    | Path       | num % 2 == 0 | Status |
 | ---- | ----- | ----------------- | ---------------- | ---------- | ------------ | ------ |
@@ -208,7 +210,7 @@ The third test indicates an error exists in the code. Assume line 10 is correcte
 
 <img alt="Example4.java fixed" src="images/example4fixed.png" width="600">
 
-Since the code has been modified, the tests should be re-executed. Notice that test #2 now short-circuits due to the `&&` operator. The tests do not achieve 100% condition coverage as `isHungry` is never evaluated as false.
+Since the code has been modified, the tests should be re-executed. Tests #2 and #3 now short-circuit due to the `&&` operator. The tests do not achieve 100% condition coverage as `isHungry` is never evaluated as false.
 
 | Test | Input    | Expected Output | Actual Output | cash > 50 && isHungry | cash > 50 | isHungry | Status |
 | ---- | -------- | --------------- | ------------- | --------------------- | --------- | -------- | ------ |
