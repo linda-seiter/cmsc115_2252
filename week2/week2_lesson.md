@@ -8,13 +8,6 @@ There are many software testing techniques. CMSC 115 introduces two common appro
 
 - **Structural Testing**. The program is treated as a **clear-box**. The tests are developed based on the actual code structures and paths. To perform structural testing in CMSC 115, we will develop test cases to cover various execution paths through a program.
 
-The week#2 programming projects will be tested using functional/opaque-box testing techniques. Each test case specifies:
-
-- the user input
-- the expected output based on the requirements
-- the actual output based on the program execution
-- the test result of pass/fail
-
 ### Example #1 - Convert Inches to Feet
 
 Consider the following program requirements:
@@ -178,6 +171,19 @@ The tests are re-executed, resulting in success:
 | 2    | 2     | 1051200 minutes    | 1051200 minutes    | Pass   |
 | 3    | 1000  | 525600000 minutes  | 525600000 minutes  | Pass   |
 | 4    | 5000  | 2628000000 minutes | 2628000000 minutes | Pass   |
+
+## Conclusion
+
+With functional testing, tests are developed based on requirements of what the program should do, rather than specific details of how it is implemented. The week#2 programming projects will be tested using the functional testing techniques presented in this lesson. Each test case should specify:
+
+- the user input
+- the expected output based on the requirements
+- the actual output based on the program execution
+- the test result of pass/fail
+
+## Resources
+
+Java files for this lesson are available at [https://github.com/linda-seiter/cmsc115_2252](https://github.com/linda-seiter/cmsc115_2252)
 
 <!--
 <style>

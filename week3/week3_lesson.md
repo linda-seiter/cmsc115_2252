@@ -7,13 +7,11 @@ Structural or clear-box testing techniques are based on code coverage, which mea
 - **Condition Coverage:** Every condition in a decision results in a true outcome and a false outcome at least once. The decision `if (isSunny && isWeekend)` consists of a compound boolean expression with two conditions: (1) `isSunny` and (2) `isWeekend`. Each must have both a true outcome and a false outcome.
 - **Loop Coverage:** Each loop is executed zero, one, and two or more times.
 
-It's crucial to recognize that code coverage does not guarantee effective testing; it merely indicates the extent of code that has been executed by the tests.
-
 ### Statement Coverage - BuggyExample1.java
 
 Consider the following program that reads in two numbers and compares them to find the smallest. Line numbers are displayed to the left of each line of code. There is an error on line 14. The programmer copied the assignment statement from the `if` block (line 12) into the `else` block (line 14) and forgot to update the variable from `x` to `y`.
 
-<img alt="BuggyExample1.java with line numbers" src="images/buggy1code.png" width="500">
+<img alt="BuggyExample1.java with line numbers" src="images/buggy1code.png" width="600">
 
 The program control flow can be visually depicted using a flowchart as shown on the left below. Decision points are drawn as diamonds and all other statements are drawn as rectangles. A line number is displayed next to each statement. Line 6 is omitted since a variable declaration without assignment is a compile-time rather than runtime statement. The flowchart is further simplified on the right to show only the line numbers.
 
@@ -57,7 +55,7 @@ _It's crucial to recognize that the purpose of testing isn't to confirm that the
 
 Consider the `BuggyExample2` class, which reads a number from input and prints whether it is even. The code contains an initialization error on line 9.
 
-<img alt="BuggyExample2.java with line numbers" src="images/buggy2code.png" width="500">
+<img alt="BuggyExample2.java with line numbers" src="images/buggy2code.png" width="600">
 
 The program control flow is as shown:
 
@@ -104,11 +102,11 @@ Here’s a decision table that recommends a morning activity based on the day of
 
 The `Example3` class implements the decision table using a nested conditional statement.
 
-<img alt="Example3.java with line numbers" src="images/example3code.png" width="500">
+<img alt="Example3.java with line numbers" src="images/example3code.png" width="600">
 
 The program control flow is shown below.
 
-<img alt="flowchart3 with java statements" src="images/example3flowchart.png" width="300">
+<img alt="flowchart3 with java statements" src="images/example3flowchart.png" width="500">
 
 The two decision points result in 3 possible paths:
 
@@ -164,11 +162,11 @@ Here’s a decision table that recommends an activity based on two conditions: c
 
 The `Example4` class attempts to implement the decision table. Note there is an error on line 10 where the logical OR operator `||` is used instead of the AND operator `&&`.
 
-<img alt="Example4.java with line numbers" src="images/example4code.png" width="500">
+<img alt="Example4.java with line numbers" src="images/example4code.png" width="600">
 
 The program control flow is shown below.
 
-<img alt="flowchart4 with java statements" src="images/example4flowchart.png" width="300">
+<img alt="flowchart4 with java statements" src="images/example4flowchart.png" width="500">
 
 The decision point has two branches, resulting in two paths:
 
@@ -194,7 +192,7 @@ To achieve 100% condition coverage, we'll need to add a third test that avoids a
 
 The third test indicates an error exists in the code. Assume line 10 is corrected to use the logical operator `&&`:
 
-<img alt="Example4.java fixed" src="images/example4fixed.png" width="500">
+<img alt="Example4.java fixed" src="images/example4fixed.png" width="600">
 
 Since the code has been modified, the tests should be re-executed. Tests #2 and #3 now short-circuit due to the `&&` operator. The tests do not achieve 100% condition coverage as `isHungry` is never evaluated as false.
 
@@ -234,7 +232,15 @@ The expression `(a || b)` also requires 3 tests:
 The examples presented in this lesson are small enough that it is easy to identify the execution paths and determine code coverage, but most programs are too large and complex to do this manually.
 [https://github.com/jacoco/jacoco](Jacoco) is a popular code coverage report generator for Java projects that can be used with many IDEs. Tools like Jacoco are often integrated with unit testing frameworks like [https://junit.org/junit5/](Junit).
 
+## Conclusion
+
+Functional (opaque-box) testing checks the application against a set of requirements, while structural (clear-box) testing is based on code coverage and measures the percent of code executed by the tests. In this lesson, we looked at three measures of code coverage: statement, decision, and condition. Statement coverage is considered a very weak and inadequate level of testing. The goal during testing is to strive for decision coverage, or even better condition coverage.
+
+It's crucial to recognize that code coverage does not guarantee effective testing; it merely indicates the extent of code that has been executed by the tests.
+
 ## Resources
+
+Java files for this lesson are available at [https://github.com/linda-seiter/cmsc115_2252](https://github.com/linda-seiter/cmsc115_2252)
 
 [https://app.code2flow.com/](https://app.code2flow.com/)
 
