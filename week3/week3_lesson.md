@@ -231,16 +231,16 @@ The expression `(a || b)` also requires 3 tests:
 
 ### Code Coverage Tools
 
-The examples presented in this lesson are small enough that it is easy to identify the execution paths and code coverage. But most programs are too large and complex to do this manually.
-There are a variety of tools that measure code coverage during test execution. For example, [https://github.com/jacoco/jacoco](Jacoco) is a popular code coverage report generator for Java projects.
-
-TODO: links to Jacoco tutorials
+The examples presented in this lesson are small enough that it is easy to identify the execution paths and determine code coverage, but most programs are too large and complex to do this manually.
+[https://github.com/jacoco/jacoco](Jacoco) is a popular code coverage report generator for Java projects that can be used with many IDEs. Tools like Jacoco are often integrated with unit testing frameworks like [https://junit.org/junit5/](Junit).
 
 ## Resources
 
 [https://app.code2flow.com/](https://app.code2flow.com/)
 
-[https://github.com/jacoco/jacoco](Jacoco open source project)
+[https://github.com/jacoco/jacoco](https://github.com/jacoco/jacoco)
+
+[https://junit.org/junit5/](https://junit.org/junit5/)
 
 <!--
 <style>
