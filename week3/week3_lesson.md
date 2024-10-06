@@ -106,7 +106,7 @@ The `Example3` class implements the decision table using a nested conditional st
 
 The program control flow is shown below.
 
-<img alt="flowchart3 with java statements" src="images/example3flowchart.png" width="500">
+<img alt="flowchart3 with java statements" src="images/example3flowchart.png" width="600">
 
 The two decision points result in 3 possible paths:
 
@@ -211,22 +211,6 @@ We'll introduce a fourth test as shown below where `cash > 50` is true to preven
 | 3    | 35 true  | Keep studying   | Keep studying | false                 | false     |          | Pass   |
 | 4    | 55 false | Keep studying   | Keep studying | false                 | true      | false    | Pass   |
 
-To summarize, condition coverage requires 3 tests for any boolean expression `(a && b)`:
-
-| Testing && | a     | b             |
-| ---------- | ----- | ------------- |
-| 1          | false | short-circuit |
-| 2          | true  | true          |
-| 3          | true  | false         |
-
-The expression `(a || b)` also requires 3 tests:
-
-| Testing \|\| | a     | b             |
-| ------------ | ----- | ------------- |
-| 1            | true  | short-circuit |
-| 2            | false | true          |
-| 3            | false | false         |
-
 ### Code Coverage Tools
 
 The examples presented in this lesson are small enough that it is easy to identify the execution paths and determine code coverage, but most programs are too large and complex to do this manually.
@@ -235,6 +219,29 @@ The examples presented in this lesson are small enough that it is easy to identi
 ## Conclusion
 
 Functional (opaque-box) testing checks the application against a set of requirements, while structural (clear-box) testing is based on code coverage and measures the percent of code executed by the tests. In this lesson, we looked at three measures of code coverage: statement, decision, and condition. Statement coverage is considered a very weak and inadequate level of testing. The goal during testing is to strive for decision coverage, or even better condition coverage.
+
+Decision coverage requires 2 tests for `if (a)`:
+
+| Test | a     |
+| ---- | ----- |
+| 1    | true  |
+| 2    | false |
+
+Condition coverage requires 3 tests for a compound decision with one operator `if (a && b)`:
+
+| Testing && | a     | b             |
+| ---------- | ----- | ------------- |
+| 1          | false | short-circuit |
+| 2          | true  | true          |
+| 3          | true  | false         |
+
+Condition coverage for `if (a || b)` also requires 3 tests:
+
+| Testing \|\| | a     | b             |
+| ------------ | ----- | ------------- |
+| 1            | true  | short-circuit |
+| 2            | false | true          |
+| 3            | false | false         |
 
 It's crucial to recognize that code coverage does not guarantee effective testing; it merely indicates the extent of code that has been executed by the tests.
 
