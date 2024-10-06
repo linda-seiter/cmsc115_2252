@@ -7,12 +7,9 @@ import java.util.Scanner;
 public class YearsToMinutes {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
         System.out.print("Enter the number of years: ");
         int years = input.nextInt();
-
-        long minutes = (long) years * 365 * 24 * 60;
-
+        int minutes = years * 365 * 24 * 60;
         System.out.println(minutes + " minutes");
     }
 }
