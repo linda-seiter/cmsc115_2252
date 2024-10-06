@@ -4,7 +4,7 @@ The primary objective of software testing is to identify and eliminate errors in
 
 There are many software testing techniques. CMSC 115 introduces two common approaches:
 
-- **Functional Testing**. The program is treated as an **opaque-box**. The tests are developed based on requirements of what the program should do, rather than how it is implemented. To perform functional testing in CMSC 115, we will develop tests that map a program input to an expected output, or map a method call to an expected return value.
+- **Functional Testing**. The program is treated as an **opaque-box**. The tests are developed based on requirements of what the program should do, rather than how it is implemented. To perform functional testing in CMSC 115, we will develop tests that map a program input to an expected output, and tests that map a method call to an expected return value.
 
 - **Structural Testing**. The program is treated as a **clear-box**. The tests are developed based on the actual code structures and paths. To perform structural testing in CMSC 115, we will develop test cases to cover various execution paths through a program.
 
@@ -170,7 +170,7 @@ We'll update the code to cast the `years` variable as a `long`. Note this does n
 long minutes = (long) years * 365 * 24 * 60;
 ```
 
-Executing the updated program for each test case results in success:
+The tests are re-executed, resulting in success:
 
 | Test | Input | Expected Output    | Actual Output      | Status |
 | ---- | ----- | ------------------ | ------------------ | ------ |
