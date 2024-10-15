@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
 public class BuggyExample1 {
-
     public static void main(String[] args) {
-        int x, y, smallest;
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter two numbers: ");
-        x = input.nextInt();
-        y = input.nextInt();
-        if (x <= y) {
-            smallest = x;
+        System.out.print("Enter number: ");
+        int num = input.nextInt();
+        if (num >= 0) {
+            System.out.println(num + " is positive");
+        } else if (num < 0) {
+            System.out.println(num + " is negative");
         } else {
-            smallest = x; // error, should be y
+            System.out.println(num + " is neutral");
         }
-        System.out.println("smallest is " + smallest);
     }
 }
