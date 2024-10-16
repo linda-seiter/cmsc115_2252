@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class BuggyExample2 {
+public class BuggyScore {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Score: ");
