@@ -1,17 +1,18 @@
 ## Week 3 - Equivalence Partitioning and Boundary Value Analysis
 
-Suppose a program reads in an integer and prints whether it is negative, neutral, or positive. It is not feasible to test the program with every possible integer value, so a subset of integers must be selected for testing.
+Suppose a program reads in an integer and prints whether it is negative, neutral, or positive. It is not feasible to test the program with every possible integer value, so a subset of integers must be selected for testing. How do we pick a set of input values that might be effective in finding bugs?
 
-**Equivalence Partitioning** and **Boundary Value Analysis** are functional (opaque-box) testing technique designed to reduce the total number of test cases to a finite set, while also covering the functional requirements.
-You'll use these techniques to develop test cases for the week 3 programming projects.
+**Equivalence Partitioning** and **Boundary Value Analysis** are functional (opaque-box) testing technique designed to reduce the total number of test cases to a finite set, while still managing to cover the functional requirements. You'll use these techniques to develop test cases for the week 3 programming projects.
 
 ### Equivalence Partitioning
 
 **Equivalence Partitioning**, also called **Equivalence Class Partitioning (ECP)**,
 partitions the input domain into equivalence classes based on the similarity of input values. Each value within an equivalence class should display the same output behavior as all other values in that class.
 
-- If one value in an equivalence class passes a test, all values in the class are expected to pass.
-- If one value in an equivalence class fails a test, all values in the class should likewise fail.
+The assumption is that given any single value in the equivalence class:
+
+- If the value passes a test, all values in the class are expected to pass.
+- If the value fails a test, all values in the class should likewise fail.
 
 Test cases are written to ensure each equivalence class is covered at least once.
 
@@ -125,10 +126,37 @@ A coding error was identified using one value from the **> 100** equivalence cla
 
 Boundary value analysis (BVA) is a type of equivalence partitioning that focuses on testing the values on or near partition boundaries, as this is where logic errors often occur.
 
-![range boundaries](images/range_boundaries.png)
+<img src="images/boundary.png" alt="single boundary with nearby points" width = 200>
 
-When an input domain has a specified range [min, max], the min and max represent the boundaries or edges that separate valid and invalid values.
-We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional). An offset of 1 is used if the boundary is an integer and 0.1 if it is a double. The nominal value is typically chosen as (max + min) / 2.
+We design the test cases to include the boundary value `b`and input values just above and below it. An offset of 1 is used if the boundary is an integer and 0.1 if it is a double.
+
+Why do we test near a boundary? Consider the legal age requirement `age is at least 18`. This results in two equivalence classes:
+
+| Invalid age | Valid age |
+| ----------- | --------- |
+| <18         | >=18      |
+
+The boundary for the minimum valid age is 18. We will test with ages 17, 18, and 19. The table below show various correct and incorrect ways that the condition might be coded. The test set {17, 18, 19} is effective in identifying the incorrect conditions.
+
+| Condition | Invalid Age | Valid Age  | Comment   |
+| --------- | ----------- | ---------- | --------- |
+| age > 17  | 17          | 18, 19     | Correct   |
+| age >= 18 | 17          | 18, 19     | Correct   |
+| age >= 17 |             | 17, 18, 19 | Incorrect |
+| age >= 18 | 17,18       | 19         | Incorrect |
+| age == 18 | 17,19       | 18         | Incorrect |
+
+When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
+
+<img src="images/range_boundaries.png" width=500 alt="range [min,max]">
+
+We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional). The nominal value is typically chosen as (max + min) / 2.
+
+While equivalence partitioning requires at least one value from each equivalence class, the choice of value may be arbitrary. Boundary value analysis on the other hand selects specific values:
+
+| Invalid | Valid                           | Invalid |
+| ------- | ------------------------------- | ------- |
+| min-1   | min, min+1, nominal, max-1, max | max+1   |
 
 **Example #1 (1 variable):** A program requires an age between 18 - 65 as input.
 
@@ -190,12 +218,6 @@ Equivalence Partitioning and Boundary Value Analysis are two common functional t
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | Representative values from valid and invalid equivalence classes are used for test cases | The following are used for test cases:<br>min-1<br>min<br>min+1<br>nominal(optional)<br>max-1<br>max<br>max+1 |
 | Identifies bugs within equivalence classes                                               | Identifies bugs at the boundaries of equivalence classes                                                      |
-
-## Conclusion
-
-....
-
-...
 
 ## Resources
 
