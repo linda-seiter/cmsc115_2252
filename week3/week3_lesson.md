@@ -1,30 +1,41 @@
 ## Week 3 - Equivalence Partitioning and Boundary Value Analysis
 
-Suppose a program reads in an integer and prints whether it is negative, neutral, or positive. It is not feasible to test the program with every possible integer value, so a subset of integers must be selected for testing. How do we pick a set of input values that might be effective in finding bugs?
+Suppose a program reads in an integer and prints whether it is negative,
+neutral, or positive. It is not feasible to test the program with every
+possible integer value, so a subset of integers must be selected for testing.
+How do we pick a set of input values that might be effective in finding bugs?
 
-**Equivalence Partitioning** and **Boundary Value Analysis** are functional (opaque-box) testing technique designed to reduce the total number of test cases to a finite set, while still managing to cover the functional requirements. You'll use these techniques to develop test cases for the week 3 programming projects.
+This lesson introduces three popular functional (opaque-box) testing techniques
+designed to reduce the total number of test cases to a finite set,
+while still managing to cover the functional requirements.
+
+- Equivalence Class Partitioning (ECP)
+- Boundary Value Analysis (BVA)
+- Decision Table Testing (DTT)
+
+You'll use these techniques to develop test cases for the week 3 programming projects.
 
 ### Equivalence Partitioning
 
 **Equivalence Partitioning**, also called **Equivalence Class Partitioning (ECP)**,
-partitions the input domain into equivalence classes based on the similarity of input values. Each value within an equivalence class should display the same output behavior as all other values in that class.
+divides the input domain into equivalence classes based on the similarity of input values. Each value within an equivalence class should display the same output behavior as all other values in that class.
 
-The assumption is that given any single value in the equivalence class:
+The assumption is that for any single value _v_ in the equivalence class:
 
-- If the value passes a test, all values in the class are expected to pass.
-- If the value fails a test, all values in the class should likewise fail.
+- If _v_ passes a test, all values in the class are expected to pass.
+- If _v_ fails a test, all values in the class should likewise fail.
 
 Test cases are written to ensure each equivalence class is covered at least once.
 
 **Example #1:** A program determines whether input is a valid gpa between 0.0 and 4.0.
 
-There are three equivalence classes:
+There are three equivalence classes/partitions:
 
 | Invalid | Valid gpa | Invalid |
 | ------- | --------- | ------- |
 | < 0.0   | 0.0 - 4.0 | > 4.0   |
 
-ECP testing requires a minimum of one test per equivalence class. For example:
+Each equivalence class should be covered by at least one test case. For example:
 
 | Test | Expected I/O             | Actual I/O | Status | Equivalence<br>Class |
 | ---- | ------------------------ | ---------- | ------ | -------------------- |
@@ -40,7 +51,7 @@ There are three equivalence classes:
 | --------- | ------------------ | --------- |
 | <6 digits | 6 digits           | >6 digits |
 
-ECP testing requires a minimum of one test per equivalence class. For example:
+ECP requires a minimum of one test per equivalence class. For example:
 
 | Test | Expected I/O                    | Actual I/O | Status | Equivalence<br>Class |
 | ---- | ------------------------------- | ---------- | ------ | -------------------- |
@@ -48,30 +59,22 @@ ECP testing requires a minimum of one test per equivalence class. For example:
 | 2    | product: **555442**<br>Valid    |            |        | 6 digits             |
 | 3    | product: **1234567**<br>Invalid |            |        | >6 digits            |
 
-**Example #3:** A program determines if the age represents a legal adult (i.e. at least 18).
+**Example #3:** A program determines if an age represents a legal adult (i.e. at least 18).
 
 There are two equivalence classes:
 
-| Not legal age | Legal age |
-| ------------- | --------- |
-| < 18          | >= 18     |
+| Underage | Legal Adult |
+| -------- | ----------- |
+| < 18     | >= 18       |
 
-ECP testing requires a minimum of one test per equivalence class. For example:
+A minimum of one test per equivalence class is needed. For example:
 
-| Test | Expected I/O             | Actual I/O | Status | Equivalence<br>Class |
-| ---- | ------------------------ | ---------- | ------ | -------------------- |
-| 1    | age: **10**<br>Not legal |            |        | < 18>                |
-| 2    | age: **32**<br>Legal     |            |        | >= 18                |
+| Test | Expected I/O               | Actual I/O | Status | Equivalence<br>Class |
+| ---- | -------------------------- | ---------- | ------ | -------------------- |
+| 1    | age: **10**<br>Underage    |            |        | < 18>                |
+| 2    | age: **32**<br>Legal Adult |            |        | >= 18                |
 
-**Example #4:** Write a program to read in a month and determine the nightly rate. Off-season stays (October - April) are discounted 20%.
-
-There are two equivalence classes:
-
-| In-season       | Off-season    |
-| --------------- | ------------- |
-| May - September | October-April |
-
-**Example #5:** Write a program to read in a numeric score between 0 and 100 and print the corresponding letter grade.
+**Example #4:** Write a program to read in a numeric score between 0 and 100 and print the corresponding letter grade.
 
 Let's assume standard letter assignment. Given that a score range of 0 to 100 is specified, we divide the test cases into seven equivalence classes to cover the five valid and two invalid input ranges.
 
@@ -120,7 +123,7 @@ One representative value from each equivalence class is selected. The last test 
 | 6    | Score: **93**<br>A               | Score: **93**<br>A               | Pass   | 90-100               |
 | 7    | Score: **105**<br>105 is invalid | Score: **105**<br>A              | Fail   | > 100                |
 
-A coding error was identified using one value from the **> 100** equivalence class.
+The coding error was identified using one sample value from the **> 100** equivalence class.
 
 ### Boundary Value Analysis
 
@@ -130,25 +133,33 @@ Boundary value analysis (BVA) is a type of equivalence partitioning that focuses
 
 We design the test cases to include the boundary value `b`and input values just above and below it. An offset of 1 is used if the boundary is an integer and 0.1 if it is a double.
 
-Why do we test near a boundary? Consider the legal age requirement `age is at least 18`. This results in two equivalence classes:
+Why do we test near a boundary? Consider a minimum age requirement to determine legal adulthood: `age is at least 18` . This results in two equivalence classes based on the minimum age boundary of 18:
 
-| Invalid age | Valid age |
-| ----------- | --------- |
-| <18         | >=18      |
+<img src="images/adult.png" alt="age boundary at 18 with nearby points 17 and 19" width = 200>
 
-The boundary for the minimum valid age is 18. We will test with ages 17, 18, and 19. The table below show various correct and incorrect ways that the condition might be coded. The test set {17, 18, 19} is effective in identifying the incorrect conditions.
+BVA picks ages 17, 18, and 19 for testing. The test cases with expected output are shown below:
 
-| Condition | Invalid Age | Valid Age  | Comment   |
-| --------- | ----------- | ---------- | --------- |
-| age > 17  | 17          | 18, 19     | Correct   |
-| age >= 18 | 17          | 18, 19     | Correct   |
-| age >= 17 |             | 17, 18, 19 | Incorrect |
-| age >= 18 | 17,18       | 19         | Incorrect |
-| age == 18 | 17,19       | 18         | Incorrect |
+| Test | Expected I/O         | Actual I/O | Status | min = 18 |
+| ---- | -------------------- | ---------- | ------ | -------- |
+| 1    | Age: **17**<br>Minor |            |        | min - 1  |
+| 2    | Age: **18**<br>Adult |            |        | min      |
+| 23   | Age: **19**<br>Adult |            |        | min + 1  |
 
-When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
+The table below show various correct and incorrect ways the
+condition for legal adulthood might be written in the Java program. Assume "Adult" is printed when the condition is true, otherwise "Minor" is printed.
+The test set {17, 18, 19} is effective in identifying each incorrect condition.
+
+| Condition | 17    | 18    | 19    | Comment |
+| --------- | ----- | ----- | ----- | ------- |
+| age > 17  | Minor | Adult | Adult | Pass    |
+| age >= 18 | Minor | Adult | Adult | Pass    |
+| age >= 17 | Adult | Adult | Adult | Fail    |
+| age > 18  | Minor | Minor | Adult | Fail    |
+| age == 18 | Minor | Adult | Minor | Fail    |
+| age < 18  | Adult | Minor | Minor | Fail    |
 
 <img src="images/range_boundaries.png" width=500 alt="range [min,max]">
+When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
 
 We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional). The nominal value is typically chosen as (max + min) / 2.
 
@@ -209,6 +220,8 @@ Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases.
 | 11   | Humidity and Temperature: **61 70**<br>Uncomfortable |            |        | (max+1, nom)<br>red dot    |
 | 12   | Humidity and Temperature: **50 64**<br>Uncomfortable |            |        | (nom, min-1)<br>red dot    |
 | 13   | Humidity and Temperature: **50 76**<br>Uncomfortable |            |        | (nom, max+1)<br>red dot    |
+
+## Decision Table
 
 ## Conclusion
 
