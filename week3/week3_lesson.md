@@ -1,11 +1,11 @@
-## Week 3 - Equivalence Partitioning and Boundary Value Analysis
+## Week 3 - Equivalence Partitioning, Boundary Value Analysis, Decision Table Testing
 
 Suppose a program reads in an integer and prints whether it is negative,
 neutral, or positive. It is not feasible to test the program with every
 possible integer value, so a subset of integers must be selected for testing.
 How do we pick a set of input values that might be effective in finding bugs?
 
-This lesson introduces three popular functional (opaque-box) testing techniques
+This lesson introduces three popular specification-based (opaque-box) testing techniques
 designed to reduce the total number of test cases to a finite set,
 while still managing to cover the functional requirements.
 
@@ -357,7 +357,7 @@ The price depends on one ternary and one binary condition, resulting in six rule
 - size = {small, medium, large}
 - rewards = { points >= 100, points < 100}
 
-Even though the gold reward discount is not available for small or medium pizzas, it is still necessary to display a rule for that combination to show the outcome for testing purposes.
+The gold reward discount is not available for small or medium pizzas. However, it is important to display a rule for that combination for testing purposes to check for program errors.
 
 <table>
 <tr>
@@ -408,7 +408,7 @@ Even though the gold reward discount is not available for small or medium pizzas
 
 ## Conclusion
 
-Equivalence Partitioning, Boundary Value Analysis, and Decision Tables are common functional testing techniques for reducing the number of test cases.
+Equivalence Partitioning, Boundary Value Analysis, and Decision Tables are common specification-based testing techniques for reducing the number of test cases.
 
 Decision Table Testing is used to describe rules involving multiple input conditions.
 
@@ -416,6 +416,8 @@ Decision Table Testing is used to describe rules involving multiple input condit
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | Representative values from valid and invalid equivalence classes are used for test cases | The following are used for test cases:<br>min-1<br>min<br>min+1<br>nominal(optional)<br>max-1<br>max<br>max+1 | Test Cases cover input condition permutations that result in different actions |
 | Identifies bugs within equivalence classes                                               | Identifies bugs at the boundaries of equivalence classes                                                      | Identifies bugs for combinations of inputs                                     |
+
+Note the three techniques are not exclusive and may be used in combination.
 
 ## Resources
 

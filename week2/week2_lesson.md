@@ -4,9 +4,14 @@ The primary objective of software testing is to identify and eliminate errors in
 
 There are many software testing techniques. CMSC 115 introduces two common approaches:
 
-- **Functional Testing** techniques focus on the external behavior of a program rather than its internal code structure. Functional testing is also referred to as **opaque-box** or **specification-based** testing because it examines a program without peering into its internal structures or workings. Tests are developed based on requirements of what the program should do and what the input domain looks like. In CMSC 115, we will develop test cases that map a given set of input values to an expected output.
+- **Specification-based Testing** techniques focus on testing the functionality of a program without looking at its internal structure.
+  Tests are developed based on the requirements of what the program should do and what the input domain looks like.
+  Specification-based testing is also referred to as **opaque-box** or **functional** testing because we don't peer inside the program code.
+  In CMSC 115, we will develop test cases that map a given set of input values to an expected output.
 
-- **Structural Testing** techniques examine a program's internal structures and logic and measure how thoroughly the program is being exercised by the tests.  Structural testing is also called **clear-box** testing since the tests 
+- **Structure-based Testing** techniques examine a program's internal structures and logic and measure how thoroughly the program
+  is being exercised by the tests. Structural testing is also called **clear-box** testing since the tests
+  are mapped to specific details of the code implementation.
   In CMSC 115, we will use coverage measures based on execution paths and conditional logic.
 
 ### Example #1 - Convert Inches to Feet
@@ -175,7 +180,11 @@ The tests are re-executed, resulting in success:
 
 ## Conclusion
 
-With functional testing, tests are developed based on requirements of what the program should do, rather than specific details of how it is implemented. The week#2 programming projects will be tested using the functional testing techniques presented in this lesson. Each test case should specify:
+With specification-based testing, the test cases are developed based on requirements of what the program should do,
+rather than specific details of how it is implemented.
+
+The week#2 programming projects will be tested using the specification-based testing techniques presented in this lesson.
+Each test case will describe:
 
 - the user input
 - the expected output based on the requirements
