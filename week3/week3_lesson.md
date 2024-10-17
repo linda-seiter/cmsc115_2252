@@ -133,7 +133,18 @@ Boundary value analysis (BVA) is a type of equivalence partitioning that focuses
 
 We design the test cases to include the boundary value `b`and input values just above and below it. An offset of 1 is used if the boundary is an integer and 0.1 if it is a double.
 
-Why do we test near a boundary? Consider a minimum age requirement to determine legal adulthood: `age is at least 18` . This results in two equivalence classes based on the minimum age boundary of 18:
+<img src="images/range_boundaries.png" width=500 alt="range [min,max]">
+When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
+
+We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional). The nominal value is typically chosen as (max + min) / 2.
+
+While equivalence partitioning requires at least one value from each equivalence class, the choice of value may be arbitrary. Boundary value analysis on the other hand selects specific values:
+
+| Invalid | Valid                           | Invalid |
+| ------- | ------------------------------- | ------- |
+| min-1   | min, min+1, nominal, max-1, max | max+1   |
+
+**Example #1 (single boundary):** Consider a minimum age requirement to determine legal adulthood: `age is at least 18` . This results in two equivalence classes based on the minimum age boundary of 18:
 
 <img src="images/adult.png" alt="age boundary at 18 with nearby points 17 and 19" width = 200>
 
@@ -158,18 +169,7 @@ The test set {17, 18, 19} is effective in identifying each incorrect condition.
 | age == 18 | Minor | Adult | Minor | Fail    |
 | age < 18  | Adult | Minor | Minor | Fail    |
 
-<img src="images/range_boundaries.png" width=500 alt="range [min,max]">
-When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
-
-We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional). The nominal value is typically chosen as (max + min) / 2.
-
-While equivalence partitioning requires at least one value from each equivalence class, the choice of value may be arbitrary. Boundary value analysis on the other hand selects specific values:
-
-| Invalid | Valid                           | Invalid |
-| ------- | ------------------------------- | ------- |
-| min-1   | min, min+1, nominal, max-1, max | max+1   |
-
-**Example #1 (1 variable):** A program requires an age between 18 - 65 as input.
+**Example #2 (range for 1 variable):** A program requires an age between 18 - 65 as input.
 
 BVA test case design will select input values from the three equivalence classes as shown:
 
@@ -177,7 +177,7 @@ BVA test case design will select input values from the three equivalence classes
 | -------------------- | ---------------------------------------- | -------------------- |
 | 17                   | 18, 19, 41, 64, 65                       | 66                   |
 
-**Example #2 (2 variables):** Most people feel comfortable when the indoor humidity level is between 40 and 60 and indoor temperature is between 65 and 75. Any point that falls within the light blue rectangle in the graph below represents a comfortable indoor condition. We'll use BVA techniques to reduce the number of points used for testing.
+**Example #3 (range for 2 variables):** Most people feel comfortable when the indoor humidity level is between 40 and 60 and indoor temperature is between 65 and 75. Any point that falls within the light blue rectangle in the graph below represents a comfortable indoor condition. We'll use BVA techniques to reduce the number of points used for testing.
 
 ![comfortable indoor conditions](images/comfyindoors.png)
 
@@ -223,14 +223,199 @@ Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases.
 
 ## Decision Table
 
+**Decision Table Testing** is a technique in which tests are designed to execute combinations of input conditions listed in a decision table. A **decision table**, also called a cause-effect table, specifies the actions to perform for a given set of input conditions.
+
+**Example #1:** A hotel charges $115 per night for a room with a king bed and $125 per night for a room with 2 queen beds. Patrons aged 65 and over are eligible for a 10% discount.
+
+The room price thus depends on two binary conditions:
+
+- room = {king, queen}
+- senior = {age >= 65, age < 65}
+
+A decision table to determine price based on the conditions is shown below. The rule columns are based on the four possible combinations of room type and senior status.
+
+<table>
+<tr>
+<th></th>
+<th>Rule 1</th>
+<th>Rule 2</th>
+<th>Rule 3</th>
+<th>Rule 4</th>
+</tr>
+<tr>
+<td>CONDITIONS</td>
+<td colspan="4"></td>
+</tr>
+<tr>
+<td>room</td>
+<td>king</td>
+<td>king</td>
+<td>queen</td>
+<td>queen</td>
+</tr>
+<tr>
+<td>senior</td>
+<td>age &gt;= 65</td>
+<td>age &lt; 65</td>
+<td>age &gt;= 65</td>
+<td>age &lt; 65</td>
+</tr>
+<tr>
+<td>ACTIONS</td>
+<td colspan="4"></td>
+</tr>
+<tr>
+<td>price</td>
+<td>115 * 0.9</td>
+<td>115</td>
+<td>125 * 0.9</td>
+<td>125</td>
+</tr>
+</table>
+
+Decision table testing requires at least one test case per rule.
+
+**Example #2:** The hotel from example #1 decides to add a $25 fee for weekend stays (check-in on Friday-Sunday). Assume Monday is coded as day 1 and Sunday is day 7.
+
+The price now depends on three binary conditions, doubling the number of rules in the decision table.
+
+- room = {king, queen}
+- senior = {age >= 65, age < 65}
+- weekend = {day >= 5, day < 5}
+
+<table>
+<tr>
+<th></th>
+<th>Rule 1</th>
+<th>Rule 2</th>
+<th>Rule 3</th>
+<th>Rule 4</th>
+<th>Rule 5</th>
+<th>Rule 6</th>
+<th>Rule 7</th>
+<th>Rule 8</th>
+</tr>
+<tr>
+<td>CONDITIONS</td>
+<td colspan="8"></td>
+</tr>
+<tr>
+<td>room</td>
+<td>king</td>
+<td>king</td>
+<td>queen</td>
+<td>queen</td>
+<td>king</td>
+<td>king</td>
+<td>queen</td>
+<td>queen</td>
+</tr>
+<tr>
+<td>senior</td>
+<td>age &gt;= 65</td>
+<td>age &lt; 65</td>
+<td>age &gt;= 65</td>
+<td>age &lt; 65</td>
+<td>age &gt;= 65</td>
+<td>age &lt; 65</td>
+<td>age &gt;= 65</td>
+<td>age &lt; 65</td>
+</tr>
+<tr>
+<tr>
+<td>weekend</td>
+<td>day &lt; 5</td>
+<td>day &lt; 5</td>
+<td>day &lt; 5</td>
+<td>day &lt; 5</td>
+<td>day &gt;= 5</td>
+<td>day &gt;= 5</td>
+<td>day &gt;= 5</td>
+<td>day &gt;= 5</td>
+</tr>
+<tr>
+<td>ACTIONS</td>
+<td colspan="8"></td>
+</tr>
+<tr>
+<td>price</td>
+<td>115 * 0.9</td>
+<td>115</td>
+<td>125 * 0.9</td>
+<td>125</td>
+<td>(115 + 25)  * 0.9</td>
+<td>115 + 25</td>
+<td>(125 + 25) * 0.9</td>
+<td>125 + 25</td>
+</tr>
+</table>
+
+**Example #3:** The cost of a pizza depends on the size (small=8.99, medium=12.99, large=16.99). Customers with gold reward status (points >= 100) get a 1.50 discount on a large pizza
+
+The price depends on one ternary and one binary condition, resulting in six rules.
+
+- size = {small, medium, large}
+- rewards = { points >= 100, points < 100}
+
+Even though the gold reward discount is not available for small or medium pizzas, it is still necessary to display a rule for that combination to show the outcome for testing purposes.
+
+<table>
+<tr>
+<th></th>
+<th>Rule 1</th>
+<th>Rule 2</th>
+<th>Rule 3</th>
+<th>Rule 4</th>
+<th>Rule 5</th>
+<th>Rule 6</th>
+
+</tr>
+<tr>
+<td>CONDITIONS</td>
+<td colspan="6"></td>
+</tr>
+<tr>
+<td>small</td>
+<td>medium</td>
+<td>large</td>
+<td>small</td>
+<td>medium</td>
+<td>large</td>
+</tr>
+<tr>
+<td>reward points</td>
+<td> points &lt; 100</td>
+<td>points &lt; 100</td>
+<td>points &lt; 100</td>
+<td>points &gt;= 100</td>
+<td>points &gt;= 100</td>
+<td>points &gt;= 100</td>
+</tr>
+<tr>
+<td>ACTIONS</td>
+<td colspan="6"></td>
+</tr>
+<tr>
+<td>price</td>
+<td>8.99</td>
+<td>12.99</td>
+<td>16.99</td>
+<td>8.99</td>
+<td>12.99</td>
+<td>16.99 - 1.50</td>
+</tr>
+</table>
+
 ## Conclusion
 
-Equivalence Partitioning and Boundary Value Analysis are two common functional testing techniques for reducing the number of test cases.
+Equivalence Partitioning, Boundary Value Analysis, and Decision Tables are common functional testing techniques for reducing the number of test cases.
 
-| Equivalence Partitioning                                                                 | Boundary Value Analysis                                                                                       |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Representative values from valid and invalid equivalence classes are used for test cases | The following are used for test cases:<br>min-1<br>min<br>min+1<br>nominal(optional)<br>max-1<br>max<br>max+1 |
-| Identifies bugs within equivalence classes                                               | Identifies bugs at the boundaries of equivalence classes                                                      |
+Decision Table Testing is used to describe rules involving multiple input conditions.
+
+| Equivalence Partitioning                                                                 | Boundary Value Analysis                                                                                       | Decision Table Testing                                                         |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Representative values from valid and invalid equivalence classes are used for test cases | The following are used for test cases:<br>min-1<br>min<br>min+1<br>nominal(optional)<br>max-1<br>max<br>max+1 | Test Cases cover input condition permutations that result in different actions |
+| Identifies bugs within equivalence classes                                               | Identifies bugs at the boundaries of equivalence classes                                                      | Identifies bugs for combinations of inputs                                     |
 
 ## Resources
 
