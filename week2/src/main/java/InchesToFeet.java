@@ -9,7 +9,7 @@ public class InchesToFeet {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter inches: ");
         int inches = input.nextInt();
-        double feet = inches / 12;
+        double feet = inches / 12; // ERROR: integer division
         System.out.println(inches + " inches = " + feet + " feet");
     }
 }

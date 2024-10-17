@@ -4,15 +4,13 @@ The primary objective of software testing is to identify and eliminate errors in
 
 There are many software testing techniques. CMSC 115 introduces two common approaches:
 
-- **Specification-based Testing** techniques focus on testing the functionality of a program without looking at its internal structure.
+- **Specification-Based Testing (opaque-box)** focuses on testing the functionality of a program without looking at its internal structure.
   Tests are developed based on the requirements of what the program should do and what the input domain looks like.
-  Specification-based testing is also referred to as **opaque-box** or **functional** testing because we don't peer inside the program code.
   In CMSC 115, we will develop test cases that map a given set of input values to an expected output.
 
-- **Structure-based Testing** techniques examine a program's internal structures and logic and measure how thoroughly the program
-  is being exercised by the tests. Structural testing is also called **clear-box** testing since the tests
-  are mapped to specific details of the code implementation.
-  In CMSC 115, we will use coverage measures based on execution paths and conditional logic.
+- **Structure-Based Testing (clear-box)** examines a program's internal structures and logic to measure
+  how thoroughly the program is being exercised by the tests.
+  In CMSC 115, we will use test coverage measures based on execution paths and conditional logic.
 
 ### Example #1 - Convert Inches to Feet
 
@@ -46,7 +44,7 @@ public class InchesToFeet {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter inches: ");
         int inches = input.nextInt();
-        double feet = inches / 12;
+        double feet = inches / 12; //ERROR: integer division
         System.out.println(inches + " inches = " + feet + " feet");
     }
 }
@@ -114,7 +112,7 @@ public class YearsToMinutes {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the number of years: ");
         int years = input.nextInt();
-        int minutes = years * 365 * 24 * 60;
+        int minutes = years * 365 * 24 * 60; // ERROR: Overflow
         System.out.println(minutes + " minutes");
     }
 }

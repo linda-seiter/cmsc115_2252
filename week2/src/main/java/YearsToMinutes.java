@@ -9,7 +9,7 @@ public class YearsToMinutes {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the number of years: ");
         int years = input.nextInt();
-        int minutes = years * 365 * 24 * 60;
+        int minutes = years * 365 * 24 * 60; // ERROR: Overflow
         System.out.println(minutes + " minutes");
     }
 }
