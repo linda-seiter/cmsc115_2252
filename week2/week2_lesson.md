@@ -6,11 +6,11 @@ There are many software testing techniques. CMSC 115 introduces two common appro
 
 - **Specification-Based Testing (opaque-box)** focuses on testing the functionality of a program without looking at its internal structure.
   Tests are developed based on the requirements of what the program should do and what the input domain looks like.
-  In CMSC 115, we will develop test cases that map a given set of input values to an expected output.
 
 - **Structure-Based Testing (clear-box)** examines a program's internal structures and logic to measure
   how thoroughly the program is being exercised by the tests.
-  In CMSC 115, we will use test coverage measures based on execution paths and conditional logic.
+
+  In week 2, we will use basic specification-based techniques to develop test cases that map program inputs to expected output.
 
 ### Example #1 - Convert Inches to Feet
 

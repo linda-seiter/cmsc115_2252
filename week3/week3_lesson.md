@@ -1,13 +1,11 @@
 ## Week 3 - Equivalence Partitioning, Boundary Value Analysis, Decision Table Testing
 
-Suppose a program reads in an integer and prints whether it is negative,
-neutral, or positive. It is not feasible to test the program with every
-possible integer value, so a subset of integers must be selected for testing.
-How do we pick a set of input values that might be effective in finding bugs?
+It is not feasible to test a program with every
+possible input value, so a subset of values must be selected.
 
 This lesson introduces three popular specification-based (opaque-box) testing techniques
-designed to reduce the total number of test cases to a finite set,
-while still managing to cover the functional requirements.
+designed to reduce the total number of test cases to a finite set
+while striving to cover the functional requirements.
 
 - Equivalence Class Partitioning (ECP)
 - Boundary Value Analysis (BVA)
@@ -18,7 +16,8 @@ You'll use these techniques to develop test cases for the week 3 programming pro
 ### Equivalence Partitioning
 
 **Equivalence Partitioning**, also called **Equivalence Class Partitioning (ECP)**,
-divides the input domain into equivalence classes based on the similarity of input values. Each value within an equivalence class should display the same output behavior as all other values in that class.
+divides the input domain into equivalence classes, also called partitions, based on the similarity of input values.
+Each value in an equivalence class should display the same program output behavior as all other values in that class.
 
 The assumption is that for any single value _v_ in the equivalence class:
 
@@ -27,7 +26,7 @@ The assumption is that for any single value _v_ in the equivalence class:
 
 Test cases are written to ensure each equivalence class is covered at least once.
 
-**Example #1:** A program determines whether input is a valid gpa between 0.0 and 4.0.
+**Example #1:** A program determines whether a numeric input is a valid gpa between 0.0 and 4.0.
 
 There are three equivalence classes/partitions:
 
@@ -37,11 +36,11 @@ There are three equivalence classes/partitions:
 
 Each equivalence class should be covered by at least one test case. For example:
 
-| Test | Expected I/O             | Actual I/O | Status | Equivalence<br>Class |
-| ---- | ------------------------ | ---------- | ------ | -------------------- |
-| 1    | gpa: **-1.0**<br>Invalid |            |        | <0.0                 |
-| 2    | gpa: **2.5**<br>Valid    |            |        | 0.0 - 4.0            |
-| 3    | gpa: **5.7**<br>Invalid  |            |        | >4.0                 |
+| Test | Expected I/O                   | Actual I/O | Status | Equivalence<br>Class |
+| ---- | ------------------------------ | ---------- | ------ | -------------------- |
+| 1    | Enter gpa: **-1.0**<br>Invalid |            |        | <0.0                 |
+| 2    | Enter gpa: **2.5**<br>Valid    |            |        | 0.0 - 4.0            |
+| 3    | Enter gpa: **5.7**<br>Invalid  |            |        | >4.0                 |
 
 **Example #2:** A program determines whether a number represents a 6 digit product code.
 
@@ -51,13 +50,13 @@ There are three equivalence classes:
 | --------- | ------------------ | --------- |
 | <6 digits | 6 digits           | >6 digits |
 
-ECP requires a minimum of one test per equivalence class. For example:
+Again, a minimum of one test per equivalence class is require. For example:
 
-| Test | Expected I/O                    | Actual I/O | Status | Equivalence<br>Class |
-| ---- | ------------------------------- | ---------- | ------ | -------------------- |
-| 1    | product: **4321**<br>Invalid    |            |        | <6 digits            |
-| 2    | product: **555442**<br>Valid    |            |        | 6 digits             |
-| 3    | product: **1234567**<br>Invalid |            |        | >6 digits            |
+| Test | Expected I/O                          | Actual I/O | Status | Equivalence<br>Class |
+| ---- | ------------------------------------- | ---------- | ------ | -------------------- |
+| 1    | Enter product: **4321**<br>Invalid    |            |        | <6 digits            |
+| 2    | Enter product: **555442**<br>Valid    |            |        | 6 digits             |
+| 3    | Enter product: **1234567**<br>Invalid |            |        | >6 digits            |
 
 **Example #3:** A program determines if an age represents a legal adult (i.e. at least 18).
 
@@ -69,14 +68,14 @@ There are two equivalence classes:
 
 A minimum of one test per equivalence class is needed. For example:
 
-| Test | Expected I/O               | Actual I/O | Status | Equivalence<br>Class |
-| ---- | -------------------------- | ---------- | ------ | -------------------- |
-| 1    | age: **10**<br>Underage    |            |        | < 18>                |
-| 2    | age: **32**<br>Legal Adult |            |        | >= 18                |
+| Test | Expected I/O                     | Actual I/O | Status | Equivalence<br>Class |
+| ---- | -------------------------------- | ---------- | ------ | -------------------- |
+| 1    | Enter age: **10**<br>Underage    |            |        | < 18                 |
+| 2    | Enter age: **32**<br>Legal Adult |            |        | >= 18                |
 
 **Example #4:** Write a program to read in a numeric score between 0 and 100 and print the corresponding letter grade.
 
-Let's assume standard letter assignment. Given that a score range of 0 to 100 is specified, we divide the test cases into seven equivalence classes to cover the five valid and two invalid input ranges.
+Let's assume a standard letter assignment of grades. A score range of 0 to 100 is specified, thus we divide the test cases into seven equivalence classes to cover the five valid and two invalid input ranges.
 
 | Invalid | F    | D     | C     | B     | A      | Invalid |
 | ------- | ---- | ----- | ----- | ----- | ------ | ------- |
@@ -131,12 +130,16 @@ Boundary value analysis (BVA) is a type of equivalence partitioning that focuses
 
 <img src="images/boundary.png" alt="single boundary with nearby points" width = 200>
 
-We design the test cases to include the boundary value `b`and input values just above and below it. An offset of 1 is used if the boundary is an integer and 0.1 if it is a double.
+We design the test cases to include the boundary value `b`and input values just above and below it.
+
+- An offset of **1** is used if the boundary is an integer and **0.1** if the boundary is a double.
 
 <img src="images/range_boundaries.png" width=500 alt="range [min,max]">
 When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
 
-We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional). The nominal value is typically chosen as (max + min) / 2.
+We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional).
+
+- The optional nominal value is usually computed as (max + min) / 2.
 
 While equivalence partitioning requires at least one value from each equivalence class, the choice of value may be arbitrary. Boundary value analysis on the other hand selects specific values:
 
@@ -148,7 +151,7 @@ While equivalence partitioning requires at least one value from each equivalence
 
 <img src="images/adult.png" alt="age boundary at 18 with nearby points 17 and 19" width = 200>
 
-BVA picks ages 17, 18, and 19 for testing. The test cases with expected output are shown below:
+BVA picks ages 17, 18, and 19 for testing:
 
 | Test | Expected I/O         | Actual I/O | Status | min = 18 |
 | ---- | -------------------- | ---------- | ------ | -------- |
@@ -156,18 +159,18 @@ BVA picks ages 17, 18, and 19 for testing. The test cases with expected output a
 | 2    | Age: **18**<br>Adult |            |        | min      |
 | 23   | Age: **19**<br>Adult |            |        | min + 1  |
 
-The table below show various correct and incorrect ways the
-condition for legal adulthood might be written in the Java program. Assume "Adult" is printed when the condition is true, otherwise "Minor" is printed.
-The test set {17, 18, 19} is effective in identifying each incorrect condition.
+The table below show several correct and incorrect ways the
+condition might be written. "Adult" is printed if the condition is true, otherwise "Minor" is printed.
+The test set {17, 18, 19} is effective in identifying the incorrect conditions.
 
-| Condition | 17    | 18    | 19    | Comment |
-| --------- | ----- | ----- | ----- | ------- |
-| age > 17  | Minor | Adult | Adult | Pass    |
-| age >= 18 | Minor | Adult | Adult | Pass    |
-| age >= 17 | Adult | Adult | Adult | Fail    |
-| age > 18  | Minor | Minor | Adult | Fail    |
-| age == 18 | Minor | Adult | Minor | Fail    |
-| age < 18  | Adult | Minor | Minor | Fail    |
+| Condition | 17    | 18    | 19    | Comment   |
+| --------- | ----- | ----- | ----- | --------- |
+| age > 17  | Minor | Adult | Adult | Correct   |
+| age >= 18 | Minor | Adult | Adult | Correct   |
+| age >= 17 | Adult | Adult | Adult | Incorrect |
+| age > 18  | Minor | Minor | Adult | Incorrect |
+| age == 18 | Minor | Adult | Minor | Incorrect |
+| age < 18  | Adult | Minor | Minor | Incorrect |
 
 **Example #2 (range for 1 variable):** A program requires an age between 18 - 65 as input.
 
@@ -177,7 +180,7 @@ BVA test case design will select input values from the three equivalence classes
 | -------------------- | ---------------------------------------- | -------------------- |
 | 17                   | 18, 19, 41, 64, 65                       | 66                   |
 
-**Example #3 (range for 2 variables):** Most people feel comfortable when the indoor humidity level is between 40 and 60 and indoor temperature is between 65 and 75. Any point that falls within the light blue rectangle in the graph below represents a comfortable indoor condition. We'll use BVA techniques to reduce the number of points used for testing.
+**Example #3 (range for 2 variables):** Most people feel comfortable indoors when the humidity level is between 40 and 60 and temperature is between 65 and 75. Any point that falls within the light blue rectangle in the graph below represents a comfortable indoor condition. We'll use BVA techniques to reduce the number of points used for testing.
 
 ![comfortable indoor conditions](images/comfyindoors.png)
 
@@ -193,17 +196,24 @@ BVA for the range [65, 75] determines 7 **temperature** input values:
 | ---------------------- | ------------------------------------------------------ | ---------------------- |
 | 64                     | 65, 66, 70, 74, 75                                     | 76                     |
 
-Is it necessary to test every combination of the 7 humidity and 7 temperature values? The answer is no if we make a **single fault assumption**, which states that failures are only rarely the result of the simultaneous occurrence of two (or more) faults. This means we can create test cases that combine each of the 7 humidity levels with the nominal temperature, and each of the 7 temperatures with the nominal humidity. Two test cases represent the same input (nominal humidity, nominal temperature), thus we need only 13 test cases.
+Is it necessary to test every combination of the 7 humidity and 7 temperature values?
+Thankfully, the answer is no if we make a **single fault assumption**, which states that
+failures are only rarely the result of the simultaneous occurrence of two (or more) faults.
+This means we can create test cases that combine each of the 7 humidity levels with the
+nominal temperature, and each of the 7 temperatures with the nominal humidity.
+Two test cases represent the same input (nominal humidity, nominal temperature), thus we need only 13 test cases.
 
-In general, N variables require 6N + 1 test cases for VBA.
+In general, N variables require 6N + 1 test cases for VBA:
 
 - 4N+1 cases on or within the boundaries.
 - 2N cases just outside a boundary.
 
-Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases.
+Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases:
 
 - 9 test cases for points inside the rectangle (black, blue, yellow dots)
 - 4 test cases for points outside the rectangle (red dots).
+
+Given the two ranges for variables humidity and temperature, we create 13 test cases as shown:
 
 | Test | Expected I/O                                         | Actual I/O | Status | (humidity, temperature)    |
 | ---- | ---------------------------------------------------- | ---------- | ------ | -------------------------- |
@@ -223,16 +233,23 @@ Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases.
 
 ## Decision Table
 
-**Decision Table Testing** is a technique in which tests are designed to execute combinations of input conditions listed in a decision table. A **decision table**, also called a cause-effect table, specifies the actions to perform for a given set of input conditions.
+**Decision Table Testing** is a technique to evaluate program behavior based on various combinations of inputs and their corresponding actions.
+It is particularly useful for testing scenarios where multiple conditions affect the outcome.
+A **decision table**, also called a cause-effect table, specifies the actions to perform for a given set of input conditions.
 
-**Example #1:** A hotel charges $115 per night for a room with a king bed and $125 per night for a room with 2 queen beds. Patrons aged 65 and over are eligible for a 10% discount.
+Decision Table Structure:
 
-The room price thus depends on two binary conditions:
+- Conditions: The different inputs that influence the outcome. A condition can have two or more values (true/false, yes/no/maybe, etc.).
+- Actions: The outputs that the system should produce based on the combination of condition values.
+- Rules: A unique combination of condition values and the corresponding action.
 
-- room = {king, queen}
-- senior = {age >= 65, age < 65}
+**Example #1:** The monthly cost for a subscription service is based on two binary conditions:
 
-A decision table to determine price based on the conditions is shown below. The rule columns are based on the four possible combinations of room type and senior status.
+- basic (B) or premium (P) plan
+- annual (A) or monthly (M) commitment
+
+The decision table below contains one rule per unique combination of subscription plan and commitment.
+Each rule defines the monthly cost for that particular combination of input values.
 
 <table>
 <tr>
@@ -247,41 +264,41 @@ A decision table to determine price based on the conditions is shown below. The 
 <td colspan="4"></td>
 </tr>
 <tr>
-<td>room</td>
-<td>king</td>
-<td>king</td>
-<td>queen</td>
-<td>queen</td>
+<td>Basic (B) or Premium (P) Plan</td>
+<td>B</td>
+<td>B</td>
+<td>P</td>
+<td>P</td>
 </tr>
 <tr>
-<td>senior</td>
-<td>age &gt;= 65</td>
-<td>age &lt; 65</td>
-<td>age &gt;= 65</td>
-<td>age &lt; 65</td>
+<td>Annual (A) or Monthly (M) Commitment</td>
+<td>A</td>
+<td>M</td>
+<td>A</td>
+<td>M</td>
 </tr>
 <tr>
 <td>ACTIONS</td>
 <td colspan="4"></td>
 </tr>
 <tr>
-<td>price</td>
-<td>115 * 0.9</td>
-<td>115</td>
-<td>125 * 0.9</td>
-<td>125</td>
+<td>Monthly Cost</td>
+<td>10</td>
+<td>15</td>
+<td>30</td>
+<td>35</td>
 </tr>
 </table>
 
-Decision table testing requires at least one test case per rule.
+Typically a test case is created for each rule.
 
-**Example #2:** The hotel from example #1 decides to add a $25 fee for weekend stays (check-in on Friday-Sunday). Assume Monday is coded as day 1 and Sunday is day 7.
+**Example #2:** The subscription service adds another condition, a $5 loyalty discount for monthly plans based on length of service.
 
-The price now depends on three binary conditions, doubling the number of rules in the decision table.
+The monthly cost now depends on three binary conditions, doubling the number of rules in the decision table.
 
-- room = {king, queen}
-- senior = {age >= 65, age < 65}
-- weekend = {day >= 5, day < 5}
+- basic (B) or premium (P) plan
+- annual (A) or monthly (M) commitment
+- loyalty discount (L) or no discount (N)
 
 <table>
 <tr>
@@ -300,64 +317,58 @@ The price now depends on three binary conditions, doubling the number of rules i
 <td colspan="8"></td>
 </tr>
 <tr>
-<td>room</td>
-<td>king</td>
-<td>king</td>
-<td>queen</td>
-<td>queen</td>
-<td>king</td>
-<td>king</td>
-<td>queen</td>
-<td>queen</td>
+<td>Basic (B) or Premium (P) Plan</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>P</td>
+<td>P</td>
+<td>P</td>
+<td>P</td>
 </tr>
 <tr>
-<td>senior</td>
-<td>age &gt;= 65</td>
-<td>age &lt; 65</td>
-<td>age &gt;= 65</td>
-<td>age &lt; 65</td>
-<td>age &gt;= 65</td>
-<td>age &lt; 65</td>
-<td>age &gt;= 65</td>
-<td>age &lt; 65</td>
+<td>Annual (A) or Monthly (M) Commitment</td>
+<td>A</td>
+<td>A</td>
+<td>M</td>
+<td>M</td>
+<td>A</td>
+<td>A</td>
+<td>M</td>
+<td>M</td>
 </tr>
 <tr>
-<tr>
-<td>weekend</td>
-<td>day &lt; 5</td>
-<td>day &lt; 5</td>
-<td>day &lt; 5</td>
-<td>day &lt; 5</td>
-<td>day &gt;= 5</td>
-<td>day &gt;= 5</td>
-<td>day &gt;= 5</td>
-<td>day &gt;= 5</td>
+<td>Loyalty Discount (L) or No Discount (N)</td>
+<td>L</td>
+<td>N</td>
+<td>L</td>
+<td>N</td>
+<td>L</td>
+<td>N</td>
+<td>L</td>
+<td>N</td>
 </tr>
 <tr>
 <td>ACTIONS</td>
 <td colspan="8"></td>
 </tr>
 <tr>
-<td>price</td>
-<td>115 * 0.9</td>
-<td>115</td>
-<td>125 * 0.9</td>
-<td>125</td>
-<td>(115 + 25)  * 0.9</td>
-<td>115 + 25</td>
-<td>(125 + 25) * 0.9</td>
-<td>125 + 25</td>
+<td>Monthly Cost</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>15</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+<td>35</td>
 </tr>
 </table>
 
-**Example #3:** The cost of a pizza depends on the size (small=8.99, medium=12.99, large=16.99). Customers with gold reward status (points >= 100) get a 1.50 discount on a large pizza
-
-The price depends on one ternary and one binary condition, resulting in six rules.
-
-- size = {small, medium, large}
-- rewards = { points >= 100, points < 100}
-
-The gold reward discount is not available for small or medium pizzas. However, it is important to display a rule for that combination for testing purposes to check for program errors.
+However, notice that the loyalty discount does not affect the cost for annual subscriptions, just monthly subscriptions.
+Thus, we can merge rules 1&2 and rules 5&6 and use a dash `-` to denote "don't care" for the loyalty value for those rules.
+The resulting table has 6 rules:
 
 <table>
 <tr>
@@ -368,43 +379,107 @@ The gold reward discount is not available for small or medium pizzas. However, i
 <th>Rule 4</th>
 <th>Rule 5</th>
 <th>Rule 6</th>
-
 </tr>
 <tr>
 <td>CONDITIONS</td>
 <td colspan="6"></td>
 </tr>
 <tr>
-<td>small</td>
-<td>medium</td>
-<td>large</td>
-<td>small</td>
-<td>medium</td>
-<td>large</td>
+<td>Basic (B) or Premium (P) Plan</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>P</td>
+<td>P</td>
+<td>P</td>
 </tr>
 <tr>
-<td>reward points</td>
-<td> points &lt; 100</td>
-<td>points &lt; 100</td>
-<td>points &lt; 100</td>
-<td>points &gt;= 100</td>
-<td>points &gt;= 100</td>
-<td>points &gt;= 100</td>
+<td>Annual (A) or Monthly (M) Commitment</td>
+<td>A</td>
+<td>M</td>
+<td>M</td>
+<td>A</td>
+<td>M</td>
+<td>M</td>
+</tr>
+<tr>
+<td>Loyalty Discount (L) or No Discount (N)</td>
+<td>-</td>
+<td>L</td>
+<td>N</td>
+<td>-</td>
+<td>L</td>
+<td>N</td>
 </tr>
 <tr>
 <td>ACTIONS</td>
 <td colspan="6"></td>
 </tr>
 <tr>
+<td>Monthly Cost</td>
+<td>10</td>
+<td>10</td>
+<td>15</td>
+<td>30</td>
+<td>30</td>
+<td>35</td>
+</tr>
+</table>
+
+**Example #3:** The base cost of a pizza is determined by the size (small=8.99, medium=12.99, large=16.99).
+A large pizza is discounted by $1.50 for customers having at least 100 reward points.
+
+There are two input conditions that determine the price:
+
+- size {small, medium, large}
+- points >= 100 { true, false}
+
+There are six possible combinations for the two conditions. However, we can reduce the number of rules to just four
+since the rewards discount only applies to large pizzas.
+
+<table>
+<tr>
+<th></th>
+<th>Rule 1</th>
+<th>Rule 2</th>
+<th>Rule 3</th>
+<th>Rule 4</th>
+</tr>
+<tr>
+<td>CONDITIONS</td>
+<td colspan="4"></td>
+</tr>
+<tr>
+<td>size</thd>
+<td>small</td>
+<td>medium</td>
+<td>large</td>
+<td>large</td>
+</tr>
+<tr>
+<td>points &gt;= 100</td>
+<td>-</td>
+<td>-</td>
+<td>true</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ACTIONS</td>
+<td colspan="4"></td>
+</tr>
+<tr>
 <td>price</td>
 <td>8.99</td>
 <td>12.99</td>
+<td>15.49</td>
 <td>16.99</td>
-<td>8.99</td>
-<td>12.99</td>
-<td>16.99 - 1.50</td>
 </tr>
 </table>
+
+To summarize, the decision table rules can be reduced by merging columns:
+
+- Combine columns where certain conditions do not affect the outcome.
+- Use “-” to denote that a condition’s value does not affect the outcome.
 
 ## Conclusion
 
