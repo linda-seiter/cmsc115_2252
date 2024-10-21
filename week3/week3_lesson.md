@@ -4,7 +4,7 @@ It is not feasible to test a program with every
 possible input value, so a subset of values must be selected.
 
 This lesson introduces three popular specification-based (opaque-box) testing techniques
-designed to reduce the total number of test cases to a finite set
+designed to reduce the total number of test cases to a finite set,
 while striving to cover the functional requirements.
 
 - Equivalence Class Partitioning (ECP)
@@ -13,10 +13,10 @@ while striving to cover the functional requirements.
 
 You'll use these techniques to develop test cases for the week 3 programming projects.
 
-### Equivalence Partitioning
+### Equivalence Class Partitioning
 
-**Equivalence Partitioning**, also called **Equivalence Class Partitioning (ECP)**,
-divides the input domain into equivalence classes, also called partitions, based on the similarity of input values.
+**Equivalence Class Partitioning (ECP)**
+divides the input domain into equivalence classes (also called partitions) based on the similarity of input values.
 Each value in an equivalence class should display the same program output behavior as all other values in that class.
 
 The assumption is that for any single value _v_ in the equivalence class:
@@ -26,9 +26,61 @@ The assumption is that for any single value _v_ in the equivalence class:
 
 Test cases are written to ensure each equivalence class is covered at least once.
 
-**Example #1:** A program determines whether a numeric input is a valid gpa between 0.0 and 4.0.
+**Example #1:** A bank charges a $2 per transaction fee. The first 5 transactions are free.
 
-There are three equivalence classes/partitions:
+This problem partitions input values based on a transaction limit of `5`. The value `5` represents a boundary between inputs that result in no fee and those that result in a fee. Thus, there are two equivalence classes:
+
+| no fee            | fee              |
+| ----------------- | ---------------- |
+| transactions <= 5 | transactions > 5 |
+
+Each equivalence class should be covered by at least one test case. For example:
+
+| Test | Expected I/O                     | Actual I/O | Status | Equivalence<br>Class |
+| ---- | -------------------------------- | ---------- | ------ | -------------------- |
+| 1    | Transactions: <b>3</b><br>Fee $0 |            |        | <= 5                 |
+| 2    | Transactions: <b>9</b><br>Fee $8 |            |        | >5                   |
+
+The program `BuggyFee` has an error in calculating the fee when transactions exceed the limit of 5:
+
+```java
+import java.util.Scanner;
+
+public class BuggyFee {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Transactions: ");
+        int transactions = input.nextInt();
+
+        int fee = 0; // 1st 5 transactions are free
+
+        // $2 per transaction above the limit of 5
+        if (transactions > 5)
+            fee = transactions * 2; // ERROR
+        System.out.println(fee);
+    }
+}
+```
+
+We will execute `BuggyFee` for each test case as shown in the table below.
+
+| Test | Expected I/O                     | Actual I/O                        | Status | Equivalence<br>Class |
+| ---- | -------------------------------- | --------------------------------- | ------ | -------------------- |
+| 1    | Transactions: <b>3</b><br>Fee $0 | Transactions: <b>3</b><br>Fee $0  | Pass   | <= 5                 |
+| 2    | Transactions: <b>9</b><br>Fee $8 | Transactions: <b>9</b><br>Fee $18 | Fail   | >5                   |
+
+Test #2 fails, indicating an error exists in `BuggyFee` for input values
+that fall into the `>5` equivalence class.
+
+The correct calculation for the fee should be:
+
+```java
+fee = (transactions - 5) * 2;
+```
+
+**Example #2:** A valid gpa falls within the range of values 0.0 and 4.0.
+
+There are three equivalence classes/partitions based on the range 0.0 - 4.0 of valid values, where 0.0 represents the minimum valid value and 4.0 represents the maximum valid value:
 
 | Invalid | Valid gpa | Invalid |
 | ------- | --------- | ------- |
@@ -36,46 +88,50 @@ There are three equivalence classes/partitions:
 
 Each equivalence class should be covered by at least one test case. For example:
 
-| Test | Expected I/O                   | Actual I/O | Status | Equivalence<br>Class |
-| ---- | ------------------------------ | ---------- | ------ | -------------------- |
-| 1    | Enter gpa: **-1.0**<br>Invalid |            |        | <0.0                 |
-| 2    | Enter gpa: **2.5**<br>Valid    |            |        | 0.0 - 4.0            |
-| 3    | Enter gpa: **5.7**<br>Invalid  |            |        | >4.0                 |
+| Test | Expected I/O                           | Actual I/O | Status | Equivalence<br>Class |
+| ---- | -------------------------------------- | ---------- | ------ | -------------------- |
+| 1    | Enter gpa: **-1.0**<br>-1.0 is invalid |            |        | <0.0                 |
+| 2    | Enter gpa: **2.5**<br>2.5 is valid     |            |        | 0.0 - 4.0            |
+| 3    | Enter gpa: **5.7**<br>5.7 is valid     |            |        | >4.0                 |
 
-**Example #2:** A program determines whether a number represents a 6 digit product code.
+Let's test the `BuggyGPA` class using the three test cases.
 
-There are three equivalence classes:
+```java
+import java.util.Scanner;
 
-| Invalid   | Valid product code | Invalid   |
-| --------- | ------------------ | --------- |
-| <6 digits | 6 digits           | >6 digits |
+public class BuggyGPA {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("gpa: ");
+        double gpa = input.nextDouble();
 
-Again, a minimum of one test per equivalence class is require. For example:
+        // ERROR: Missing test for minimum value 0.0
+        if (gpa <= 4.0) {
+            System.out.println(gpa + " is valid");
+        } else {
+            System.out.println(gpa + " is invalid");
+        }
+    }
+}
+```
 
-| Test | Expected I/O                          | Actual I/O | Status | Equivalence<br>Class |
-| ---- | ------------------------------------- | ---------- | ------ | -------------------- |
-| 1    | Enter product: **4321**<br>Invalid    |            |        | <6 digits            |
-| 2    | Enter product: **555442**<br>Valid    |            |        | 6 digits             |
-| 3    | Enter product: **1234567**<br>Invalid |            |        | >6 digits            |
+Test #1 fails to identify the negative number -1.0 as invalid.
 
-**Example #3:** A program determines if an age represents a legal adult (i.e. at least 18).
+| Test | Expected I/O                           | Actual I/O                           | Status | Equivalence<br>Class |
+| ---- | -------------------------------------- | ------------------------------------ | ------ | -------------------- |
+| 1    | Enter gpa: **-1.0**<br>-1.0 is invalid | Enter gpa: **-1.0**<br>-1.0 is valid | Fail   | <0.0                 |
+| 2    | Enter gpa: **2.5**<br>2.5 is valid     | Enter gpa: **2.5**<br>2.5 is valid   | Pass   | 0.0 - 4.0            |
+| 3    | Enter gpa: **5.7**<br>5.7 is valid     | Enter gpa: **5.7**<br>5.7 is valid   | Pass   | >4.0                 |
 
-There are two equivalence classes:
+The condition should be adjusted to compare the user input against both the range minimum of 0.0 and range maximum of 4.0:
 
-| Underage | Legal Adult |
-| -------- | ----------- |
-| < 18     | >= 18       |
+```java
+if (gpa >= 0.0 && gpa <= 4.0)
+```
 
-A minimum of one test per equivalence class is needed. For example:
+**Example #3:** A numeric score between 0 and 100 is mapped with a corresponding letter grade (F = 0..59, D=60-69, C = 70-79, B = 80-89, A=90-100).
 
-| Test | Expected I/O                     | Actual I/O | Status | Equivalence<br>Class |
-| ---- | -------------------------------- | ---------- | ------ | -------------------- |
-| 1    | Enter age: **10**<br>Underage    |            |        | < 18                 |
-| 2    | Enter age: **32**<br>Legal Adult |            |        | >= 18                |
-
-**Example #4:** Write a program to read in a numeric score between 0 and 100 and print the corresponding letter grade.
-
-Let's assume a standard letter assignment of grades. A score range of 0 to 100 is specified, thus we divide the test cases into seven equivalence classes to cover the five valid and two invalid input ranges.
+A score range of 0 to 100 is specified, thus we divide the test cases into seven equivalence classes to cover the five valid and two invalid input ranges as shown below:
 
 | Invalid | F    | D     | C     | B     | A      | Invalid |
 | ------- | ---- | ----- | ----- | ----- | ------ | ------- |
@@ -110,7 +166,7 @@ public class BuggyGrade {
 }
 ```
 
-One representative value from each equivalence class is selected. The last test fails to produce the expected output.
+One representative value is selected from each equivalence class. The last test fails to produce the expected output.
 
 | Test | Expected I/O                     | Actual I/O                       | Status | Equivalence<br>Class |
 | ---- | -------------------------------- | -------------------------------- | ------ | -------------------- |

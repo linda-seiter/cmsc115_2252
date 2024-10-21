@@ -1,14 +1,14 @@
-## Week 2 - Functional (opaque-box) Testing
+## Week 2 - Specification-Based (opaque-box) Testing
 
-The primary objective of software testing is to identify and eliminate errors in the code.
+A key goal of software testing is to detect and resolve errors in the code.
 
-There are many software testing techniques. CMSC 115 introduces two common approaches:
+While numerous software testing techniques exist, CMSC 115 presents two popular approaches:
 
-- **Specification-Based Testing (opaque-box)** focuses on testing the functionality of a program without looking at its internal structure.
-  Tests are developed based on the requirements of what the program should do and what the input domain looks like.
+- **Specification-Based Testing (opaque-box)** assesses a program's functionality without examining its internal structure.
+  Tests are created based on the program's requirements and the characteristics of the input domain.
 
-- **Structure-Based Testing (clear-box)** examines a program's internal structures and logic to measure
-  how thoroughly the program is being exercised by the tests.
+- **Structure-Based Testing (clear-box)** analyzes a program's internal structures and logic to
+  evaluate how thoroughly the tests exercise the program.
 
   In week 2, we will use basic specification-based techniques to develop test cases that map program inputs to expected output.
 
