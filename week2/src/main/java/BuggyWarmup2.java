@@ -9,9 +9,7 @@ public class BuggyWarmup2 {
         System.out.print("Enter R0: ");
         int r0 = input.nextInt();
         int iterations = 3;
-
         int infected = (int) Math.pow(iterations, r0);
-
         System.out.println(iterations + " iterations result in " + infected + " infections");
     }
 }
