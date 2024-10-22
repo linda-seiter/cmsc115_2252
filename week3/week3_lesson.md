@@ -28,11 +28,11 @@ Test cases are written to ensure each equivalence class is covered at least once
 
 **Example #1:** A bank charges a $2 per transaction fee. The first 5 transactions are free.
 
-This problem partitions input values based on a transaction limit of `5`. The value `5` represents a boundary between inputs that result in no fee and those that result in a fee. Thus, there are two equivalence classes:
+This problem partitions input values based on a transaction limit of `5`. The value `5` represents a boundary between inputs that result in no fee and those that result in a fee. Thus, there are two equivalence classes for the transactions input variable:
 
-| no fee            | fee              |
-| ----------------- | ---------------- |
-| transactions <= 5 | transactions > 5 |
+| no fee | fee |
+| ------ | --- |
+| <= 5   | > 5 |
 
 Each equivalence class should be covered by at least one test case. For example:
 
@@ -41,7 +41,7 @@ Each equivalence class should be covered by at least one test case. For example:
 | 1    | Transactions: <b>3</b><br>Fee $0 |            |        | <= 5                 |
 | 2    | Transactions: <b>9</b><br>Fee $8 |            |        | >5                   |
 
-The program `BuggyFee` has an error in calculating the fee when transactions exceed the limit of 5:
+The program `BuggyFee` has an error in calculating the fee when the transaction count exceeds the limit of 5:
 
 ```java
 import java.util.Scanner;
@@ -78,9 +78,11 @@ The correct calculation for the fee should be:
 fee = (transactions - 5) * 2;
 ```
 
+Optional: Update the code to fix the fee calculation, and rerun both test cases to confirm they pass.
+
 **Example #2:** A valid gpa falls within the range of values 0.0 and 4.0.
 
-There are three equivalence classes/partitions based on the range 0.0 - 4.0 of valid values, where 0.0 represents the minimum valid value and 4.0 represents the maximum valid value:
+There are three equivalence classes based on the range 0.0 - 4.0. The value 0.0 represents the minimum valid value and 4.0 represents the maximum valid value.
 
 | Invalid | Valid gpa | Invalid |
 | ------- | --------- | ------- |
@@ -90,9 +92,9 @@ Each equivalence class should be covered by at least one test case. For example:
 
 | Test | Expected I/O                           | Actual I/O | Status | Equivalence<br>Class |
 | ---- | -------------------------------------- | ---------- | ------ | -------------------- |
-| 1    | Enter gpa: **-1.0**<br>-1.0 is invalid |            |        | <0.0                 |
+| 1    | Enter gpa: **-1.0**<br>-1.0 is invalid |            |        | < 0.0                |
 | 2    | Enter gpa: **2.5**<br>2.5 is valid     |            |        | 0.0 - 4.0            |
-| 3    | Enter gpa: **5.7**<br>5.7 is valid     |            |        | >4.0                 |
+| 3    | Enter gpa: **5.7**<br>5.7 is valid     |            |        | > 4.0                |
 
 Let's test the `BuggyGPA` class using the three test cases.
 
@@ -119,15 +121,17 @@ Test #1 fails to identify the negative number -1.0 as invalid.
 
 | Test | Expected I/O                           | Actual I/O                           | Status | Equivalence<br>Class |
 | ---- | -------------------------------------- | ------------------------------------ | ------ | -------------------- |
-| 1    | Enter gpa: **-1.0**<br>-1.0 is invalid | Enter gpa: **-1.0**<br>-1.0 is valid | Fail   | <0.0                 |
+| 1    | Enter gpa: **-1.0**<br>-1.0 is invalid | Enter gpa: **-1.0**<br>-1.0 is valid | Fail   | < 0.0                |
 | 2    | Enter gpa: **2.5**<br>2.5 is valid     | Enter gpa: **2.5**<br>2.5 is valid   | Pass   | 0.0 - 4.0            |
-| 3    | Enter gpa: **5.7**<br>5.7 is valid     | Enter gpa: **5.7**<br>5.7 is valid   | Pass   | >4.0                 |
+| 3    | Enter gpa: **5.7**<br>5.7 is valid     | Enter gpa: **5.7**<br>5.7 is valid   | Pass   | > 4.0                |
 
 The condition should be adjusted to compare the user input against both the range minimum of 0.0 and range maximum of 4.0:
 
 ```java
 if (gpa >= 0.0 && gpa <= 4.0)
 ```
+
+Optional: Update the code to fix the gpa range test, then rerun the test cases and confirm they pass.
 
 **Example #3:** A numeric score between 0 and 100 is mapped with a corresponding letter grade (F = 0..59, D=60-69, C = 70-79, B = 80-89, A=90-100).
 
@@ -180,17 +184,20 @@ One representative value is selected from each equivalence class. The last test 
 
 The coding error was identified using one sample value from the **> 100** equivalence class.
 
+Optional: Update the code to fix the error and rerun the tests.
+
 ### Boundary Value Analysis
 
 Boundary value analysis (BVA) is a type of equivalence partitioning that focuses on testing the values on or near partition boundaries, as this is where logic errors often occur.
 
 <img src="images/boundary.png" alt="single boundary with nearby points" width = 200>
 
-We design the test cases to include the boundary value `b`and input values just above and below it.
+We design the test cases to include the boundary value `b` and input values just above and below it.
 
-- An offset of **1** is used if the boundary is an integer and **0.1** if the boundary is a double.
+- Typically, an offset of **1** is used if the boundary is an integer and **0.1** if the boundary is a double.
 
 <img src="images/range_boundaries.png" width=500 alt="range [min,max]">
+
 When an input domain has a specified range [min, max], the min and max represent two boundaries that separate valid and invalid values.
 
 We design the test cases to include input values at the min/max, just below the min/max, just above the min/max, and a nominal value (optional).
@@ -213,10 +220,10 @@ BVA picks ages 17, 18, and 19 for testing:
 | ---- | -------------------- | ---------- | ------ | -------- |
 | 1    | Age: **17**<br>Minor |            |        | min - 1  |
 | 2    | Age: **18**<br>Adult |            |        | min      |
-| 23   | Age: **19**<br>Adult |            |        | min + 1  |
+| 3    | Age: **19**<br>Adult |            |        | min + 1  |
 
-The table below show several correct and incorrect ways the
-condition might be written. "Adult" is printed if the condition is true, otherwise "Minor" is printed.
+The table below show several **correct** and **incorrect** ways the
+condition might be written. Assume "Adult" is printed if the condition is true, otherwise "Minor" is printed.
 The test set {17, 18, 19} is effective in identifying the incorrect conditions.
 
 | Condition | 17    | 18    | 19    | Comment   |
@@ -230,13 +237,27 @@ The test set {17, 18, 19} is effective in identifying the incorrect conditions.
 
 **Example #2 (range for 1 variable):** A program requires an age between 18 - 65 as input.
 
-BVA test case design will select input values from the three equivalence classes as shown:
+BVA test case design selects input values from the three equivalence classes as shown:
 
 | Invalid Age<br>min-1 | Valid Age<br>min,min+1,nominal,max-1,max | Invalid Age<br>max+1 |
 | -------------------- | ---------------------------------------- | -------------------- |
 | 17                   | 18, 19, 41, 64, 65                       | 66                   |
 
-**Example #3 (range for 2 variables):** Most people feel comfortable indoors when the humidity level is between 40 and 60 and temperature is between 65 and 75. Any point that falls within the light blue rectangle in the graph below represents a comfortable indoor condition. We'll use BVA techniques to reduce the number of points used for testing.
+TODO: Code example and test cases
+
+BVA picks ages 17, 18, 19, 41, 64, 65, and 66 for testing:
+
+| Test | Expected I/O           | Actual I/O | Status | min = 18 |
+| ---- | ---------------------- | ---------- | ------ | -------- |
+| 1    | Age: **17**<br>Invalid |            |        | min - 1  |
+| 2    | Age: **18**<br>Valid   |            |        | min      |
+| 3    | Age: **19**<br>Valid   |            |        | min + 1  |
+| 4    | Age: **41**<br>Valid   |            |        | nominal  |
+| 3    | Age: **64**<br>Valid   |            |        | max - 1  |
+| 3    | Age: **65**<br>Valid   |            |        | max      |
+| 3    | Age: **66**<br>Invalid |            |        | max + 1  |
+
+**Example #3 (range for 2 variables):** Research suggests that most people feel comfortable indoors when the humidity level is between 40 and 60 and temperature is between 65 and 75. Any point that falls within the light blue rectangle in the graph below represents a comfortable indoor condition. We'll use BVA techniques to reduce the number of points used for testing.
 
 ![comfortable indoor conditions](images/comfyindoors.png)
 
@@ -347,6 +368,8 @@ Each rule defines the monthly cost for that particular combination of input valu
 </table>
 
 Typically a test case is created for each rule.
+
+TODO: Show test cases
 
 **Example #2:** The subscription service adds another condition, a $5 loyalty discount for monthly plans based on length of service.
 
