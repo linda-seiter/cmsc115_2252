@@ -1,14 +1,13 @@
 import java.util.Scanner;
 
-public class BuggyScore {
+public class BuggyLetterGrade {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Score: ");
         int score = input.nextInt();
 
-        // ERROR, missing invalid score > 100
         if (score < 0) {
-            System.out.println(score + " is invalid");
+            System.out.println("Invalid");
         } else if (score < 60) {
             System.out.println("F");
         } else if (score < 70) {

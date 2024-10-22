@@ -28,11 +28,11 @@ Test cases are written to ensure each equivalence class is covered at least once
 
 **Example #1:** A bank charges a $2 per transaction fee. The first 5 transactions are free.
 
-This problem partitions input values based on a transaction limit of `5`. The value `5` represents a boundary between inputs that result in no fee and those that result in a fee. Thus, there are two equivalence classes for the transactions input variable:
+This problem partitions input values based on a transaction limit of `5`. The value `5` represents a single boundary or threshold, resulting in two equivalence classes for the transaction count:
 
-| no fee | fee |
-| ------ | --- |
-| <= 5   | > 5 |
+| No fee | Transaction fee |
+| ------ | --------------- |
+| <= 5   | > 5             |
 
 Each equivalence class should be covered by at least one test case. For example:
 
@@ -78,11 +78,9 @@ The correct calculation for the fee should be:
 fee = (transactions - 5) * 2;
 ```
 
-Optional: Update the code to fix the fee calculation, and rerun both test cases to confirm they pass.
-
 **Example #2:** A valid gpa falls within the range of values 0.0 and 4.0.
 
-There are three equivalence classes based on the range 0.0 - 4.0. The value 0.0 represents the minimum valid value and 4.0 represents the maximum valid value.
+The range has a minimum boundary of 0.0 and a maximum boundary of 4.0. The two boundaries result in three three equivalence classes:
 
 | Invalid | Valid gpa | Invalid |
 | ------- | --------- | ------- |
@@ -130,61 +128,6 @@ The condition should be adjusted to compare the user input against both the rang
 ```java
 if (gpa >= 0.0 && gpa <= 4.0)
 ```
-
-Optional: Update the code to fix the gpa range test, then rerun the test cases and confirm they pass.
-
-**Example #3:** A numeric score between 0 and 100 is mapped with a corresponding letter grade (F = 0..59, D=60-69, C = 70-79, B = 80-89, A=90-100).
-
-A score range of 0 to 100 is specified, thus we divide the test cases into seven equivalence classes to cover the five valid and two invalid input ranges as shown below:
-
-| Invalid | F    | D     | C     | B     | A      | Invalid |
-| ------- | ---- | ----- | ----- | ----- | ------ | ------- |
-| < 0     | 0-59 | 60-69 | 70-79 | 80-89 | 90-100 | >100    |
-
-We'll test the following program, which fails to differentiate between a valid score of A and an invalid score above 100.
-
-```java
-import java.util.Scanner;
-
-public class BuggyGrade {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Score: ");
-        int score = input.nextInt();
-
-        // ERROR, missing condition for  score > 100
-        if (score < 0) {
-            System.out.println(score + " is invalid");
-        } else if (score < 60) {
-            System.out.println("F");
-        } else if (score < 70) {
-            System.out.println("D");
-        } else if (score < 80) {
-            System.out.println("C");
-        } else if (score < 90) {
-            System.out.println("B");
-        } else {
-            System.out.println("A");
-        }
-    }
-}
-```
-
-One representative value is selected from each equivalence class. The last test fails to produce the expected output.
-
-| Test | Expected I/O                     | Actual I/O                       | Status | Equivalence<br>Class |
-| ---- | -------------------------------- | -------------------------------- | ------ | -------------------- |
-| 1    | Score: **-10**<br>-10 is invalid | Score: **-10**<br>-10 is invalid | Pass   | <0                   |
-| 2    | Score: **52**<br>F               | Score: **52**<br>F               | Pass   | 0-59                 |
-| 3    | Score: **60**<br>D               | Score: **60**<br>D               | Pass   | 60-69                |
-| 4    | Score: **79**<br>C               | Score: **79**<br>C               | Pass   | 70-79                |
-| 5    | Score: **85**<br>B               | Score: **85**<br>B               | Pass   | 80-89                |
-| 6    | Score: **93**<br>A               | Score: **93**<br>A               | Pass   | 90-100               |
-| 7    | Score: **105**<br>105 is invalid | Score: **105**<br>A              | Fail   | > 100                |
-
-The coding error was identified using one sample value from the **> 100** equivalence class.
-
-Optional: Update the code to fix the error and rerun the tests.
 
 ### Boundary Value Analysis
 
@@ -243,8 +186,6 @@ BVA test case design selects input values from the three equivalence classes as 
 | -------------------- | ---------------------------------------- | -------------------- |
 | 17                   | 18, 19, 41, 64, 65                       | 66                   |
 
-TODO: Code example and test cases
-
 BVA picks ages 17, 18, 19, 41, 64, 65, and 66 for testing:
 
 | Test | Expected I/O           | Actual I/O | Status | min = 18 |
@@ -290,23 +231,55 @@ Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases:
 - 9 test cases for points inside the rectangle (black, blue, yellow dots)
 - 4 test cases for points outside the rectangle (red dots).
 
-Given the two ranges for variables humidity and temperature, we create 13 test cases as shown:
+Given the two ranges for variables humidity and temperature, we create 13 test cases.
 
-| Test | Expected I/O                                         | Actual I/O | Status | (humidity, temperature)    |
-| ---- | ---------------------------------------------------- | ---------- | ------ | -------------------------- |
-| 1    | Humidity and Temperature: **50 70**<br>Comfortable   |            |        | (nom, nom) <br>black dot   |
-| 2    | Humidity and Temperature: **40 70**<br>Comfortable   |            |        | (min, nom) <br>blue dot    |
-| 3    | Humidity and Temperature: **41 70**<br>Comfortable   |            |        | (min+1, nom)<br> blue dot  |
-| 4    | Humidity and Temperature: **59 70**<br>Comfortable   |            |        | (max-1, nom)<br>blue dot   |
-| 5    | Humidity and Temperature: **60 70**<br>Comfortable   |            |        | (max, nom)<br>blue dot     |
-| 6    | Humidity and Temperature: **50 65**<br>Comfortable   |            |        | (nom, min)<br>yellow dot   |
-| 7    | Humidity and Temperature: **50 66**<br>Comfortable   |            |        | (nom, min+1)<br>yellow dot |
-| 8    | Humidity and Temperature: **50 74**<br>Comfortable   |            |        | (nom, max-1)<br>yellow dot |
-| 9    | Humidity and Temperature: **50 75**<br>Comfortable   |            |        | (nom, max)<br>yellow dot   |
-| 10   | Humidity and Temperature: **39 70**<br>Uncomfortable |            |        | (min-1, nom)<br>red dot    |
-| 11   | Humidity and Temperature: **61 70**<br>Uncomfortable |            |        | (max+1, nom)<br>red dot    |
-| 12   | Humidity and Temperature: **50 64**<br>Uncomfortable |            |        | (nom, min-1)<br>red dot    |
-| 13   | Humidity and Temperature: **50 76**<br>Uncomfortable |            |        | (nom, max+1)<br>red dot    |
+```java
+import java.util.Scanner;
+
+public class BuggyIndoorTemp {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Humidity and Temperature: ");
+        int humidity = input.nextInt();
+        int temperature = input.nextInt();
+
+        boolean comfyHumidity = humidity >= 40 || humidity <= 60; // ERROR
+        boolean comfyTemp = temperature >= 65 && temperature <= 75;
+
+        if (comfyTemp && comfyHumidity) {
+            System.out.println("Comfy");
+        } else {
+            System.out.println("Uncomfy");
+        }
+    }
+}
+```
+
+We'll test `BuggyIndoorTemp`, which has an error when checking the humidity condition.
+Tests 10 and 11 test humidity values below the minimum and above the maximum.
+
+| Test | Expected I/O                                   | Actual I/O                                     | Status | (humidity, temperature)    |
+| ---- | ---------------------------------------------- | ---------------------------------------------- | ------ | -------------------------- |
+| 1    | Humidity and Temperature: **50 70**<br>Comfy   | Humidity and Temperature: **50 70**<br>Comfy   | Pass   | (nom, nom) <br>black dot   |
+| 2    | Humidity and Temperature: **40 70**<br>Comfy   | Humidity and Temperature: **40 70**<br>Comfy   | Pass   | (min, nom) <br>blue dot    |
+| 3    | Humidity and Temperature: **41 70**<br>Comfy   | Humidity and Temperature: **41 70**<br>Comfy   | Pass   | (min+1, nom)<br> blue dot  |
+| 4    | Humidity and Temperature: **59 70**<br>Comfy   | Humidity and Temperature: **59 70**<br>Comfy   | Pass   | (max-1, nom)<br>blue dot   |
+| 5    | Humidity and Temperature: **60 70**<br>Comfy   | Humidity and Temperature: **60 70**<br>Comfy   | Pass   | (max, nom)<br>blue dot     |
+| 6    | Humidity and Temperature: **50 65**<br>Comfy   | Humidity and Temperature: **50 65**<br>Comfy   | Pass   | (nom, min)<br>yellow dot   |
+| 7    | Humidity and Temperature: **50 66**<br>Comfy   | Humidity and Temperature: **50 66**<br>Comfy   | Pass   | (nom, min+1)<br>yellow dot |
+| 8    | Humidity and Temperature: **50 74**<br>Comfy   | Humidity and Temperature: **50 74**<br>Comfy   | Pass   | (nom, max-1)<br>yellow dot |
+| 9    | Humidity and Temperature: **50 75**<br>Comfy   | Humidity and Temperature: **50 75**<br>Comfy   | Pass   | (nom, max)<br>yellow dot   |
+| 10   | Humidity and Temperature: **39 70**<br>Uncomfy | Humidity and Temperature: **39 70**<br>Comfy   | Fail   | (min-1, nom)<br>red dot    |
+| 11   | Humidity and Temperature: **61 70**<br>Uncomfy | Humidity and Temperature: **61 70**<br>Comfy   | Fail   | (max+1, nom)<br>red dot    |
+| 12   | Humidity and Temperature: **50 64**<br>Uncomfy | Humidity and Temperature: **50 64**<br>Uncomfy | Pass   | (nom, min-1)<br>red dot    |
+| 13   | Humidity and Temperature: **50 76**<br>Uncomfy | Humidity and Temperature: **50 76**<br>Uncomfy | Pass   | (nom, max+1)<br>red dot    |
+
+The two tests fail due the logical operator error, which should be `&&` (and) rather than `||` (or).
+
+```java
+    boolean comfyHumidity = humidity >= 40 && humidity <= 60;
+    boolean comfyTemp = temperature >= 65 && temperature <= 75;
+```
 
 ## Decision Table
 
