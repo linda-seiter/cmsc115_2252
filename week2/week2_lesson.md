@@ -20,9 +20,8 @@ _Write a program that converts inches to feet. The program should read in an int
 
 The table below contains 5 test cases that will be used for testing a program.
 
-- The expected I/O (Input/Output) column can be filled out based on the specified program requirements.
-- The last two columns are filled out after writing and executing the program. The `Status` column will show a Pass/Fail result based on whether the expected and actual I/O match.
-- _NOTE: Input values are displayed in bold._
+- The **Expected I/O** (Input/Output) column can be filled out based on the specified program requirements. Input values are displayed in bold.
+- The **Actual I/O** and **Status** columns are filled out after writing and executing the program. `Status` will contain **Pass/Fail** based on whether the expected and actual I/O columns match.
 
 | Test | Expected I/O                                     | Actual I/O | Status |
 | ---- | ------------------------------------------------ | ---------- | ------ |
@@ -54,7 +53,12 @@ public class InchesToFeet {
 }
 ```
 
-The program must be executed for each test case to obtain the actual output. The `Status` indicates whether the test passed or failed. While the tests for 12 and 24 inches pass, the other tests fail. A failed test indicates an error exists in the code.
+TODO: Incorporate Possible Online Versions?
+
+- [InchesToFeet using Java Visualizer](<https://cscircles.cemc.uwaterloo.ca/java_visualize/#code=import+java.util.Scanner%3B%0A%0A/**%0A+*+InchesToFeet+reads+the+number+of+inches+from+user+input%0A+*+and+prints+the+equivalent+number+of+feet.%0A+*/%0Apublic+class+InchesToFeet+%7B%0A++++public+static+void+main(String%5B%5D+args)+%7B%0A++++++++Scanner+input+%3D+new+Scanner(System.in)%3B%0A++++++++System.out.print(%22Enter+inches%3A+%22)%3B%0A++++++++int+inches+%3D+input.nextInt()%3B%0A++++++++double+feet+%3D+inches+/+12%3B+//ERROR%3A+integer+division%0A++++++++System.out.println(inches+%2B+%22+inches+%3D+%22+%2B+feet+%2B+%22+feet%22)%3B%0A++++%7D%0A%7D&mode=edit&stdin=18%0A>)
+- [InchesToFeet using https://onlinegdb.com](https://onlinegdb.com/NSw4HI2UG7)
+
+The program must be executed for each test case to obtain the actual output. While the tests for 12 and 24 inches pass, the other tests fail.
 
 | Test | Expected I/O                                     | Actual I/O                                      | Status |
 | ---- | ------------------------------------------------ | ----------------------------------------------- | ------ |
@@ -63,6 +67,8 @@ The program must be executed for each test case to obtain the actual output. The
 | 3    | Enter inches: <b>18</b><br>18 inches = 1.5 feet  | Enter inches: <b>18</b><br>18 inches = 1.0 feet | Fail   |
 | 4    | Enter inches: <b>24</b><br>24 inches =2.0 feet   | Enter inches: <b>24</b><br>24 inches =2.0 feet  | Pass   |
 | 5    | Enter inches: <b>33</b><br>33 inches = 2.75 feet | Enter inches: <b>33</b><br>33 inches = 2.0 feet | Fail   |
+
+A failed test indicates an error exists in the code!
 
 Recall how division works in Java. If both operands are integers, the result is an integer and any remainder is discarded. However, if either operand is a floating point number, the result is a floating point number.
 
@@ -77,7 +83,7 @@ To avoid integer division, the code should be updated to use 12.0 as the divisor
 double feet = inches / 12.0;
 ```
 
-After updating the code, the program must be re-executed for each test case to confirm the actual and expected I/O match:
+After updating the code, the program must be re-executed for every test case to confirm the actual and expected I/O match. _It is important to re-execute all tests and not just the failed tests because an update might accidentally introduce new errors_.
 
 | Test | Expected I/O                                     | Actual I/O                                       | Status |
 | ---- | ------------------------------------------------ | ------------------------------------------------ | ------ |
