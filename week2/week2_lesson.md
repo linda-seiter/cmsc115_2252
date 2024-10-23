@@ -10,7 +10,7 @@ While numerous software testing techniques exist, CMSC 115 presents two popular 
 - **Structure-Based Testing (clear-box)** analyzes a program's internal structures and logic to
   evaluate how thoroughly the tests exercise the program.
 
-  Basic specification-based testing techniques will be used for the week#2 programming projects.
+Specification-based testing techniques will be used for the week#2 programming projects.
 
 ### Example #1 - Convert Inches to Feet
 
@@ -18,7 +18,11 @@ Consider the following program requirements:
 
 _Write a program that converts inches to feet. The program should read in an integer representing the number of inches, then calculate and display the equivalent number of feet. There are 12 inches in a foot._
 
-The table below contains 5 test cases that will be used for testing. The expected I/O (input/output) column can be filled out based on the specified program requirements. The last two columns are filled out after writing and executing the program. The `Status` column will show a pass/fail result.
+The table below contains 5 test cases that will be used for testing a program.
+
+- The expected I/O (Input/Output) column can be filled out based on the specified program requirements.
+- The last two columns are filled out after writing and executing the program. The `Status` column will show a Pass/Fail result based on whether the expected and actual I/O match.
+- _NOTE: Input values are displayed in bold._
 
 | Test | Expected I/O                                     | Actual I/O | Status |
 | ---- | ------------------------------------------------ | ---------- | ------ |
@@ -27,8 +31,6 @@ The table below contains 5 test cases that will be used for testing. The expecte
 | 3    | Enter inches: <b>18</b><br>18 inches = 1.5 feet  |            |        |
 | 4    | Enter inches: <b>24</b><br>24 inches =2.0 feet   |            |        |
 | 5    | Enter inches: <b>33</b><br>33 inches = 2.75 feet |            |        |
-
-NOTE: Program input values are displayed in bold.
 
 <div style="page-break-after: always"></div>
 
@@ -52,7 +54,7 @@ public class InchesToFeet {
 }
 ```
 
-For each test case, the program must be executed to obtain the actual output. The `Status` indicates whether the test passed or failed. While the tests for 12 and 24 inches pass (expected and actual output match), the other tests fail. A failed test indicates an error exists in the code.
+The program must be executed for each test case to obtain the actual output. The `Status` indicates whether the test passed or failed. While the tests for 12 and 24 inches pass, the other tests fail. A failed test indicates an error exists in the code.
 
 | Test | Expected I/O                                     | Actual I/O                                      | Status |
 | ---- | ------------------------------------------------ | ----------------------------------------------- | ------ |
@@ -75,7 +77,7 @@ To avoid integer division, the code should be updated to use 12.0 as the divisor
 double feet = inches / 12.0;
 ```
 
-After updating the code, the program must be re-executed for each test case to confirm the actual output matches the expected output:
+After updating the code, the program must be re-executed for each test case to confirm the actual and expected I/O match:
 
 | Test | Expected I/O                                     | Actual I/O                                       | Status |
 | ---- | ------------------------------------------------ | ------------------------------------------------ | ------ |
@@ -155,7 +157,7 @@ Although the variable `minutes` on the left-hand side of the assignment is decla
 long minutes = years * 365 * 24 * 60;
 ```
 
-Why does this happen? Since the variable `years` is declared as an `int`, the expression `years * 365 * 24 * 60` produces an `int` and results in an overflow error. The solution is to either cast `years` as a long, or to specify one of the numeric literal values as a long by append `L`.
+Why does this happen? The expression `years * 365 * 24 * 60` produces an `int` because the variable `years` is declared as an `int` and the numeric literals 365, 24, and 60 are also integers. The solution is to either cast `years` as a long, or to specify the first numeric literal value as a long by append `L`.
 
 | Expression          | Type |
 | ------------------- | ---- |
@@ -186,9 +188,8 @@ rather than specific details of how it is implemented.
 The week#2 programming projects will be tested using the specification-based testing techniques presented in this lesson.
 Each test case will describe:
 
-- the user input
-- the expected output based on the requirements
-- the actual output based on the program execution
+- the expected I/O based on the requirements
+- the actual I/O based on the program execution
 - the test result of pass/fail
 
 ## Resources
