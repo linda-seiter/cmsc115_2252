@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class BuggyHotelBill {
+public class HotelBill {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Room 1=full,2=queen,3=king: ");

@@ -41,12 +41,12 @@ Each equivalence class should be covered by at least one test case. For example:
 | 1    | Transactions: <b>3</b><br>Fee $0 |            |        | <= 5                 |
 | 2    | Transactions: <b>9</b><br>Fee $8 |            |        | >5                   |
 
-The program `BuggyFee` has an error in calculating the fee when the transaction count exceeds the limit of 5:
+The program `TransactionFee` has an error in calculating the fee when the transaction count exceeds the limit of 5:
 
 ```java
 import java.util.Scanner;
 
-public class BuggyFee {
+public class TransactionFee {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Transactions: ");
@@ -62,14 +62,14 @@ public class BuggyFee {
 }
 ```
 
-We will execute `BuggyFee` for each test case as shown in the table below.
+We will execute `TransactionFee` for each test case as shown in the table below.
 
 | Test | Expected I/O                     | Actual I/O                        | Status | Equivalence<br>Class |
 | ---- | -------------------------------- | --------------------------------- | ------ | -------------------- |
 | 1    | Transactions: <b>3</b><br>Fee $0 | Transactions: <b>3</b><br>Fee $0  | Pass   | <= 5                 |
 | 2    | Transactions: <b>9</b><br>Fee $8 | Transactions: <b>9</b><br>Fee $18 | Fail   | >5                   |
 
-Test #2 fails, indicating an error exists in `BuggyFee` for input values
+Test #2 fails, indicating an error exists for input values
 that fall into the `>5` equivalence class.
 
 The correct calculation for the fee should be:
@@ -94,12 +94,12 @@ Each equivalence class should be covered by at least one test case. For example:
 | 2    | Enter gpa: **2.5**<br>2.5 is valid     |            |        | 0.0 - 4.0            |
 | 3    | Enter gpa: **5.7**<br>5.7 is valid     |            |        | > 4.0                |
 
-Let's test the `BuggyGPA` class using the three test cases.
+Let's test the `ValidGPA` class using the three test cases.
 
 ```java
 import java.util.Scanner;
 
-public class BuggyGPA {
+public class ValidGPA {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("gpa: ");
@@ -155,7 +155,7 @@ While equivalence partitioning requires at least one value from each equivalence
 
 **Example #1 (single boundary):** Consider a minimum age requirement to determine legal adulthood: `age is at least 18` . This results in two equivalence classes based on the minimum age boundary of 18:
 
-<img src="images/adult.png" alt="age boundary at 18 with nearby points 17 and 19" width = 200>
+<img src="images/adult.png" alt="age boundary at 18 with nearby points 17 and 19" width = 300>
 
 BVA picks ages 17, 18, and 19 for testing:
 
@@ -236,7 +236,7 @@ Given the two ranges for variables humidity and temperature, we create 13 test c
 ```java
 import java.util.Scanner;
 
-public class BuggyIndoorTemp {
+public class IndoorTemp {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Humidity and Temperature: ");
@@ -255,8 +255,9 @@ public class BuggyIndoorTemp {
 }
 ```
 
-We'll test `BuggyIndoorTemp`, which has an error when checking the humidity condition.
-Tests 10 and 11 test humidity values below the minimum and above the maximum.
+We'll test `IndoorTemp`, which has an error when checking the humidity condition.
+
+Test cases 10 and 11 check the humidity values below the minimum and above the maximum.
 
 | Test | Expected I/O                                   | Actual I/O                                     | Status | (humidity, temperature)    |
 | ---- | ---------------------------------------------- | ---------------------------------------------- | ------ | -------------------------- |

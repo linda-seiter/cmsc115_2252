@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class BuggyIndoorTemp {
+public class IndoorTemp {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Humidity and Temperature: ");
