@@ -11,6 +11,6 @@ public class TransactionFee {
         // $2 per transaction above the limit of 5
         if (transactions > 5)
             fee = transactions * 2; // ERROR
-        System.out.println(fee);
+        System.out.println("Fee: $" + fee);
     }
 }

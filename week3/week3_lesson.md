@@ -1,40 +1,38 @@
-## Week 3 - Equivalence Partitioning, Boundary Value Analysis, Decision Table Testing
+## Week 3 - Equivalence Class Partitioning, Boundary Value Analysis, Decision Table Testing
 
 It is not feasible to test a program with every
 possible input value, so a subset of values must be selected.
 
-This lesson introduces three popular specification-based (opaque-box) testing techniques
-designed to reduce the total number of test cases to a finite set,
-while striving to cover the functional requirements.
+This lesson presents three widely-used specification-based (opaque-box) testing techniques aimed at minimizing the overall number of test cases to a manageable set, while still ensuring coverage of the functional requirements.
 
 - Equivalence Class Partitioning (ECP)
 - Boundary Value Analysis (BVA)
 - Decision Table Testing (DTT)
 
-You'll use these techniques to develop test cases for the week 3 programming projects.
+Each technique will be used to develop test cases for the week 3 programming projects.
 
 ### Equivalence Class Partitioning
 
 **Equivalence Class Partitioning (ECP)**
-divides the input domain into equivalence classes (also called partitions) based on the similarity of input values.
-Each value in an equivalence class should display the same program output behavior as all other values in that class.
+divides the input domain into equivalence classes (also called partitions) based on the similarity of input values. Each value in an equivalence class should display the same program output behavior as all other values in that class.
 
-The assumption is that for any single value _v_ in the equivalence class:
+The assumption is that for any single value _v_ in an equivalence class:
 
-- If _v_ passes a test, all values in the class are expected to pass.
-- If _v_ fails a test, all values in the class should likewise fail.
+- If _v_ passes a test, all values in that class are expected to pass.
+- If _v_ fails a test, all values in that class should likewise fail.
 
 Test cases are written to ensure each equivalence class is covered at least once.
 
 **Example #1:** A bank charges a $2 per transaction fee. The first 5 transactions are free.
 
-This problem partitions input values based on a transaction limit of `5`. The value `5` represents a single boundary or threshold, resulting in two equivalence classes for the transaction count:
+This problem partitions input values based on a transaction limit of `5`. The value `5` is a boundary resulting in two equivalence classes:
 
 | No fee | Transaction fee |
 | ------ | --------------- |
 | <= 5   | > 5             |
 
-Each equivalence class should be covered by at least one test case. For example:
+Each equivalence class should be covered by at least one test case. A random value
+is selected from each equivalence class. For example:
 
 | Test | Expected I/O                     | Actual I/O | Status | Equivalence<br>Class |
 | ---- | -------------------------------- | ---------- | ------ | -------------------- |
@@ -62,7 +60,9 @@ public class TransactionFee {
 }
 ```
 
-We will execute `TransactionFee` for each test case as shown in the table below.
+<iframe style="width: 100%; height: 480;" src="https://cscircles.cemc.uwaterloo.ca/java_visualize/iframe-embed.html?faking_cpp=false#data=%7B%22user_script%22%3A%22import%20java.util.Scanner%3B%5Cn%5Cnpublic%20class%20TransactionFee%20%7B%5Cn%20%20%20%20public%20static%20void%20main(String%5B%5D%20args)%20%7B%5Cn%20%20%20%20%20%20%20%20Scanner%20input%20%3D%20new%20Scanner(System.in)%3B%5Cn%20%20%20%20%20%20%20%20System.out.print(%5C%22Transactions%3A%20%5C%22)%3B%5Cn%20%20%20%20%20%20%20%20int%20transactions%20%3D%20input.nextInt()%3B%5Cn%5Cn%20%20%20%20%20%20%20%20int%20fee%20%3D%200%3B%20%2F%2F%201st%205%20transactions%20are%20free%5Cn%5Cn%20%20%20%20%20%20%20%20%2F%2F%20%242%20per%20transaction%20above%20the%20limit%20of%205%5Cn%20%20%20%20%20%20%20%20if%20(transactions%20%3E%205)%5Cn%20%20%20%20%20%20%20%20%20%20%20%20fee%20%3D%20transactions%20*%202%3B%20%2F%2F%20ERROR%5Cn%20%20%20%20%20%20%20%20System.out.println(%5C%22Fee%3A%20%24%5C%22%20%2B%20fee)%3B%5Cn%20%20%20%20%7D%5Cn%7D%22%2C%22options%22%3A%7B%22showStringsAsValues%22%3Atrue%2C%22showAllFields%22%3Afalse%7D%2C%22args%22%3A%5B%5D%2C%22stdin%22%3A%228%5Cn%22%7D&cumulative=false&heapPrimitives=false&drawParentPointers=false&textReferences=false&showOnlyOutputs=false&py=3&curInstr=0&resizeContainer=true&highlightLines=true&rightStdout=true" frameborder="0" scrolling="no"></iframe>
+
+We will execute `TransactionFee` for each test case to obtain the actual I/O and test status.
 
 | Test | Expected I/O                     | Actual I/O                        | Status | Equivalence<br>Class |
 | ---- | -------------------------------- | --------------------------------- | ------ | -------------------- |
@@ -80,7 +80,7 @@ fee = (transactions - 5) * 2;
 
 **Example #2:** A valid gpa falls within the range of values 0.0 and 4.0.
 
-The range has a minimum boundary of 0.0 and a maximum boundary of 4.0. The two boundaries result in three three equivalence classes:
+The range has a minimum boundary of 0.0 and a maximum boundary of 4.0. The two boundaries result in three three equivalence classes (below minimum, between minimum and maximum, above maximum):
 
 | Invalid | Valid gpa | Invalid |
 | ------- | --------- | ------- |
@@ -115,7 +115,7 @@ public class ValidGPA {
 }
 ```
 
-Test #1 fails to identify the negative number -1.0 as invalid.
+Test #1 fails to identify -1.0 as an invalid gpa. The failing test indicates a code error exists for values that fall within the `< 0.0` equivalence class.
 
 | Test | Expected I/O                           | Actual I/O                           | Status | Equivalence<br>Class |
 | ---- | -------------------------------------- | ------------------------------------ | ------ | -------------------- |
@@ -131,7 +131,7 @@ if (gpa >= 0.0 && gpa <= 4.0)
 
 ### Boundary Value Analysis
 
-Boundary value analysis (BVA) is a type of equivalence partitioning that focuses on testing the values on or near partition boundaries, as this is where logic errors often occur.
+Boundary Value Analysis (BVA) is a type of equivalence partitioning that focuses on testing the values on or near partition boundaries, as this is where logic errors often occur.
 
 <img src="images/boundary.png" alt="single boundary with nearby points" width = 200>
 
@@ -221,17 +221,8 @@ This means we can create test cases that combine each of the 7 humidity levels w
 nominal temperature, and each of the 7 temperatures with the nominal humidity.
 Two test cases represent the same input (nominal humidity, nominal temperature), thus we need only 13 test cases.
 
-In general, N variables require 6N + 1 test cases for VBA:
-
-- 4N+1 cases on or within the boundaries.
-- 2N cases just outside a boundary.
-
-Two variables (humidity, temperature) thus require 6\*2+1 = 13 test cases:
-
 - 9 test cases for points inside the rectangle (black, blue, yellow dots)
 - 4 test cases for points outside the rectangle (red dots).
-
-Given the two ranges for variables humidity and temperature, we create 13 test cases.
 
 ```java
 import java.util.Scanner;
@@ -257,8 +248,6 @@ public class IndoorTemp {
 
 We'll test `IndoorTemp`, which has an error when checking the humidity condition.
 
-Test cases 10 and 11 check the humidity values below the minimum and above the maximum.
-
 | Test | Expected I/O                                   | Actual I/O                                     | Status | (humidity, temperature)    |
 | ---- | ---------------------------------------------- | ---------------------------------------------- | ------ | -------------------------- |
 | 1    | Humidity and Temperature: **50 70**<br>Comfy   | Humidity and Temperature: **50 70**<br>Comfy   | Pass   | (nom, nom) <br>black dot   |
@@ -275,6 +264,7 @@ Test cases 10 and 11 check the humidity values below the minimum and above the m
 | 12   | Humidity and Temperature: **50 64**<br>Uncomfy | Humidity and Temperature: **50 64**<br>Uncomfy | Pass   | (nom, min-1)<br>red dot    |
 | 13   | Humidity and Temperature: **50 76**<br>Uncomfy | Humidity and Temperature: **50 76**<br>Uncomfy | Pass   | (nom, max+1)<br>red dot    |
 
+Test cases 10 and 11 check the humidity values below the minimum and above the maximum.
 The two tests fail due the logical operator error, which should be `&&` (and) rather than `||` (or).
 
 ```java
@@ -341,9 +331,7 @@ Each rule defines the monthly cost for that particular combination of input valu
 </tr>
 </table>
 
-Typically a test case is created for each rule.
-
-TODO: Show test cases
+A test case is typically created for each rule.
 
 **Example #2:** The subscription service adds another condition, a $5 loyalty discount for monthly plans based on length of service.
 
@@ -487,8 +475,7 @@ There are two input conditions that determine the price:
 - size {small, medium, large}
 - points >= 100 { true, false}
 
-There are six possible combinations for the two conditions. However, we can reduce the number of rules to just four
-since the rewards discount only applies to large pizzas.
+There are six possible combinations for the two conditions, but we can reduce the number of rules to just four since the rewards discount only applies to large pizzas.
 
 <table>
 <tr>
