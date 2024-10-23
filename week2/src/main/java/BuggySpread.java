@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
 /**
- * BuggyWarmup2 computes 3 iterations of viral spread given a particular R0.
+ * BuggySpread computes 3 iterations of viral spread given a particular R0.
+ * There is an error in the calculation.
  */
-public class BuggyWarmup2 {
+public class BuggySpread {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter R0: ");

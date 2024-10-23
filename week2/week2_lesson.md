@@ -10,7 +10,7 @@ While numerous software testing techniques exist, CMSC 115 presents two popular 
 - **Structure-Based Testing (clear-box)** analyzes a program's internal structures and logic to
   evaluate how thoroughly the tests exercise the program.
 
-  In week 2, we will use basic specification-based techniques to develop test cases that map program inputs to expected output.
+  Basic specification-based testing techniques will be used for the week#2 programming projects.
 
 ### Example #1 - Convert Inches to Feet
 
@@ -18,15 +18,17 @@ Consider the following program requirements:
 
 _Write a program that converts inches to feet. The program should read in an integer representing the number of inches, then calculate and display the equivalent number of feet. There are 12 inches in a foot._
 
-The table below contains 5 test cases that will be used for testing. The first three columns can be filled out based on the specified program requirements. The last two columns are filled out after writing and executing the program. The `Status` column will show a pass/fail result.
+The table below contains 5 test cases that will be used for testing. The expected I/O (input/output) column can be filled out based on the specified program requirements. The last two columns are filled out after writing and executing the program. The `Status` column will show a pass/fail result.
 
-| Test | Input | Expected Output       | Actual Output | Status |
-| ---- | ----- | --------------------- | ------------- | ------ |
-| 1    | 3     | 3 inches = 0.25 feet  |               |        |
-| 2    | 12    | 12 inches = 1.0 feet  |               |        |
-| 3    | 18    | 18 inches = 1.5 feet  |               |        |
-| 4    | 24    | 24 inches = 2.0 feet  |               |        |
-| 5    | 33    | 30 inches = 2.75 feet |               |        |
+| Test | Expected I/O                                     | Actual I/O | Status |
+| ---- | ------------------------------------------------ | ---------- | ------ |
+| 1    | Enter inches: <b>3</b><br>3 inches = 0.25 feet   |            |        |
+| 2    | Enter inches: <b>12</b><br>12 inches = 1.0 feet  |            |        |
+| 3    | Enter inches: <b>18</b><br>18 inches = 1.5 feet  |            |        |
+| 4    | Enter inches: <b>24</b><br>24 inches =2.0 feet   |            |        |
+| 5    | Enter inches: <b>33</b><br>33 inches = 2.75 feet |            |        |
+
+NOTE: Program input values are displayed in bold.
 
 <div style="page-break-after: always"></div>
 
@@ -52,13 +54,13 @@ public class InchesToFeet {
 
 For each test case, the program must be executed to obtain the actual output. The `Status` indicates whether the test passed or failed. While the tests for 12 and 24 inches pass (expected and actual output match), the other tests fail. A failed test indicates an error exists in the code.
 
-| Test | Input | Expected Output       | Actual Output        | Status |
-| ---- | ----- | --------------------- | -------------------- | ------ |
-| 1    | 3     | 3 inches = 0.25 feet  | 3 inches = 0.0 feet  | Fail   |
-| 2    | 12    | 12 inches = 1.0 feet  | 12 inches = 1.0 feet | Pass   |
-| 3    | 18    | 18 inches = 1.5 feet  | 18 inches = 1.0 feet | Fail   |
-| 4    | 24    | 24 inches = 2.0 feet  | 24 inches = 2.0 feet | Pass   |
-| 5    | 33    | 33 inches = 2.75 feet | 33 inches = 2.0 feet | Fail   |
+| Test | Expected I/O                                     | Actual I/O                                      | Status |
+| ---- | ------------------------------------------------ | ----------------------------------------------- | ------ |
+| 1    | Enter inches: <b>3</b><br>3 inches = 0.25 feet   | Enter inches: <b>3</b><br>3 inches = 0.0 feet   | Fail   |
+| 2    | Enter inches: <b>12</b><br>12 inches = 1.0 feet  | Enter inches: <b>12</b><br>12 inches = 1.0 feet | Pass   |
+| 3    | Enter inches: <b>18</b><br>18 inches = 1.5 feet  | Enter inches: <b>18</b><br>18 inches = 1.0 feet | Fail   |
+| 4    | Enter inches: <b>24</b><br>24 inches =2.0 feet   | Enter inches: <b>24</b><br>24 inches =2.0 feet  | Pass   |
+| 5    | Enter inches: <b>33</b><br>33 inches = 2.75 feet | Enter inches: <b>33</b><br>33 inches = 2.0 feet | Fail   |
 
 Recall how division works in Java. If both operands are integers, the result is an integer and any remainder is discarded. However, if either operand is a floating point number, the result is a floating point number.
 
@@ -75,13 +77,13 @@ double feet = inches / 12.0;
 
 After updating the code, the program must be re-executed for each test case to confirm the actual output matches the expected output:
 
-| Test | Input | Expected Output       | Actual Output         | Status |
-| ---- | ----- | --------------------- | --------------------- | ------ |
-| 1    | 3     | 3 inches = 0.25 feet  | 3 inches = 0.25 feet  | Pass   |
-| 2    | 12    | 12 inches = 1.0 feet  | 12 inches = 1.0 feet  | Pass   |
-| 3    | 18    | 18 inches = 1.5 feet  | 18 inches = 1.5 feet  | Pass   |
-| 4    | 24    | 24 inches = 2.0 feet  | 24 inches = 2.0 feet  | Pass   |
-| 5    | 33    | 33 inches = 2.75 feet | 33 inches = 2.75 feet | Pass   |
+| Test | Expected I/O                                     | Actual I/O                                       | Status |
+| ---- | ------------------------------------------------ | ------------------------------------------------ | ------ |
+| 1    | Enter inches: <b>3</b><br>3 inches = 0.25 feet   | Enter inches: <b>3</b><br>3 inches = 0.25 feet   | Pass   |
+| 2    | Enter inches: <b>12</b><br>12 inches = 1.0 feet  | Enter inches: <b>12</b><br>12 inches = 1.0 feet  | Pass   |
+| 3    | Enter inches: <b>18</b><br>18 inches = 1.5 feet  | Enter inches: <b>18</b><br>18 inches = 1.5 feet  | Pass   |
+| 4    | Enter inches: <b>24</b><br>24 inches =2.0 feet   | Enter inches: <b>24</b><br>24 inches =2.0 feet   | Pass   |
+| 5    | Enter inches: <b>33</b><br>33 inches = 2.75 feet | Enter inches: <b>33</b><br>33 inches = 2.75 feet | Pass   |
 
 ### Example #2 - Converting years to minutes
 
@@ -91,12 +93,12 @@ _Write a program that converts years to minutes. The program should read in an i
 
 The requirements do not specify a particular range of values for years, other than stating the input is an integer. We'll use the following test cases:
 
-| Test | Input | Expected Output    | Actual Output | Status |
-| ---- | ----- | ------------------ | ------------- | ------ |
-| 1    | 1     | 525600 minutes     |               |        |
-| 2    | 2     | 1051200 minutes    |               |        |
-| 3    | 1000  | 525600000 minutes  |               |        |
-| 4    | 5000  | 2628000000 minutes |               |        |
+| Test | Expected I/O                                   | Actual I/O | Status |
+| ---- | ---------------------------------------------- | ---------- | ------ |
+| 1    | Enter years: <b>1</b><br>525600 minutes        |            |        |
+| 2    | Enter years: <b>2</b><br>1051200 minutes       |            |        |
+| 3    | Enter years: <b>1000</b><br>525600000 minutes  |            |        |
+| 4    | Enter years: <b>5000</b><br>2628000000 minutes |            |        |
 
 The `YearsToMinutes` class represents a possible solution:
 
@@ -110,7 +112,7 @@ import java.util.Scanner;
 public class YearsToMinutes {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the number of years: ");
+        System.out.print("Enter years: ");
         int years = input.nextInt();
         int minutes = years * 365 * 24 * 60; // ERROR: Overflow
         System.out.println(minutes + " minutes");
@@ -120,12 +122,12 @@ public class YearsToMinutes {
 
 We'll execute `YearsToMinutes` for each test case. Notice the last test fails to produce the expected result.
 
-| Test | Input | Expected Output    | Actual Output       | Status |
-| ---- | ----- | ------------------ | ------------------- | ------ |
-| 1    | 1     | 525600 minutes     | 525600 minutes      | Pass   |
-| 2    | 2     | 1051200 minutes    | 1051200 minutes     | Pass   |
-| 3    | 1000  | 525600000 minutes  | 525600000 minutes   | Pass   |
-| 4    | 5000  | 2628000000 minutes | -1666967296 minutes | Fail   |
+| Test | Expected I/O                                   | Actual I/O                                      | Status |
+| ---- | ---------------------------------------------- | ----------------------------------------------- | ------ |
+| 1    | Enter years: <b>1</b><br>525600 minutes        | Enter years: <b>1</b><br>525600 minutes         | Pass   |
+| 2    | Enter years: <b>2</b><br>1051200 minutes       | Enter years: <b>2</b><br>1051200 minutes        | Pass   |
+| 3    | Enter years: <b>1000</b><br>525600000 minutes  | Enter years: <b>1000</b><br>525600000 minutes   | Pass   |
+| 4    | Enter years: <b>5000</b><br>2628000000 minutes | Enter years: <b>5000</b><br>-1666967296 minutes | Fail   |
 
 An **overflow** occurs when a calculation produces a result that is too large for the declared data type of a variable.
 
@@ -140,12 +142,12 @@ long minutes = years * 365 * 24 * 60;
 
 After updating the code, the program is re-executed for each test case. Unfortunately, the last test case still fails as shown below:
 
-| Test | Input | Expected Output    | Actual Output       | Status |
-| ---- | ----- | ------------------ | ------------------- | ------ |
-| 1    | 1     | 525600 minutes     | 525600 minutes      | Pass   |
-| 2    | 2     | 1051200 minutes    | 1051200 minutes     | Pass   |
-| 3    | 1000  | 525600000 minutes  | 525600000 minutes   | Pass   |
-| 4    | 5000  | 2628000000 minutes | -1666967296 minutes | Fail   |
+| Test | Expected I/O                                   | Actual I/O                                      | Status |
+| ---- | ---------------------------------------------- | ----------------------------------------------- | ------ |
+| 1    | Enter years: <b>1</b><br>525600 minutes        | Enter years: <b>1</b><br>525600 minutes         | Pass   |
+| 2    | Enter years: <b>2</b><br>1051200 minutes       | Enter years: <b>2</b><br>1051200 minutes        | Pass   |
+| 3    | Enter years: <b>1000</b><br>525600000 minutes  | Enter years: <b>1000</b><br>525600000 minutes   | Pass   |
+| 4    | Enter years: <b>5000</b><br>2628000000 minutes | Enter years: <b>5000</b><br>-1666967296 minutes | Fail   |
 
 Although the variable `minutes` on the left-hand side of the assignment is declared as a long, the expression on the right-hand side produces an int:
 
@@ -169,12 +171,12 @@ long minutes = (long) years * 365 * 24 * 60;
 
 The tests are re-executed, resulting in success:
 
-| Test | Input | Expected Output    | Actual Output      | Status |
-| ---- | ----- | ------------------ | ------------------ | ------ |
-| 1    | 1     | 525600 minutes     | 525600 minutes     | Pass   |
-| 2    | 2     | 1051200 minutes    | 1051200 minutes    | Pass   |
-| 3    | 1000  | 525600000 minutes  | 525600000 minutes  | Pass   |
-| 4    | 5000  | 2628000000 minutes | 2628000000 minutes | Pass   |
+| Test | Expected I/O                                   | Actual I/O                                     | Status |
+| ---- | ---------------------------------------------- | ---------------------------------------------- | ------ |
+| 1    | Enter years: <b>1</b><br>525600 minutes        | Enter years: <b>1</b><br>525600 minutes        | Pass   |
+| 2    | Enter years: <b>2</b><br>1051200 minutes       | Enter years: <b>2</b><br>1051200 minutes       | Pass   |
+| 3    | Enter years: <b>1000</b><br>525600000 minutes  | Enter years: <b>1000</b><br>525600000 minutes  | Pass   |
+| 4    | Enter years: <b>5000</b><br>2628000000 minutes | Enter years: <b>5000</b><br>2628000000 minutes | Pass   |
 
 ## Conclusion
 

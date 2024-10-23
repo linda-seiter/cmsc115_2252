@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
 /**
- * BuggyWarmup1 reads two numbers and prints the average.
+ * BuggyAverage reads two numbers and prints the average. There is an error in
+ * the average calculation.
  */
-public class BuggyWarmup1 {
+public class BuggyAverage {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter 2 numbers: ");
