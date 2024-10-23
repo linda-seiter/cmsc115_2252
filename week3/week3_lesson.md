@@ -39,7 +39,7 @@ is selected from each equivalence class. For example:
 | 1    | Transactions: <b>3</b><br>Fee $0 |            |        | <= 5                 |
 | 2    | Transactions: <b>9</b><br>Fee $8 |            |        | >5                   |
 
-The program `TransactionFee` has an error in calculating the fee when the transaction count exceeds the limit of 5:
+The program `TransactionFee` has an error in calculating the fee when the transaction count exceeds the limit of 5.
 
 ```java
 import java.util.Scanner;
@@ -60,9 +60,7 @@ public class TransactionFee {
 }
 ```
 
-<iframe style="width: 100%; height: 480;" src="https://cscircles.cemc.uwaterloo.ca/java_visualize/iframe-embed.html?faking_cpp=false#data=%7B%22user_script%22%3A%22import%20java.util.Scanner%3B%5Cn%5Cnpublic%20class%20TransactionFee%20%7B%5Cn%20%20%20%20public%20static%20void%20main(String%5B%5D%20args)%20%7B%5Cn%20%20%20%20%20%20%20%20Scanner%20input%20%3D%20new%20Scanner(System.in)%3B%5Cn%20%20%20%20%20%20%20%20System.out.print(%5C%22Transactions%3A%20%5C%22)%3B%5Cn%20%20%20%20%20%20%20%20int%20transactions%20%3D%20input.nextInt()%3B%5Cn%5Cn%20%20%20%20%20%20%20%20int%20fee%20%3D%200%3B%20%2F%2F%201st%205%20transactions%20are%20free%5Cn%5Cn%20%20%20%20%20%20%20%20%2F%2F%20%242%20per%20transaction%20above%20the%20limit%20of%205%5Cn%20%20%20%20%20%20%20%20if%20(transactions%20%3E%205)%5Cn%20%20%20%20%20%20%20%20%20%20%20%20fee%20%3D%20transactions%20*%202%3B%20%2F%2F%20ERROR%5Cn%20%20%20%20%20%20%20%20System.out.println(%5C%22Fee%3A%20%24%5C%22%20%2B%20fee)%3B%5Cn%20%20%20%20%7D%5Cn%7D%22%2C%22options%22%3A%7B%22showStringsAsValues%22%3Atrue%2C%22showAllFields%22%3Afalse%7D%2C%22args%22%3A%5B%5D%2C%22stdin%22%3A%228%5Cn%22%7D&cumulative=false&heapPrimitives=false&drawParentPointers=false&textReferences=false&showOnlyOutputs=false&py=3&curInstr=0&resizeContainer=true&highlightLines=true&rightStdout=true" frameborder="0" scrolling="no"></iframe>
-
-We will execute `TransactionFee` for each test case to obtain the actual I/O and test status.
+We must execute `TransactionFee` for each test case to obtain the actual I/O and test status.
 
 | Test | Expected I/O                     | Actual I/O                        | Status | Equivalence<br>Class |
 | ---- | -------------------------------- | --------------------------------- | ------ | -------------------- |
