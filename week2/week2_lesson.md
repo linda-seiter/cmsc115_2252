@@ -58,7 +58,7 @@ TODO: Incorporate Possible Online Versions?
 - [InchesToFeet using Java Visualizer](<https://cscircles.cemc.uwaterloo.ca/java_visualize/#code=import+java.util.Scanner%3B%0A%0A/**%0A+*+InchesToFeet+reads+the+number+of+inches+from+user+input%0A+*+and+prints+the+equivalent+number+of+feet.%0A+*/%0Apublic+class+InchesToFeet+%7B%0A++++public+static+void+main(String%5B%5D+args)+%7B%0A++++++++Scanner+input+%3D+new+Scanner(System.in)%3B%0A++++++++System.out.print(%22Enter+inches%3A+%22)%3B%0A++++++++int+inches+%3D+input.nextInt()%3B%0A++++++++double+feet+%3D+inches+/+12%3B+//ERROR%3A+integer+division%0A++++++++System.out.println(inches+%2B+%22+inches+%3D+%22+%2B+feet+%2B+%22+feet%22)%3B%0A++++%7D%0A%7D&mode=edit&stdin=18%0A>)
 - [InchesToFeet using https://onlinegdb.com](https://onlinegdb.com/NSw4HI2UG7)
 
-<iframe style="height:800 width:100%" src="https://onlinegdb.com/NSw4HI2UG7"></iframe>
+<iframe title="InchesToFeet.java in online code editor" style="height:800px; width:100%" src="https://onlinegdb.com/NSw4HI2UG7"></iframe>
 
 The program must be executed for each test case to obtain the actual output. While the tests for 12 and 24 inches pass, the other tests fail.
 
