@@ -60,11 +60,11 @@ TODO: Incorporate Possible Online Versions?
 
 onlinegdb iframe:
 
-<iframe sandbox="allow-forms allow-modals" title="InchesToFeet.java in online code editor" scrolling="yes" height="800" width="100%" src="https://onlinegdb.com/NSw4HI2UG7"></iframe>
+<iframe height="800" width="800"  title="InchesToFeet.java in online code editor" src="https://onlinegdb.com/NSw4HI2UG7"></iframe>
 
 Java visualizer iframe:
 
-<iframe height="800" width="100%" scrolling="yes"  
+<iframe height="800" width="100%" scrolling="yes"  title="InchesToFeet.java in visualizer"
 src="https://cscircles.cemc.uwaterloo.ca/java_visualize/#code=import+java.util.Scanner%3B%0A%0A/**%0A+*+InchesToFeet+reads+the+number+of+inches+from+user+input+and+prints+the%0A+*+equivalent+number+of+feet.%0A+*/%0Apublic+class+InchesToFeet+%7B%0A++++public+static+void+main(String%5B%5D+args)+%7B%0A++++++++Scanner+input+%3D+new+Scanner(System.in)%3B%0A++++++++System.out.print(%22Enter+inches%3A+%22)%3B%0A++++++++int+inches+%3D+input.nextInt()%3B%0A++++++++double+feet+%3D+inches+/+12%3B+//+ERROR%3A+integer+division%0A++++++++System.out.println(inches+%2B+%22+inches+%3D+%22+%2B+feet+%2B+%22+feet%22)%3B%0A++++%7D%0A%7D&mode=display&stdin=18&curInstr=0"></iframe>
 
 The program must be executed for each test case to obtain the actual output. While the tests for 12 and 24 inches pass, the other tests fail.
