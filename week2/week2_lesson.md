@@ -60,7 +60,7 @@ TODO: Incorporate Possible Online Versions?
 
 onlinegdb iframe:
 
-<iframe sandbox="allow-forms allow-modals" title="InchesToFeet.java in online code editor" scrolling="no" height="1000" width="90%" src="https://onlinegdb.com/NSw4HI2UG7"></iframe>
+<iframe sandbox="allow-forms allow-modals" title="InchesToFeet.java in online code editor" scrolling="yes" height="800" width="100%" src="https://onlinegdb.com/NSw4HI2UG7"></iframe>
 
 Java visualizer iframe:
 
