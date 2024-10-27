@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 /**
- * Reads two numbers and prints the average. There is an error in
- * the average calculation.
+ * Reads two numbers and prints the average.
+ * 
+ * There is an error in the code.
  */
 public class Average {
     public static void main(String[] args) {
@@ -10,7 +11,7 @@ public class Average {
         System.out.print("Enter 2 numbers: ");
         int num1 = input.nextInt();
         int num2 = input.nextInt();
-        double avg = num1 + num2 / 2.0; // ERROR
+        double avg = num1 + num2 / 2.0;
         System.out.println("Average = " + avg);
     }
 }
