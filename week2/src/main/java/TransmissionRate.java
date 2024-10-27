@@ -11,7 +11,7 @@ public class TransmissionRate {
         System.out.print("Enter R0: ");
         double r0 = input.nextDouble();
         int iterations = 3;
-        double infected = Math.pow(r0, iterations);
+        double infected = Math.pow(iterations, r0);
         System.out.println(iterations + " iterations result in " + infected + " infections");
     }
 }

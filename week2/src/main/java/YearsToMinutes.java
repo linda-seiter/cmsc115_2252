@@ -4,7 +4,7 @@ import java.util.Scanner;
  * YearsToMinutes reads the number of years from user input and prints the
  * equivalent number of minutes.
  * 
- * An overflow error may occur when the number of years is large.
+ * An overflow error occurs when the number of years is large.
  */
 public class YearsToMinutes {
     public static void main(String[] args) {

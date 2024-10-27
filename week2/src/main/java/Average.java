@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Reads two numbers and prints the average.
+ * Reads two integers and prints the average.
  * 
  * There is an error in the code.
  */
