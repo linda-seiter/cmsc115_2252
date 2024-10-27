@@ -53,9 +53,9 @@ public class InchesToFeet {
 }
 ```
 
-[InchesToFeet using https://onlinegdb.com](https://onlinegdb.com/NSw4HI2UG7)
+You can run `InchesToFeet` online at [https://www.onlinegdb.com/HlNge0ml1](https://www.onlinegdb.com/HlNge0ml1). Press "Fork this" to create your own copy and edit the code.
 
-The program must be executed for each test case to obtain the actual output. While the tests for 12 and 24 inches pass, the other tests fail.
+The program should be executed for each test case to obtain the actual output. While the tests for 12 and 24 inches pass, the other tests fail.
 
 | Test | Expected I/O                                     | Actual I/O                                      | Status |
 | ---- | ------------------------------------------------ | ----------------------------------------------- | ------ |
@@ -124,6 +124,8 @@ public class YearsToMinutes {
     }
 }
 ```
+
+You can run `YearsToMinutes` online at [https://onlinegdb.com/muHSCPisS](https://onlinegdb.com/muHSCPisS).
 
 We'll execute `YearsToMinutes` for each test case. Notice the last test fails to produce the expected result.
 
