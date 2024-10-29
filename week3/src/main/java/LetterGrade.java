@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * LetterGrade reads in a numeric score and prints the equivalent letter grade.
+ * 
+ * There is an error in the code.
+ */
 public class LetterGrade {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
