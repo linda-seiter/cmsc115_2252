@@ -1,13 +1,19 @@
+//https://www.onlinegdb.com/blog/brief-guide-on-how-to-use-onlinegdb-debugger/
+
+/**
+ * DailyPlans prints what to do based on the day (weekend or not) and temperature.
+ * 
+ * There is an error in the code
+ */
 import java.util.Scanner;
 
-public class Example3 {
+public class DailyPlansV1 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        System.out.print("Weekend (true/false)? ");
+        System.out.print("Weekend and Temperature: ");
         boolean isWeekend = input.nextBoolean();
-        if (isWeekend) {
-            System.out.print("Outdoor temperature?");
-            int temperature = input.nextInt();
+        int temperature = input.nextInt();
+        if (isWeekend = true) {
             if (temperature < 50) {
                 System.out.println("Sleep late");
             } else {
