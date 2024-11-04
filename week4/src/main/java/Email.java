@@ -5,11 +5,9 @@ public class Email {
         Scanner input = new Scanner(System.in);
         System.out.print("Email: ");
         String email = input.next();
-        String umgcEdu = "@umgc.edu";
-        boolean isUmgc = email.toLowerCase().endsWith(umgcEdu);
-        int indexUmgc = email.indexOf(umgcEdu);
-        String userid = email.substring(indexUmgc); // ERROR, 0, indexUmgc
-        if (isUmgc && userid.contains(".")) {
+        String atUmgcEdu = "@umgc.edu";
+        // Valid email has format userid@umgc.edu and userid is not empty
+        if (email.length() > atUmgcEdu.length() && email.endsWith(atUmgcEdu)) {
             System.out.println("Valid");
         } else {
             System.out.println("Invalid");
