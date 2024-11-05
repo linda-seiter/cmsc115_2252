@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * PizzaStudyNested implements the decision table rules with nesting
+ * PizzaStudyNested implements the decision table rules with nesting.
  */
 public class PizzaStudyNested {
     public static void main(String[] args) {

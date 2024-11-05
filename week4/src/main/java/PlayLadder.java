@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * PlayLadder implements the decision table rules using if/else if/else ladder
+ * PlayLadder implements the decision table rules using if/else if/else ladder.
  */
 public class PlayLadder {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * PlayOr implements the decision table rules using logical OR ||
+ * PlayOr implements the decision table rules using logical OR ||.
  */
 public class PlayOr {
     public static void main(String[] args) {

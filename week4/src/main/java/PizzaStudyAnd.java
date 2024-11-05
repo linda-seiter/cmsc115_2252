@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * PizzaStudyAnd implements the decision table rules using logical AND &&
+ * PizzaStudyAnd implements the decision table rules using logical AND &&.
  */
 public class PizzaStudyAnd {
     public static void main(String[] args) {
