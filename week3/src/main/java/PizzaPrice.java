@@ -29,7 +29,7 @@ public class PizzaPrice {
                 break;
         }
 
-        // $1.00 discount for medium or large pizza.
+        // $1.00 discount for medium or large pizza if customer has at least 100 points.
         if (points >= 100 && size == 2 || size == 3) {
             price -= 1.00;
         }
